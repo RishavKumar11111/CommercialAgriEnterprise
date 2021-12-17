@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+<html lang="en" style="min-height: 100%" onload="noback();" onpageshow="if (event.persisted) noback();" unload="" oncontextmenu="return false;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mukhyamantri Krushi Udyoga Yojana</title>
+    <link href="~/DPRDesign/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/DPRDesign/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/DPRDesign/normalize.min.css" rel="stylesheet" />
+    <link href="~/DPRDesign/animate.min.css" rel="stylesheet" />
+    <link href="~/DPRDesign/Loader.css" rel="stylesheet" />
+    <link href="~/DPRDesign/angular-material.min.css" rel="stylesheet" />
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/DPRDesign/angular-animate.min.js"></script>
+    <script src="~/DPRDesign/angular-aria.min.js"></script>
+    <script src="~/DPRDesign/angular-material.min.js"></script>
+    <script src="~/DPRDesign/angular-messages.min.js"></script>
+    <script src="~/Content/encoder.js"></script>
+    <style>
+        #ackTable td {
+            border: 1px solid black;
+            padding: 3px;
+            text-align: center;
+        }
+        .wizard {
+            margin: 0 auto;
+            background: #fff;
+        }
+        .wizard .nav-tabs {
+            position: relative;
+            margin: 0 auto;
+            margin-bottom: 0;
+            border-bottom-color: #e0e0e0;
+        }
+        .wizard > div.wizard-inner {
+            position: relative;
+        }
+        .connecting-line {
+            height: 2px;
+            background: #e0e0e0;
+            position: absolute;
+            width: 80%;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+            top: 38%;
+            z-index: 1;
+        }
+        .wizard .nav-tabs > li.active > a, .wizard .nav-tabs > li.active > a:hover, .wizard .nav-tabs > li.active > a:focus {
+            color: #555555;
+            cursor: default;
+            border: 0;
+            border-bottom-color: transparent;
+        }
+        span.round-tab {
+            width: 70px;
+            height: 70px;
+            line-height: 70px;
+            display: inline-block;
+            border-radius: 100px;
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            z-index: 2;
+            position: absolute;
+            left: 0;
+            text-align: center;
+            font-size: 25px;
+        }
+        span.round-tab i {
+            color: #555555;
+        }
+        .wizard li.active span.round-tab {
+            background: #fff;
+            border: 2px solid #5bc0de;
+        }
+        .wizard li.active span.round-tab i {
+            color: #5bc0de;
+        }
+        span.round-tab:hover {
+            color: #333;
+            border: 2px solid #333;
+        }
+        .wizard .nav-tabs > li {
+            width: 20%;
+        }
+        .wizard li:after {
+            content: " ";
+            position: absolute;
+            left: 46%;
+            opacity: 0;
+            margin: 0 auto;
+            bottom: 0px;
+            border: 5px solid transparent;
+            border-bottom-color: #5bc0de;
+            transition: 0.1s ease-in-out;
+        }
+        .wizard li.active:after {
+            content: " ";
+            position: absolute;
+            left: 46%;
+            opacity: 1;
+            margin: 0 auto;
+            bottom: 0px;
+            border: 10px solid transparent;
+            border-bottom-color: #5bc0de;
+        }
+        .wizard .nav-tabs > li a {
+            width: 50px;
+            height: 70px;
+            margin: 20px auto;
+            border-radius: 100%;
+            padding: 0;
+        }
+        .wizard .nav-tabs > li a:hover {
+            background: transparent;
+        }
+        .wizard .tab-pane {
+            position: relative;
+            padding-top: 50px;
+        }
+        .wizard h3 {
+            margin-top: 0;
+        }
+        @@media( max-width : 585px ) {
+            .wizard {
+                width: 90%;
+                height: auto !important;
+            }
+            span.round-tab {
+                font-size: 16px;
+                width: 50px;
+                height: 50px;
+                line-height: 50px;
+            }
+            .wizard .nav-tabs > li a {
+                width: 50px;
+                height: 50px;
+                line-height: 50px;
+            }
+            .wizard li.active:after {
+                content: " ";
+                position: absolute;
+                left: 35%;
+            }
+            .space {
+                padding: 3px;
+                font-size: 12px;
+            }
+            .textalignment {
+                text-align: center;
+            }
+            #navbar h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+    <script type="text/javascript">window.onload = window.history.forward(0); function noback() { window.history.forward(); };</script>
+</head>
+<body class="nav-md" ng-app="RegdApp" ng-controller="RegdCtrl" ng-cloak>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar" style="height: auto; background: rgb(83, 163, 163)">
+        <h1 style="padding: 10px 30px; font-family: 'Times New Roman'; color: white"><a href="@Url.Action("Index", "Home")"><span class="glyphicon glyphicon-home" title="Click here to go Home page" style="color: white; font-size: 24px; padding-right: 30px"></span></a>Agricultural Promotion & Investment Corporation of Odisha Limited (APICOL)</h1>
+    </nav>
+    <div class="container" style="margin-top: 100px">
+        @RenderBody()
+    </div>
+    <footer style="background: rgb(83, 163, 163); margin: 0px; padding: 10px; position: fixed; bottom: 0; left: 0; right: 0; z-index: 999">
+        <div class="text-right" style="color: white; font-family: 'Times New Roman'">
+            <p style="margin: 0px">Designed and developed by National Informatics Centre, Odisha</p>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+    <script src="~/DPRDesign/jquery.min.js"></script>
+    <script src="~/DPRDesign/bootstrap.min.js"></script>
+    <script src="~/Content/Angular/registration.js"></script>
+    <script src="~/Scripts/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="~/Scripts/angular-ui-bootstrap-modal.js"></script>
+    <script src="~/Scripts/angularjs-dropdown-multiselect.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+        $(document).ready(function () {
+            $('.nav-tabs > li a[title]').tooltip();
+            $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+                var $target = $(e.target);
+                if ($target.parent().hasClass('disabled')) {
+                    return false;
+                }
+            });
+            $(".next-step").click(function (e) {
+                var $active = $('.wizard .nav-tabs li.active');
+                $active.next().removeClass('disabled');
+                nextTab($active);
+            });
+            $(".prev-step").click(function (e) {
+                var $active = $('.wizard .nav-tabs li.active');
+                prevTab($active);
+            });
+        });
+        function nextTab(elem) {
+            $(elem).next().find('a[data-toggle="tab"]').click();
+        };
+        function prevTab(elem) {
+            $(elem).prev().find('a[data-toggle="tab"]').click();
+        };
+        $(document).ready(function () {
+            $('.modal').on('hidden.bs.modal', function (e) {
+                if ($('.modal').hasClass('in')) {
+                    $('body').addClass('modal-open');
+                }
+            });
+        });
+        function togglechk(val) {
+            $('.chk').change(function () {
+                $('.chk').not(this).prop('checked', false);
+            });
+        };
+        function togglecheck(val) {
+            $('.check').change(function () {
+                $('.check').not(this).prop('checked', false);
+            });
+        };
+        function postcode_validate(zipcode) {
+            var regPostcode = /^([1-9])([0-9]){6}$/;
+            obj = document.getElementById("status");
+            if (regPostcode.test(zipcode) == false) {
+                obj.innerHTML = "Postcode is not yet valid.";
+            }
+            else {
+                obj.innerHTML = "Your India Postal Index Number is valid!";
+            }
+        };
+    </script>
+</body>
+</html>

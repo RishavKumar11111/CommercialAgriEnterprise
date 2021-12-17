@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html lang="en" onload="noback();" onpageshow="if (event.persisted) noback();" unload="" oncontextmenu="return false;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/DPRDesign/Loader.css" rel="stylesheet" />
+    <link href="~/Content/angular-material.min.css" rel="stylesheet" />
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-animate.min.js"></script>
+    <script src="~/Scripts/angular-aria.min.js"></script>
+    <script src="~/Scripts/angular-messages.min.js"></script>
+    <script src="~/Scripts/angular-material.min.js"></script>
+    <script src="~/Scripts/encoder.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/angular-ui-bootstrap-modal.js"></script>
+    <script src="~/Scripts/dirPagination.js"></script>
+    <script src="~/Scripts/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <title>Mukhyamantri Krushi Udyoga Yojana</title>
+    <script type="text/javascript">window.onload = window.history.forward(0); function noback() { window.history.forward(); };</script>
+    <style>
+        #clockdiv {
+            font-family: sans-serif;
+            color: #fff;
+            display: inline-block;
+            font-weight: 100;
+            text-align: center;
+            font-size: 15px;
+        }
+        #clockdiv > div {
+            padding: 3px;
+            border-radius: 3px;
+            background: #00BF96;
+            display: inline-block;
+        }
+        #clockdiv div > span {
+            padding: 3px;
+            border-radius: 3px;
+            background: #00816A;
+            display: inline-block;
+        }
+        .smalltext {
+            padding-top: 3px;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" style=" background: rgb(83, 163, 163)">
+        <div class="container-fluid" style="height: 100px">
+            <div class="navbar-header">
+                <a style="color: white" class="navbar-brand" href="@Url.Action("Index", "Home")"><h2><span class="glyphicon glyphicon-home" title="Click here to go Home page"></span> Agricultural Promotion & Investment Corporation of Odisha Limited (APICOL)</h2></a>
+            </div>
+        </div>
+    </nav>
+    <div class="container" style="margin-top: 100px">
+        @RenderBody()
+    </div>
+    <footer style="background: rgb(83, 163, 163); margin: 0px; padding: 10px; position: fixed; bottom: 0; left: 0; right: 0">
+        <div class="text-right" style="color: white">
+            <p style="margin: 0px">Designed and developed by National Informatics Centre, Odisha</p>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+    <script>
+        function getTimeRemaining(endtime) {
+            var t = Date.parse(endtime) - Date.parse(new Date());
+            var seconds = Math.floor((t / 1000) % 60);
+            var minutes = Math.floor((t / 1000 / 60) % 60);
+            return {
+                'total': t,
+                'minutes': minutes,
+                'seconds': seconds
+            };
+        };
+        function initializeClock(id, endtime) {
+            var clock = document.getElementById(id);
+            var minutesSpan = clock.querySelector('.minutes');
+            var secondsSpan = clock.querySelector('.seconds');
+            function updateClock() {
+                var t = getTimeRemaining(endtime);
+                minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+                secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+                if (t.total <= 0) {
+                    clearInterval(timeinterval);
+                    alert("Session time out. The page will reload.");
+                    window.location.href = "PrePayment";
+                }
+            };
+            updateClock();
+            var timeinterval = setInterval(updateClock, 1000);
+        };
+        var deadline = new Date(Date.parse(new Date()) + 15 * 60 * 1000);
+        initializeClock('clockdiv', deadline);
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0e0a2a5824944d28b271294b97e5db36" Name="Diagram1">
+        <EntityTypeShape EntityType="FARMERDBModel.LGBlock" Width="1.5" PointX="2.75" PointY="2.375" />
+        <EntityTypeShape EntityType="FARMERDBModel.LGDistrict" Width="1.5" PointX="0.5" PointY="2.625" />
+        <EntityTypeShape EntityType="FARMERDBModel.LGGp" Width="1.5" PointX="5" PointY="5.75" />
+        <EntityTypeShape EntityType="FARMERDBModel.LGVillage" Width="1.5" PointX="5" PointY="2.25" />
+        <EntityTypeShape EntityType="FARMERDBModel.M_FARMER_REGISTRATION" Width="1.5" PointX="0.5" PointY="5.5" />
+        <EntityTypeShape EntityType="FARMERDBModel.M_PDS_BANKBRANCH" Width="1.5" PointX="7.5" PointY="0.5" />
+        <EntityTypeShape EntityType="FARMERDBModel.M_PDS_FARMERBANK" Width="1.5" PointX="7.5" PointY="5.5" />
+        <EntityTypeShape EntityType="FARMERDBModel.M_PDS_RELATIONSHIP" Width="1.5" PointX="9.5" PointY="0.5" />
+        <EntityTypeShape EntityType="FARMERDBModel.PDS_BLOCKMASTER" Width="1.5" PointX="2.5" PointY="9.5" />
+        <EntityTypeShape EntityType="FARMERDBModel.PDS_DISTRICTMASTER" Width="1.5" PointX="9.5" PointY="3.5" />
+        <EntityTypeShape EntityType="FARMERDBModel.PDS_GPMASTER" Width="1.5" PointX="4.5" PointY="9.5" />
+        <EntityTypeShape EntityType="FARMERDBModel.PDS_VILLAGEMASTER" Width="1.5" PointX="6.5" PointY="9.5" />
+        <EntityTypeShape EntityType="FARMERDBModel.Tbl_Bank" Width="1.5" PointX="9.5" PointY="7.5" />
+        <EntityTypeShape EntityType="FARMERDBModel.Tbl_Category" Width="1.5" PointX="8.5" PointY="10.5" />
+        <EntityTypeShape EntityType="FARMERDBModel.Tbl_Gender" Width="1.5" PointX="10.5" PointY="10.5" />
+        <EntityTypeShape EntityType="FARMERDBModel.Tbl_Branch" Width="1.5" PointX="11.5" PointY="0.5" />
+        <AssociationConnector Association="FARMERDBModel.FK_BlockTab_DistrictTab" />
+        <AssociationConnector Association="FARMERDBModel.FK_LGGp_LGBlock" />
+        <AssociationConnector Association="FARMERDBModel.FK_LGVillage_LGBlock" />
+        <AssociationConnector Association="FARMERDBModel.FK_LGVillage_LGDistrict" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

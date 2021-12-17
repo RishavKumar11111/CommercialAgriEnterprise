@@ -1,0 +1,290 @@
+﻿@{
+    ViewBag.Title = "RegisterBLO";
+    Layout = "~/Views/Shared/_LayoutDNO.cshtml";
+}
+@using (Html.BeginForm("RegisterBLO", "DNO", FormMethod.Post, new { id = "FormId" }))
+{
+    @Html.AntiForgeryToken()
+}
+
+<div class="right_col" role="main" ng-app="BLORegdApp" ng-controller="BLORegdCtrl" ng-cloak>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <h2>Blocks under the District to be selected</h2>
+                <div class="x_content">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <div style="display: inline" ng-repeat="i in blocks">
+                                <input style="margin: 5px" type="checkbox" value="{{i.BlockCode}}" id="{{i.BlockCode}}" ng-model="i.selected" ng-click="getValue()" />
+                                <label style="padding: 0 25px 0 0; font-weight: normal" class="control-label">{{i.BlockName | capitalize}}</label>
+                            </div>
+                            <div ng-show="blocks.length == 0">
+                                <label style="color: darkred" class="control-label">All Blocks are occupied.</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-xs-4 col-xs-12">
+            <div class="x_panel" style="min-height: 450px">
+                <div class="x_title">
+                    <h2>Block Level Officer Registration</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <form class="form-horizontal" role="form" name="bloForm" autocomplete="off" novalidate>
+                        <div class="form-group" ng-show="showBlocks">
+                            <div class="row" ng-show="populateBlocks.length != 0">
+                                <div class="form-group col-md-12 col-sm-12 col-xs-12" style="text-align: center">
+                                    <div class="table table-responsive">
+                                        <table class="table table-striped">
+                                            <tr>
+                                                <td><b>Serial No.</b></td>
+                                                <td><b>Block Name</b></td>
+                                                <td><b>User ID</b></td>
+                                                <td><b>Name</b></td>
+                                                <td><b>Mobile No.</b></td>
+                                                <td><b>Action</b></td>
+                                            </tr>
+                                            <tr ng-repeat="i in populateBlocks">
+                                                <td>{{$index + 1}}</td>
+                                                <td>{{i.BlockName | capitalize}}</td>
+                                                <td>{{selectedBlocks[$index]}}</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    <button type="button" style="margin-bottom: 0px" class="btn btn-xs btn-danger" ng-click="removeData($index, i.BlockCode)">Delete <i class="fa fa-close"></i></button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-show="populateBlocks == null">
+                                <label style="color: darkred; text-align: justify" class="control-label">Select blocks to assign Block Level Officers to their respective blocks.</label>
+                            </div>
+                        </div>
+                        <div ng-show="blocks.length != 0 && populateBlocks.length != 0" class="ln_solid"></div>
+                        <input ng-show="blocks.length != 0 && populateBlocks.length != 0" type="button" class="btn btn-success" value="Register" ng-disabled="bloForm.$invalid" ng-click="RegisterBLO()"/>
+                        <div ng-show="blocks.length == 0">
+                            <label style="color: darkred; text-align: justify" class="control-label">All Block Level Officers are allotted their respective blocks.</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-xs-8 col-xs-12">
+            <div class="x_panel" style="min-height: 450px">
+                <div class="x_title">
+                    <h2>Registered Block Level Officers</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <div class="row" ng-show="registeredBLO.length != 0">
+                                <div class="form-group col-md-12 col-sm-12 col-xs-12" style="text-align: center">
+                                   <div class="table table-responsive">
+                                       <table class="table table-striped">
+                                           <tr>
+                                               <td><b>Serial No.</b></td>
+                                               <td><b>UserID</b></td>
+                                               <td><b>Block Name</b></td>
+                                               <td><b>Action</b></td>
+                                           </tr>
+                                           <tr ng-repeat="i in registeredBLO">
+                                               <td>{{$index + 1}}</td>
+                                               <td>{{i.UserID}}</td>
+                                               <td>{{i.BlockName | capitalize}}</td>
+                                               <td>
+                                                   <button type="button" style="margin-bottom: 0px" class="btn btn-xs btn-warning" ng-click="remove(i.UserID)" data-toggle="modal" data-target="#removeModal">Remove <span class="glyphicon glyphicon-trash"></span></button>
+                                               </td>
+                                           </tr>
+                                       </table>
+                                   </div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div ng-show="registeredBLO.length == 0">
+                                <label style="color: darkred" class="control-label">No Block Level Officers are allotted.</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="removeModal" role="dialog">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Remove Block Level Officer</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-12 col-sm-12 col-xs-12">
+                                Are you sure you want to remove the Block Level Officer?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-primary" value="Yes" data-dismiss="modal" ng-click="removeBLO()" />
+                    <input type="button" class="btn btn-default" value="No" data-dismiss="modal" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = angular.module('BLORegdApp', []);
+
+    app.controller('BLORegdCtrl', function ($scope, $http) {
+
+        var token = document.getElementsByName('__RequestVerificationToken')[0].value;
+
+        $scope.department;
+        $scope.designation;
+
+        $scope.removeData = function (index, blockCode) {
+            $scope.populateBlocks.splice(index, 1);
+            $scope.selectedBlocks.splice(index, 1);
+            document.getElementById(blockCode).checked = false;
+        };
+
+        $scope.blocks = [];
+        var getBlocks = function () {
+            $http.get('GetBlocks').then(function success(response) {
+                $scope.blocks = response.data;
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+        getBlocks();
+
+        $http.get('GetDepartment').then(function success(response) {
+            $scope.department = response.data;
+            if ($scope.department == "agr") {
+                $scope.designation = "aao";
+            }
+            else if ($scope.department == "hor") {
+                $scope.designation = "aho";
+            }
+            else if ($scope.department == "fis") {
+                $scope.designation = "afo";
+            }
+            else if ($scope.department == "ani") {
+                $scope.designation = "bvo";
+            }
+        }, function error(response) {
+            alert(response.status);
+        });
+
+        $scope.selectedBlocks = [];
+        $scope.populateBlocks = [];
+        $scope.showBlocks = false;
+        $scope.getValue = function () {
+            $scope.selectedBlocks = [];
+            $scope.populateBlocks = [];
+            $scope.showBlocks = true;
+            angular.forEach($scope.blocks, function (i) {
+                if (i.selected) {
+                    $scope.selectedBlocks.push($scope.designation + '_' + i.BlockCode);
+                    $scope.populateBlocks.push(i);
+                }
+            });
+        };
+
+        $scope.RegisterBLO = function () {
+            if ($scope.blocks.length > 0) {
+                if ($scope.populateBlocks.length > 0) {
+                    var myData = [];
+                    angular.forEach($scope.selectedBlocks, function (i) {
+                        var k = {};
+                        k.UserID = i;
+                        k.BlockCode = i.substr(4, 4);
+                        myData.push(k);
+                    });
+                    var myReq = {
+                        method: 'POST',
+                        url: 'AddBLO',
+                        headers: {
+                            '__RequestVerificationToken': token
+                        },
+                        data: { lbbm: myData },
+                    };
+                    $http(myReq).then(function success(response) {
+                        var k = response.data;
+                        if (k == true) {
+                            alert('Block Level Officer(s) successfully registered.');
+                            $scope.showBlocks = false;
+                        }
+                        getBlocks();
+                        getRegisteredBLO();
+                        $scope.selectedBlocks = [];
+                        $scope.populateBlocks = [];
+                    }, function error(response) {
+                        alert(response.status);
+                    });
+                }
+                else {
+                    alert('Please select the Block to be mapped.');
+                    return false;
+                }
+            }
+            else {
+                alert('All the Blocks are already mapped.');
+                return false;
+            }
+        };
+
+        $scope.registeredBLO = [];
+        var getRegisteredBLO = function () {
+            $http.get('GetRegisteredBLO').then(function success(response) {
+                $scope.registeredBLO = response.data;
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+        getRegisteredBLO();
+
+        $scope.remove = function (a) {
+            userID = a;
+        };
+
+        $scope.removeBLO = function () {
+            var myData = { UserID: userID };
+            var myReq = {
+                method: 'POST',
+                url: 'RemoveBLO',
+                headers: {
+                    '__RequestVerificationToken': token
+                },
+                data: myData
+            };
+            $http(myReq).then(function success(response) {
+                var k = response.data;
+                if (k == true) {
+                    alert('Block Level Officer(s) successfully removed.');
+                }
+                getBlocks();
+                getRegisteredBLO();
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+    });
+
+    app.filter('capitalize', function () {
+        return function (input) {
+            return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+        }
+    });
+</script>

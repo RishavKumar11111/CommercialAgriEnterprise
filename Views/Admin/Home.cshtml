@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using (Html.BeginForm("Home", "Admin", FormMethod.Post, new { id = "FormId" }))
+{
+    @Html.AntiForgeryToken()
+}
+<div class="right_col" role="main" ng-app="AdminHomeApp" ng-controller="AdminHomeCtrl" ng-cloak>
+    <div class="page-title">
+        <div class="mid_center" style="padding: 250px 20px">
+            <h1>Welcome APICOL (Administrator)</h1>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+<script>
+    var app = angular.module("AdminHomeApp", []);
+    app.controller("AdminHomeCtrl", function ($scope, $http) {
+        var token = document.getElementsByName('__RequestVerificationToken')[0].value;
+    });
+</script>

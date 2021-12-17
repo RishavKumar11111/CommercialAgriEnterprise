@@ -1,0 +1,270 @@
+﻿@{
+    ViewBag.Title = "CheckBeneficiaryStatus";
+    Layout = "~/Views/Shared/_LayoutGoAhead.cshtml";
+}
+
+@using (Html.BeginForm("BeneficiaryStatus", "GoAhead", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal text-center", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+}
+
+<div data-loading></div>
+<div class="title">
+    <h2 style="text-align: center">Mukhyamantri Krushi Udyoga Yojana</h2>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <h3 style="text-align: center">Beneficiary Status</h3>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div ng-show="EntryDetails" class="well row" style="margin-top: 30px">
+    <form class="form-horizontal text-center" name="formEDetail" role="form" autocomplete="off" novalidate>
+        <div class="col-md-3 col-sm-3 col-xs-12"></div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="col-md-6 col-sm-6 col-xs-12 text-left">
+                <div class="form-group">
+                    <label class="control-label">Reference No.</label>
+                    <span style="color: red" class="required">*</span>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 text-left">
+                <div class="form-group">
+                    <input type="text" placeholder="Enter your Reference No" name="referenceNo" reference-no capitalize class="form-control" ng-model="txtReferenceNo" maxlength="25" required />
+                    <span style="color: red" ng-show="formEDetail.referenceNo.$touched && formEDetail.referenceNo.$invalid && formEDetail.referenceNo.$error.required">This is a required field.</span>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 text-left">
+                <div class="form-group">
+                    <label class="control-label">Voter ID Card No.</label>
+                    <span style="color: red" class="required">*</span>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 text-left">
+                <div class="form-group">
+                    <input type="text" placeholder="Enter your Voter ID Card No" name="voterID" alpha-numeric capitalize class="form-control" ng-model="txtVoterID" maxlength="25" required />
+                    <span style="color: red" ng-show="formEDetail.voterID.$touched && formEDetail.voterID.$invalid && formEDetail.voterID.$error.required">This is a required field.</span>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 text-left">
+                <div class="form-group">
+                    <label class="control-label">Aadhaar Card No.</label>
+                    <span style="color: red" class="required">*</span>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 text-left">
+                <div class="form-group">
+                    <input type="text" placeholder="Enter your Aadhaar Card No" name="aadhaarNo" numbers-only capitalize class="form-control" ng-model="txtAadhaarNo" maxlength="25" required />
+                    <span style="color: red" ng-show="formEDetail.aadhaarNo.$touched && formEDetail.aadhaarNo.$invalid && formEDetail.aadhaarNo.$error.required">This is a required field.</span>
+                </div>
+            </div>
+            <div class="form-group text-center">
+                <input type="button" value="Submit" class="btn btn-primary" ng-disabled="formEDetail.$invalid" ng-click="CheckReferenceNoStatus()" />
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-12"></div>
+    </form>
+</div>
+<center>
+    <div ng-show="CheckBeneficiaryStus" ng-repeat="i in GetALLStaus" class="row col-md-12 col-sm-12-col-xs-12">
+        <div class="row" style="white-space: nowrap">
+            <div class="col-md-1 col-sm-1 col-xs-12"><span style="float: right"><input type="image" src="~/Content/images/COMPLETECOLORCODE.png"></span></div>
+            <div class="col-md-1 col-sm-1 col-xs-12"><b style="float: left"> COMPLETE STATUS</b> </div>
+            <div class="col-md-2 col-sm-2 col-xs-12"><span style="float: right"><input type="image" src="~/Content/images/PENDINGCOLORCODE .png"> </span></div>
+            <div class="col-md-1 col-sm-1 col-xs-12"><b style="float: left">PENDING STATUS</b></div>
+            <div class="col-md-7 col-sm-7 col-xs-12"></div>
+        </div><br />
+
+        <span style="float: left" ng-if="i.RegdStatus == 'Success'"><a><input type="image" src="~/Content/images/REGDSUCCESS.png"><input type="image" src="~/Content/images/BAR .png" style="padding-bottom: 48px"></a></span><span style="float: left" ng-if="i.RegdStatus == 'Pending'"><a><input type="image" src="~/Content/images/REGDPENDING.png"><input type="image" src="~/Content/images/Pending-BAR.png" style="padding-bottom: 48px" ng-if="i.RegdStatus == 'Success'"></a></span>
+
+        <span style="float: left" ng-if="i.RegdStatus == 'Success' && i.DprStatus == 'Success'"><a><input type="image" src="~/Content/images/DPRSUCCESS.png"><input type="image" src="~/Content/images/BAR .png" style="padding-bottom: 48px"></a></span><span style="float: left" ng-if="i.RegdStatus == 'Success' &&  i.DprStatus == 'Pending'"><a><input type="image" src="~/Content/images/DPRPENDING.png"><input type="image" src="~/Content/images/Pending-BAR.png" style="padding-bottom: 48px" ng-if="i.DprStatus == 'Success'"></a></span>
+
+        <span style="float: left" ng-if="i.DprStatus == 'Success' && i.paymentStatus == 'Success'"><a><input type="image" src="~/Content/images/PAYMENTSUCCESS.png"><input type="image" src="~/Content/images/BAR .png" style="padding-bottom: 48px"></a></span><span style="float: left" ng-if="i.DprStatus == 'Success' && i.paymentStatus == 'Pending'"><a><input type="image" src="~/Content/images/PAYMENTPENDING.png"><input type="image" src="~/Content/images/Pending-BAR.png" style="padding-bottom: 48px" ng-if="i.paymentStatus == 'Success'"></a></span>
+
+        <span style="float: left" ng-if="i.paymentStatus == 'Success' && i.BloStatus == 'Success'"><a><input type="image" src="~/Content/images/BLOSUCCESS.png"><input type="image" src="~/Content/images/BAR .png" style="padding-bottom: 48px"></a></span><span style="float: left" ng-if="i.paymentStatus == 'Success' && i.BloStatus == 'Pending'"><a><input type="image" src="~/Content/images/BLOPENDING.png"><input type="image" src="~/Content/images/Pending-BAR.png" style="padding-bottom: 48px" ng-if="i.BloStatus == 'Success'"></a></span>
+
+        <span style="float: left" ng-if="i.BloStatus == 'Success' && i.DnoStatus == 'Success'"><a><input type="image" src="~/Content/images/DNOSUCCESS.png"><input type="image" src="~/Content/images/BAR .png" style="padding-bottom: 48px"></a></span><span style="float: left" ng-if="i.BloStatus == 'Success' && i.DnoStatus == 'Pending'"><a><input type="image" src="~/Content/images/DNOPENDING.png"><input type="image" src="~/Content/images/Pending-BAR.png" style="padding-bottom: 48px" ng-if="i.DnoStatus == 'Success'"></a></span>
+
+        <span style="float: left" ng-if="i.DnoStatus == 'Success' && i.CollectorStatus == 'Success'"><a><input type="image" src="~/Content/images/COLLECTORSUCCESS.png"></a></span><span style="float: left" ng-if="i.DnoStatus == 'Success' && i.CollectorStatus == 'Pending'"><a><input type="image" src="~/Content/images/COLLECTORPENDING.png"><input type="image" src="~/Content/images/Pending-BAR.png" style="padding-bottom: 40px" ng-if="i.CollectorStatus == 'Success'"></a></span>
+
+        <span style="float: left" ng-if="i.CollectorStatus == 'Success' && i.DdaStatus == 'Success'"><a><input type="image" src="~/Content/images/DDASUCCESS.png"><input type="image" src="~/Content/images/BAR .png" style="padding-bottom: 48px"></a></span><span style="float: left" ng-if="i.CollectorStatus == 'Success' && i.GoaheadStatus == 'Pending'"><a><input type="image" src="~/Content/images/DDAPENDING.png"><input type="image" src="~/Content/images/Pending-BAR.png" style="padding-bottom: 48px" ng-if="i.DdaStatus == 'Success'"></a></span>
+
+        <span style="float: left" ng-if=" i.DdaStatus == 'Success' && i.GoaheadStatus=='Success'"><a><input type="image" src="~/Content/images/GOAHEAD-Success.png"></a></span><span style="float: left" ng-if="i.GoaheadStatus == 'Pending' && i.DdaStatus == 'Success'"><a><input type="image" src="~/Content/images/GOAHEAD-Pending.png"></a></span>
+    </div>
+</center>
+
+<script>
+    var app = angular.module("GoAheadApp", ['ngMaterial']);
+
+    app.controller("GoAheadCtrl", function ($scope, $http, $mdDialog, $timeout) {
+
+        $scope.EntryDetails = true;
+        $scope.CheckBeneficiaryStus = false;
+
+        var emptyFields = function () {
+            $scope.txtReferenceNo = null;
+            $scope.txtVoterID = null;
+            $scope.txtAadhaarNo = null;
+        };
+
+        $scope.GetALLStaus = [];
+        $scope.CheckReferenceNoStatus = function () {
+            $http.get('CheckBStatus?referenceNo=' + $scope.txtReferenceNo + '&voterIDNo=' + digest($scope.txtVoterID) + '&aadhaarCardNo=' + digest($scope.txtAadhaarNo)).then(function success(response) {
+                var k = response.data;
+                if (k == "NULL") {
+                    $http.get('ChkBeneficiaryStatus1?ReferenceNo=' + $scope.txtReferenceNo).then(function success(response) {
+                        var L = response.data;
+                        if (L != null) {
+                            $scope.EntryDetails = false;
+                            $scope.CheckBeneficiaryStus = true;
+                            $scope.GetALLStaus = L;
+                        }
+                    }, function error(response) {
+                        alert(response.status);
+                    });
+                }
+                if (k == "You have entered an invalid Reference No.") {
+                    alert(k);
+                    $scope.txtReferenceNo = null;
+                }
+                if (k == "Invalid Aadhaar Card No.") {
+                    alert(k);
+                    $scope.txtAadhaarNo = null;
+                }
+                if (k == "Invalid Voter ID Card No.") {
+                    alert(k);
+                    $scope.txtVoterID = null;
+                }
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+    });
+
+    app.directive('capitalize', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                var capitalize = function (inputValue) {
+                    if (inputValue == undefined) inputValue = '';
+                    var capitalized = inputValue.toUpperCase();
+                    if (capitalized !== inputValue) {
+                        ngModelCtrl.$setViewValue(capitalized);
+                        ngModelCtrl.$render();
+                    }
+                    return capitalized;
+                }
+                ngModelCtrl.$parsers.push(capitalize);
+                capitalize(scope[attrs.ngModel]);
+            }
+        };
+    });
+
+    app.directive('referenceNo', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                ngModelCtrl.$parsers.push(function (val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace(/[^a-zA-Z0-9\/\-]/g, '');
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
+                element.bind('keypress', function (event) {
+                    if (event.keyCode === 32) {
+                        event.preventDefault();
+                    }
+                });
+            }
+        };
+    });
+
+    app.directive('alphaNumeric', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                ngModelCtrl.$parsers.push(function (val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace(/[^a-zA-Z0-9\/]/g, '');
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
+                element.bind('keypress', function (event) {
+                    if (event.keyCode === 32) {
+                        event.preventDefault();
+                    }
+                });
+            }
+        };
+    });
+
+    app.directive('numbersOnly', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                ngModelCtrl.$parsers.push(function (val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace(/[^0-9]/g, '');
+                    var negativeCheck = clean.split('-');
+                    if (!angular.isUndefined(negativeCheck[1])) {
+                        negativeCheck[1] = negativeCheck[1].slice(0, negativeCheck[1].length);
+                        clean = negativeCheck[0] + '-' + negativeCheck[1];
+                        if (negativeCheck[0].length > 0) {
+                            clean = negativeCheck[0];
+                        }
+                    }
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
+                element.bind('keypress', function (event) {
+                    if (event.keyCode === 32) {
+                        event.preventDefault();
+                    }
+                });
+            }
+        };
+    });
+
+    app.directive('loading', ['$http', function ($http) {
+        return {
+            restrict: 'A',
+            template: '<div class="loading">Loading&#8230;</div>',
+            link: function (scope, elm, attrs) {
+                scope.isLoading = function () {
+                    return $http.pendingRequests.length > 0;
+                };
+                scope.$watch(scope.isLoading, function (v) {
+                    if (v) {
+                        elm.css('display', 'block');
+                    } else {
+                        elm.css('display', 'none');
+                    }
+                });
+            }
+        };
+    }]);
+</script>

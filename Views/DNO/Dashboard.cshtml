@@ -1,0 +1,1306 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutDNO.cshtml";
+}
+@using (Html.BeginForm("Dashboard", "DNO", FormMethod.Post, new { id = "FormId" }))
+{
+    @Html.AntiForgeryToken()
+}
+<div ng-app="DNODApp" ng-controller="DNODCtrl" ng-cloak>
+    <div data-loading></div>
+    <div class="right_col" role="main">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-xs-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Dashboard for District Nodal Officer</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <form class="form-horizontal">
+                            <div class="table table-responsive">
+                                <table class="table table-bordered table-striped" style="white-space: nowrap">
+                                    <tr style="background: #34495e; color: #ecf0f1">
+                                        <td><b>Serial No.</b></td>
+                                        <td><b>Reference No.</b></td>
+                                        <td><b>View Registration</b></td>
+                                        <td><b>View DPR</b></td>
+                                        <td><b>View Feasibility Report</b></td>
+                                        <td><b>Payment Status</b></td>
+                                        <td><b>BLO Status</b></td>
+                                        <td><b>DNO Status</b></td>
+                                        <td><b>Collector Status</b></td>
+                                        <td><b>DDA Status</b></td>
+                                        <td><b>Action</b></td>
+                                    </tr>
+                                    <tr ng-repeat="i in getApproval" style="background-color:white;color:black;white-space:nowrap;text-align:center">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{i.refno}}</td>
+                                        <td><a href="" ng-click="open(i.refno)"><center><input type="image" src="~/Content/images/binocular-solid.png" style="height:20px;width:20px;" /></center></a></td>
+                                        <td><a href="" ng-click="openmodal(i.refno)"><center><input type="image" src="~/Content/images/binocular-solid.png" style="height:20px;width:20px;" /></center></a></td>
+                                        <td><a href="" ng-click="openfeasibility(i.refno)"><center><input type="image" src="~/Content/images/binocular-solid.png" style="height:20px;width:20px;" /></center></a></td>
+                                        <td>
+                                            {{i.paymentStatus}}
+                                            <span class="glyphicon glyphicon-ok" style="color:green;" ng-if="i.paymentStatus == 'Success'"></span>
+                                            <span class="glyphicon glyphicon-refresh" style="color:orangered;" ng-if="i.paymentStatus =='Pending'"></span>
+                                        </td>
+                                        <td>
+                                            {{i.BloStatus}}
+                                            <span class="glyphicon glyphicon-ok" style="color:green;" ng-if="i.BloStatus == 'Feasible'"></span>
+                                            <span class="glyphicon glyphicon-remove" style="color:red;" ng-if="i.BloStatus =='Not Feasible'">
+                                                <a href="#" ng-click="NotFeasibleReason(i.refno)" data-toggle="modal" data-target="#NotFeasibleReason"><b style="color: red">View Reason</b></a>
+                                            </span>
+                                            <span class="glyphicon glyphicon-refresh" style="color:orange;" ng-if="i.Blostatus =='Pending'"></span>
+                                        </td>
+                                        <td>
+                                            {{i.Approvestatus}}
+                                            <span class="glyphicon glyphicon-ok" style="color:green;" ng-if="i.Approvestatus == 'Recommended'"></span>
+                                            <span class="glyphicon glyphicon-remove" style="color:red;" ng-if="i.Approvestatus =='Not Recommended'">
+                                                <a href="#" ng-click="NotRecommendedReason(i.refno)" data-toggle="modal" data-target="#NotRecommendedReason"><b style="color:red">View Reason</b></a>
+                                            </span>
+                                            <span class="glyphicon glyphicon-refresh" style="color:orange;" ng-if="i.Approvestatus =='Pending'"></span>
+                                        </td>
+                                        <td>
+                                            {{i.CollectorStatus}}
+                                            <span class="glyphicon glyphicon-ok" style="color:green;" ng-if="i.CollectorStatus == 'Approved'"></span>
+                                            <span class="glyphicon glyphicon-remove" style="color:red;" ng-if="i.CollectorStatus =='Rejected'"></span>
+                                            <span class="glyphicon glyphicon-refresh" style="color:orange;" ng-if="i.CollectorStatus =='Pending'"></span>
+                                        </td>
+                                        <td>
+                                            {{i.DDASTATUS}}
+                                            <span class="glyphicon glyphicon-ok" style="color:green;" ng-if="i.DDASTATUS == 'Approved'"></span>
+                                            <span class="glyphicon glyphicon-remove" style="color:red;" ng-if="i.DDASTATUS =='Rejected'"></span>
+                                            <span class="glyphicon glyphicon-refresh" style="color:orange;" ng-if="i.DDASTATUS =='Pending'"></span>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#ApproveModal" ng-if="i.status == 0" ng-click="approve(i.refno)"><span class="glyphicon glyphicon-ok"></span> Recommend</button>
+                                            <button type="button" class="btn btn-sm btn-danger" value="Reject" ng-if="i.status == 0" data-toggle="modal" data-target="#RejectModal" ng-click="reject(i.refno)"><span class="glyphicon glyphicon-remove"></span> Not Recommend</button>
+                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#BackToBLOModal" ng-if="i.status == 0 && i.BackToBLOStatus == 'show'" ng-click="backTB(i.refno)"><span class="glyphicon glyphicon-ok"></span> Back to BLO</button>
+                                            <a href="#" ng-if="((i.status == '1' || i.status == '2') && i.statusDda=='1')" ng-click="ApproveGoAhead(i.refno)" class="btn btn-sm btn-info">
+                                                <span class="glyphicon glyphicon-arrow-right"></span> Go Ahead
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr style="color: red; text-align: center; font-size: 20px" ng-if="Errorshow"><td colspan="11"><b>{{ErrorMSg}}</b></td></tr>
+                                </table>
+                            </div>
+                        </form>
+                        @if (ViewBag.Department == "Agriculture")
+                        {
+                            <h2>Integrated Farming</h2>
+                            <form class="form-horizontal">
+                                <div class="table table-responsive">
+                                    <table class="table table-bordered table-striped" style="white-space: nowrap">
+                                        <tr style="background: #34495e; color: #ecf0f1">
+                                            <td><b>Serial No.</b></td>
+                                            <td><b>Reference No.</b></td>
+                                            <td><b>View Registration</b></td>
+                                            <td><b>View DPR</b></td>
+                                            <td><b>View Feasibility Report</b></td>
+                                            <td><b>Payment Status</b></td>
+                                            <td><b>BLO Status</b></td>
+                                            <td><b>DNO Status</b></td>
+                                            <td><b>Collector Status</b></td>
+                                            <td><b>DDA Status</b></td>
+                                            <td><b>Action</b></td>
+                                        </tr>
+                                        <tr ng-repeat="i in getIntegratedFarming" style="background-color:white;color:black;white-space:nowrap;text-align:center">
+                                            <td>{{$index+1}}</td>
+                                            <td>{{i.refno}}</td>
+                                            <td><a href="" ng-click="open(i.refno)"><center><input type="image" src="~/Content/images/binocular-solid.png" style="height:20px;width:20px;" /></center></a></td>
+                                            <td><a href="" ng-click="openmodal(i.refno)"><center><input type="image" src="~/Content/images/binocular-solid.png" style="height:20px;width:20px;" /></center></a></td>
+                                            <td><a href="" ng-click="openfeasibility(i.refno)"><center><input type="image" src="~/Content/images/binocular-solid.png" style="height:20px;width:20px;" /></center></a></td>
+                                            <td>
+                                                {{i.paymentStatus}}
+                                                <span class="glyphicon glyphicon-ok" style="color:green;" ng-if="i.paymentStatus == 'Success'"></span>
+                                                <span class="glyphicon glyphicon-refresh" style="color:orangered;" ng-if="i.paymentStatus =='Pending'"></span>
+                                            </td>
+                                            <td>
+                                                {{i.BloStatus}}
+                                                <span class="glyphicon glyphicon-ok" style="color:green;" ng-if="i.BloStatus == 'Feasible'"></span>
+                                                <span class="glyphicon glyphicon-remove" style="color:red;" ng-if="i.BloStatus =='Not Feasible'">
+                                                    <a href="#" ng-click="NotFeasibleReason(i.refno)" data-toggle="modal" data-target="#NotFeasibleReason"><b style="color:red"><u>View Reason</u></b></a>
+                                                </span>
+                                                <span class="glyphicon glyphicon-refresh" style="color:orange;" ng-if="i.BloStatus =='Pending'"></span>
+                                            </td>
+                                            <td>
+                                                {{i.IntegratedFarmingStatus}}
+                                                <span class="glyphicon glyphicon-ok" style="color:green;" ng-if="i.IntegratedFarmingStatus == 'Approved'"></span>
+                                                <span class="glyphicon glyphicon-remove" style="color:red;" ng-if="i.IntegratedFarmingStatus =='Rejected'">
+                                                    <a href="#" ng-click="NotRecommendedReason(i.refno)" data-toggle="modal" data-target="#NotRecommendedReason"><b style="color:red">View Reason</b></a>
+                                                </span>
+                                                <span class="glyphicon glyphicon-refresh" style="color:orange;" ng-if="i.IntegratedFarmingStatus =='Pending'"></span>
+                                            </td>
+                                            <td>
+                                                {{i.CollectorStatus}}
+                                                <span class="glyphicon glyphicon-ok" style="color:green;" ng-if="i.CollectorStatus == 'Approved'"></span>
+                                                <span class="glyphicon glyphicon-remove" style="color:red;" ng-if="i.CollectorStatus =='Rejected'"></span>
+                                                <span class="glyphicon glyphicon-refresh" style="color:orange;" ng-if="i.CollectorStatus =='Pending'"></span>
+                                            </td>
+                                            <td>
+                                                {{i.DDASTATUS}}
+                                                <span class="glyphicon glyphicon-ok" style="color:green;" ng-if="i.DDASTATUS == 'Approved'"></span>
+                                                <span class="glyphicon glyphicon-remove" style="color:red;" ng-if="i.DDASTATUS =='Rejected'"></span>
+                                                <span class="glyphicon glyphicon-refresh" style="color:orange;" ng-if="i.DDASTATUS =='Pending'"></span>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#ApproveDDAModal" ng-if="i.integratedStatus == 0" ng-click="approve(i.refno)"><span class="glyphicon glyphicon-ok"></span> Recommend</button>
+                                                <button type="button" class="btn btn-sm btn-danger" value="Reject" ng-if="i.integratedStatus == 0" data-toggle="modal" data-target="#RejectDDAModal" ng-click="reject(i.refno)"><span class="glyphicon glyphicon-remove"></span> Not Recommend</button>
+                                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#BackToDDABLOModal" ng-if="i.BackToBLOStatus == 'show' && i.integratedStatus == 0" ng-click="backTB(i.refno)"><span class="glyphicon glyphicon-ok"></span> Back to BLO</button>
+                                                <a href="#" ng-if="(i.statusDda=='1')" ng-click="ApproveGoAhead(i.refno)" class="btn btn-sm btn-info">
+                                                    <span class="glyphicon glyphicon-arrow-right"></span> Go Ahead
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr style="color:red;text-align:center;font-size:20px" ng-if="Errorshow1"><td colspan="10"><b>{{ErrorMSg1}}</b></td></tr>
+                                    </table>
+                                </div>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="NotRecommendedReason" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center">Not Recommended Reason</h4>
+                </div>
+                <div class="modal-body">
+                    <p ng-show="lblDNOReason1 != ''" style="font-size: 15px">1. {{lblDNOReason1}}</p><br />
+                    <p ng-show="lblDNOReason2 != ''" style="font-size: 15px">2. {{lblDNOReason2}}</p><br />
+                    <p ng-show="lblDNOReason3 != ''" style="font-size: 15px">3. {{lblDNOReason3}}</p><br />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div modal="CheckDNONS" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+                    <h4 class="modal-title">DNO Details</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="frmWaterSupply" role="form" autocomplete="off" novalidate>
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label>Name</label>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label>{{lblGDNOName}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label>Signature</label>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <img id="dnoGSign" style="height: 100px; width: 175px; border: 1px solid black" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" value="Submit" class="btn btn-info" ng-click="submitGDNORecord()" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div modal="showModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg" style="width: 1300px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title text-center">View & Print Registration</h3>
+                </div>
+                <div class="modal-body" id="printSection4">
+                    <center>
+                        <div style="border: 1px solid black; background-color: white; width: 100%">
+                            <table style="width: 100%">
+                                <tr>
+                                    <td style="width: 120px; padding: 10px"><img src="~/Content/images/govtlogo.jpg" /></td>
+                                    <td style="text-align: center"><h3>Department of Agriculture and Farmers' Empowerment</h3></td>
+                                    <td style="width: 120px; padding: 10px"><img style="height: 80px; width: 86px" src="~/Content/images/ApicolLOGO.jpg" /></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center" colspan="3"><h3>Registration</h3></td>
+                                </tr>
+                            </table>
+                            <hr class="form-group" style="border-top: 1px solid black" />
+                            <div class="row form-group">
+                                <table style="width: 90%">
+                                    <tr>
+                                        <td colspan="3"><b>Applicant Details -----</b><br /><input type="image" src="~/Content/images/ul.jpg" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Reference No.</b></td>
+                                        <td>: {{t.ReferenceNumber}}</td>
+                                        <td rowspan="8" style="text-align: center"><img id="passpic" style="width: 122px; height: 142px; border: 1px solid black" /><br />Photograph</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Date of Application</b></td>
+                                        <td>: {{t.DateOfApplication}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Submited to</b></td>
+                                        <td>: Block Level Officer : {{t.Block}}, {{t.AppliedTo}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Farmer ID</b></td>
+                                        <td>: {{t.FarmerID}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Applicant Type</b></td>
+                                        <td>: {{t.ApplicantType}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Applicant Name</b></td>
+                                        <td>: {{t.ApplicantName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Name of the Father / Husband</b></td>
+                                        <td>: {{t.FatherorHusbandName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Gender</b></td>
+                                        <td>: {{t.Gender}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Category</b></td>
+                                        <td>: {{t.Category}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Educational Qualification</b></td>
+                                        <td>: {{t.EducationalQualification}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Annual Income</b></td>
+                                        <td>: ₹ {{t.AnnualIncome}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Present Occupation</b></td>
+                                        <td>: {{t.PresentOccupation}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Previous Experience</b></td>
+                                        <td>: {{t.PreviousExperience}}</td>
+                                    </tr>
+                                    <tr ng-if="t.ApplicantType == 'Group'">
+                                        <td><b>Type of Group</b></td>
+                                        <td>: {{t.GroupType}}</td>
+                                    </tr>
+                                    <tr ng-if="t.ApplicantType == 'Group'">
+                                        <td><b>Number of Group Members</b></td>
+                                        <td>: {{t.GMNumber}}</td>
+                                    </tr>
+                                    <tr ng-if="t.ApplicantType == 'Group'">
+                                        <td><b>Firm Name</b></td>
+                                        <td>: {{t.FirmName}}</td>
+                                    </tr>
+                                    <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                    <tr ng-if="t.ApplicantType == 'Group'">
+                                        <td colspan="3"><b>Details of the Group Members -----</b><br /><input type="image" src="~/Content/images/ul.jpg" /></td>
+                                    </tr>
+                                    <tr ng-if="t.ApplicantType == 'Group'">
+                                        <td><b>Sl. No.</b></td>
+                                        <td><b>Group Member Farmer ID</b></td>
+                                        <td><b>Educational Qualification</b></td>
+                                    </tr>
+                                    <tr ng-if="t.ApplicantType == 'Group'" ng-repeat="i in grMem">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{i.GroupMemberFarmerID}}</td>
+                                        <td>{{i.EducationalQualificationName}}</td>
+                                    </tr>
+                                    <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                    <tr>
+                                        <td colspan="2"><b>Applicant's Address Details -----</b><br /><input type="image" src="~/Content/images/ul.jpg" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Correspondance Address (With PIN)</b></td>
+                                        <td>: {{t.CorrespondenceAddress}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Permanent Address</b></td>
+                                        <td>: {{t.PermanentAddress}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Pincode</b></td>
+                                        <td>: {{t.Pincode}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Mobile No.</b></td>
+                                        <td>: {{t.MobileNumber}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>E-Mail ID</b></td>
+                                        <td>: {{t.EmailID == null ? 'NA' : t.EmailID}}</td>
+                                    </tr>
+                                    <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                    <tr>
+                                        <td colspan="2"><b>Project Informations -----</b><br /><input type="image" src="~/Content/images/ul.jpg" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Type of Project</b></td>
+                                        <td>: {{t.Department}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Project Name</b></td>
+                                        <td>: {{t.Project}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Products / Services to be produced / marketed</b></td>
+                                        <td>: {{t.ProductsProduced}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Capacity</b></td>
+                                        <td>: {{t.Capacity == null ? 'NA' : t.Capacity}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Unit</b></td>
+                                        <td>: {{t.CapacityUnit == null ? 'NA' : t.CapacityUnit}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Means of Finance</b></td>
+                                        <td>: {{t.FinanceType}}</td>
+                                    </tr>
+                                    <tr ng-if="t.FinanceType=='Bank'">
+                                        <td><b>Bank Name</b></td>
+                                        <td>: {{t.Bank}}</td>
+                                    </tr>
+                                    <tr ng-if="t.FinanceType=='Bank'">
+                                        <td><b>Branch Name</b></td>
+                                        <td>: {{t.Branch}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Whether CIS previously availed for any project</b></td>
+                                        <td>: {{t.IsCISPreviouslyAvailed}}</td>
+                                    </tr>
+                                    <tr ng-if="t.IsCISPreviouslyAvailed=='Yes'">
+                                        <td><b>CIS Project Type</b></td>
+                                        <td>: {{t.CISProject}}</td>
+                                    </tr>
+                                    <tr ng-if="t.IsCISPreviouslyAvailed=='Yes'">
+                                        <td><b>CIS Location</b></td>
+                                        <td>: {{t.CISProject}}</td>
+                                    </tr>
+                                    <tr ng-if="t.IsCISPreviouslyAvailed=='Yes'">
+                                        <td><b>CIS Availed Year</b></td>
+                                        <td>: {{t.CISProject}}</td>
+                                    </tr>
+                                    <tr ng-if="t.IsCISPreviouslyAvailed=='Yes'">
+                                        <td><b>CIS Finance Type</b></td>
+                                        <td>: {{t.CISProject}}</td>
+                                    </tr>
+                                    <tr ng-if="t.IsCISPreviouslyAvailed=='Yes'">
+                                        <td><b>CIS Amount</b></td>
+                                        <td>: {{t.CISProject}}</td>
+                                    </tr>
+                                    <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                    <tr ng-if="t.Project == 'Integrated Farming'">
+                                        <td colspan="5"><b>Projects under Integrated Farming -----</b><br /><input type="image" src="~/Content/images/ul.jpg" /></td>
+                                    </tr>
+                                    <tr ng-if="t.Project == 'Integrated Farming'">
+                                        <td><b>Sl. No.</b></td>
+                                        <td><b>Projects</b></td>
+                                        <td><b>Sectors</b></td>
+                                        <td><b>Capacity</b></td>
+                                        <td><b>Unit</b></td>
+                                    </tr>
+                                    <tr ng-if="t.Project == 'Integrated Farming'" ng-repeat="i in iProjects">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{i.ProjectTypeName}}</td>
+                                        <td>{{i.DepartmentName}}</td>
+                                        <td>{{i.Capacity == null ? 'NA' : i.Capacity}}</td>
+                                        <td>{{i.Unit == null ? 'NA' : i.Unit}}</td>
+                                    </tr>
+                                    <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                    <tr>
+                                        <td colspan="2"><b>Tentative Cost of the Project (in ₹) -----</b><br /><input type="image" src="~/Content/images/ul.jpg" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Approximate Cost</b></td>
+                                        <td>: {{t.ApproximateCost}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Own Contribution</b></td>
+                                        <td>: ₹ {{t.OwnContribution}}</td>
+                                    </tr>
+                                    <tr ng-if="t.FinanceType=='Bank'">
+                                        <td><b>Bank Loan</b></td>
+                                        <td>: ₹ {{t.BankLoan}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Total Cost</b></td>
+                                        <td>: ₹ {{t.TotalCost}}</td>
+                                    </tr>
+                                    <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                    <tr>
+                                        <td colspan="2"><b>Documents Attached -----</b><br /><input type="image" src="~/Content/images/ul.jpg" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Land Record / Lease Document</b></td>
+                                        <td>: <input type="checkbox" disabled checked /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Education Certificate</b></td>
+                                        <td>: <input type="checkbox" disabled ng-model="AckeduCert" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Bank Consent Letter</b></td>
+                                        <td>: <input type="checkbox" disabled ng-model="AckBCL" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>CIS Bank Clearance Certificate</b></td>
+                                        <td>: <input type="checkbox" disabled ng-model="AckCISBCC" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Photograph of the Applicant</b></td>
+                                        <td>: <input type="checkbox" disabled checked /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Identity Proof</b></td>
+                                        <td>: <input type="checkbox" disabled checked /></td>
+                                    </tr>
+                                </table>
+                                <br />
+                                <table id="ackTable" style="width: 90%; border: 1px solid black">
+                                    <tr>
+                                        <td colspan="17" style="text-align: left"><b>Proposed Location of CAE with land Particulars -----</b><br /><input type="image" src="~/Content/images/ul.jpg" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Sl. No.</b></td>
+                                        <td><b>Khata No.</b></td>
+                                        <td><b>Plot No.</b></td>
+                                        <td><b>District</b></td>
+                                        <td ng-if="localRU == 'Rural'"><b>Block</b></td>
+                                        <td ng-if="localRU == 'Rural'"><b>GP</b></td>
+                                        <td ng-if="localRU == 'Urban'"><b>Tehsil</b></td>
+                                        <td ng-if="localRU == 'Urban'"><b>RI Circle</b></td>
+                                        <td><b>Village</b></td>
+                                        <td><b>Tenant Name</b></td>
+                                        <td><b>Kisam</b></td>
+                                        <td><b>Area In Hectare</b></td>
+                                        <td><b>Area In Acre</b></td>
+                                        <td><b>Area of Execution</b></td>
+                                        <td><b>Unit of Execution Area</b></td>
+                                        <td><b>Relationship</b></td>
+                                        <td><b>Locality</b></td>
+                                    </tr>
+                                    <tr ng-repeat="i in landRecord">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{i.KhataNo}}</td>
+                                        <td>{{i.PlotNo}}</td>
+                                        <td>{{i.DistName}}</td>
+                                        <td ng-if="i.Locality == 'Rural'">{{i.BlockName}}</td>
+                                        <td ng-if="i.Locality == 'Rural'">{{i.GPName}}</td>
+                                        <td ng-if="i.Locality == 'Urban'">{{i.TehsilName}}</td>
+                                        <td ng-if="i.Locality == 'Urban'">{{i.RICircleName}}</td>
+                                        <td>{{i.VillageName}}</td>
+                                        <td>{{i.TenantName}}</td>
+                                        <td>{{i.Kisam == null ? 'NA' : i.Kisam}}</td>
+                                        <td>{{i.AreaInHectare}}</td>
+                                        <td>{{i.AreaInAcre}}</td>
+                                        <td>{{i.ExecArea}}</td>
+                                        <td>{{i.ExecUnit}}</td>
+                                        <td>{{i.Relationship}}</td>
+                                        <td>{{i.Locality}}</td>
+                                    </tr>
+                                </table>
+                                <br />
+                                <table style="width: 90%">
+                                    <tr>
+                                        <td colspan="1"><b>Signature of the Applicant -----</b><br /><input type="image" src="~/Content/images/ul.jpg" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center"><img id="photoSignature" style="height: 100px; width: 200px; border: 1px solid black" /></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </center>
+                </div>
+                <div class="modal-footer">
+                    <div class="row text-left col-md-9 col-sm-9 col-xs-12">
+                        <div class="row col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-4 col-sm-4 col-sm-12">
+                                <div class="col-md-10 col-sm-10 col-xs-12"><b>Preferential Treatment Certificate</b></div>
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    <a href="#" ng-show="t.EducationalCertificate != ''" ng-click="viewPTCCGAAD('CGCertificate')"><input type="image" src="~/Content/images/binocular-solid.png" style="width: 20px; height: 20px" /></a>
+                                    <b ng-show="t.EducationalCertificate == ''" style="color: red">NA</b>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-sm-12">
+                                <div class="col-md-10 col-sm-10 col-xs-12"><b>Bank Consent Letter</b></div>
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    <a href="#" ng-show="t.BankConsentLeter != ''" ng-click="viewBankCL('BankConsent')"><input type="image" src="~/Content/images/binocular-solid.png" style="width: 20px; height: 20px" /></a>
+                                    <b ng-show="t.BankConsentLeter == ''" style="color: red">NA</b>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-sm-12">
+                                <div class="col-md-10 col-sm-10 col-xs-12"><b>CIS Bank Clearance Certificate</b></div>
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    <a href="#" ng-show="t.CISBankConsentLeter != ''" ng-click="viewCISBankCC('BankDocument')"><input type="image" src="~/Content/images/binocular-solid.png" style="width: 20px; height: 20px" /></a>
+                                    <b ng-show="t.CISBankConsentLeter == ''" style="color: red">NA</b>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-4 col-sm-4 col-sm-12">
+                                <div class="col-md-10 col-sm-10 col-xs-12"><b>1st Land Document</b></div>
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    <a href="#" ng-click="viewDocumentFile('LandPdf1')"><input type="image" src="~/Content/images/binocular-solid.png" style="width: 20px; height: 20px" /></a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-sm-12">
+                                <div class="col-md-10 col-sm-10 col-xs-12"><b>2nd Land Document</b></div>
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    <a href="#" ng-show="result.pdffile2 != null" ng-click="viewDocumentFile('LandPdf2')"><input type="image" src="~/Content/images/binocular-solid.png" style="width: 20px; height: 20px" /></a>
+                                    <b ng-show="result.pdffile2 == null" style="color: red">NA</b>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-sm-12">
+                                <div class="col-md-10 col-sm-10 col-xs-12"><b>ID Proof</b></div>
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    <a href="#" ng-click="viewIDProof('IdentityProof')"><input type="image" src="~/Content/images/binocular-solid.png" style="width: 20px; height: 20px" /></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-md-3 col-sm-3 col-xs-12" style="margin: 10px -10px">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="print('printSection4')">Print Registration</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div modal="showModal1" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+                    <h3 class="modal-title text-center">View & Print DPR</h3>
+                </div>
+                <div class="modal-body">
+                    <div id="printSection1" class="text-center">
+                        <center>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td style="width: 120px; padding: 10px"><img src="../Content/images/govtlogo.jpg" /></td>
+                                    <td style="text-align: center"><h3>Department of Agriculture and Farmers' Empowerment</h3></td>
+                                    <td style="width: 120px; padding: 10px"><img style="height: 80px; width: 86px" src="~/Content/images/ApicolLOGO.jpg" /></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center" colspan="3"><h3>DPR</h3></td>
+                                </tr>
+                            </table>
+                            <h3>Beneficiary Details</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 50%"><b>Reference No</b></td>
+                                    <td style="width: 50%">{{referenceNo}}</td>
+                                </tr>
+                            </table>
+                            <h3>Land</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Land Development</b></td>
+                                    <td style="width: 25%">₹ {{z.Development}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Fencing <small>(Barbed Wire / Green Fencing)</small></b></td>
+                                    <td style="width: 25%">₹ {{z.Fencing}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.LandTotal}}</td>
+                                </tr>
+                            </table>
+                            <h3>Civil Construction <small>(Exclusively used for the Project)</small></h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Building</b></td>
+                                    <td style="width: 25%">₹ {{z.Building}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Shed</b></td>
+                                    <td style="width: 25%">₹ {{z.Shed}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Office cum Store</b></td>
+                                    <td style="width: 25%">₹ {{z.OfficeCumStore}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Godown</b></td>
+                                    <td style="width: 25%">₹ {{z.Godown}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Plant Area</b></td>
+                                    <td style="width: 25%">₹ {{z.PlantArea}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Other Necessary Constructions</b></td>
+                                    <td style="width: 25%">₹ {{z.OtherNecessaryConstruction}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.CivilConstructionTotal}}</td>
+                                </tr>
+                            </table>
+                            <h3>Water Supply</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Bore Well / Tube Well / Dug Well / River Lift</b></td>
+                                    <td style="width: 25%">₹ {{z.WellOrRiver}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Pump & Pipeline</b></td>
+                                    <td style="width: 25%">₹ {{z.PumpPipeLine}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Tank / Overhead Tank</b></td>
+                                    <td style="width: 25%">₹ {{z.Tank}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sprinkler / Fogger</b></td>
+                                    <td style="width: 25%">₹ {{z.SprinklerFogger}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.WaterSupplyTotal}}</td>
+                                </tr>
+                            </table>
+                            <h3>Electrification</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Installation & Fitting</b></td>
+                                    <td style="width: 25%">₹ {{z.InstallationFitting}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Transformer</b></td>
+                                    <td style="width: 25%">₹ {{z.Transformer}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>DG Set</b></td>
+                                    <td style="width: 25%">₹ {{z.DGSet}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.ElectrificationTotal}}</td>
+                                </tr>
+                            </table>
+                            <h3>Plant & Machinery</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Equipment & Machinery <small>(including Transportation, Tax, & Insurance)</small></b></td>
+                                    <td style="width: 25%">₹ {{z.Equipment}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Manual / Motor Operated Equipment <small>(eg. Poultry Cages / Brooding & Growing Equipments / Milking Machine / Chaff Cutter / Refrigeration / Preservation Unit / Fisheries Equipments, etc)</small></b></td>
+                                    <td style="width: 25%">₹ {{z.ManualOrMotor}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.PlantMachineryTotal}}</td>
+                                </tr>
+                            </table>
+                            <h3>Animal & Plant Cost</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td colspan="2">Livestocks :--- <small>(including Transportation, Tax, & Insurance)</small></td>
+                                </tr>
+                                <tr>
+                                    <td ng-if="z.LivestockType != null" style="width: 75%"><b>{{z.LivestockType}}</b></td>
+                                    <td ng-if="z.LivestockType == null" style="width: 75%"><b>NA</b></td>
+                                    <td ng-if="z.Livestock != null" style="width: 25%">₹ {{z.Livestock}}</td>
+                                    <td ng-if="z.Livestock == null" style="width: 25%">NA</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Poultry Layer & Breeder Birds <small>(Broiler not Included)</small></b></td>
+                                    <td style="width: 25%">₹ {{z.PoultryBreeder}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Brood Fish</b></td>
+                                    <td style="width: 25%">₹ {{z.BroodFish}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Plants</b></td>
+                                    <td style="width: 25%">₹ {{z.Plant}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.AnimalPlantTotal}}</td>
+                                </tr>
+                            </table>
+                            <h3>Miscellaneous</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td colspan="2">Insurance Premium of Assets :---</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>i. Fixed Assets</b></td>
+                                    <td style="width: 25%">₹ {{z.FixedAsset}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>ii. Livestocks</b></td>
+                                    <td style="width: 25%">₹ {{z.MLivestock}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>iii. Birds</b></td>
+                                    <td style="width: 25%">₹ {{z.Bird}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Perennial Fodder Cultivation</b></td>
+                                    <td style="width: 25%">₹ {{z.Cultivation}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.MiscellaneousTotal}}</td>
+                                </tr>
+                            </table>
+                            <h3>Total Capital Investment Cost</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Total Capital Investment Cost <small>(A. Land - G. Miscellaneous)</small></b></td>
+                                    <td style="width: 25%">₹ {{z.TotalCapitalInvestmentCost}}</td>
+                                </tr>
+                            </table>
+                            <h3>Recurring Expenditure upto trial Production (not Eligible for CIS)</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Raw Material (Food, Seeds, Medicines, Fertilizers, Chemicals, etc)</b></td>
+                                    <td style="width: 25%">₹ {{z.RawMaterial}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Salary / labour</b></td>
+                                    <td style="width: 25%">₹ {{z.Salary}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Reparing & Maintainence, etc</b></td>
+                                    <td style="width: 25%">₹ {{z.Maintenance}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.RecurringExpenditureTotal}}</td>
+                                </tr>
+                            </table>
+                            <h3>Total Project Cost</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Total Project Cost <small>(1. Capital Investment + 2. Recurring Expenditure)</small></b></td>
+                                    <td style="width: 25%">₹ {{z.TotalProjectCost}}</td>
+                                </tr>
+                            </table>
+                            <h3>Means of Finance</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 50%"><b>Own Investment</b></td>
+                                    <td style="width: 25%">₹ {{z.OwnInvestment}}</td>
+                                    <td style="width: 25%">Remark: {{z.OwnInvestmentRemark == null ? "NA" : z.OwnInvestmentRemark}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%"><b>Term Loan</b></td>
+                                    <td style="width: 25%">₹ {{z.TermLoan}}</td>
+                                    <td style="width: 25%">Remark: {{z.TermLoanRemark == null ? "NA" : z.TermLoanRemark}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%"><b>Working Capital Loan</b></td>
+                                    <td style="width: 25%">₹ {{z.WorkingCapitalLoan}}</td>
+                                    <td style="width: 25%">Remark: {{z.WorkingCapitalLoanRemark == null ? "NA" : z.WorkingCapitalLoanRemark}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%"><b>Any Other Source</b></td>
+                                    <td style="width: 25%">₹ {{z.OtherSource}}</td>
+                                    <td style="width: 25%">Remark: {{z.OtherSourceRemark == null ? "NA" : z.OtherSourceRemark}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%"><b>Total Finance</b></td>
+                                    <td style="width: 25%">₹ {{z.TotalAmount}}</td>
+                                    <td style="width: 25%"></td>
+                                </tr>
+                            </table>
+                            <h3>Profitability Projection</h3><hr />
+                            <table style="width: 87.5%; text-align: center" class="table table-striped table-bordered">
+                                <tr style="font-size: smaller">
+                                    <td><b>Serial No.</b></td>
+                                    <td><b>Year</b></td>
+                                    <td><b>Gross Revenue / Income ( ₹ )</b></td>
+                                    <td><b>Total Expenditure ( ₹ )</b></td>
+                                    <td><b>Gross Profit <small>(PBDIT)</small> ( ₹ )</b></td>
+                                    <td><b>Net Profit ( ₹ )</b></td>
+                                </tr>
+                                <tr ng-repeat="i in profitabilityProjectionDetails">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{i.Year}}</td>
+                                    <td>{{i.GrossRevenue}}</td>
+                                    <td>{{i.TotalExpenditure}}</td>
+                                    <td>{{i.GrossProfit}}</td>
+                                    <td>{{i.NetProfit}}</td>
+                                </tr>
+                            </table>
+                            <h3>Cash Flow Statement</h3><hr />
+                            <table style="width: 87.5%; text-align: center" class="table table-striped table-bordered">
+                                <tr style="font-size: smaller">
+                                    <td><b>Serial No.</b></td>
+                                    <td><b>Year</b></td>
+                                    <td><b>Total Cash Inflow ( ₹ )</b></td>
+                                    <td><b>Total Cash Outflow ( ₹ )</b></td>
+                                    <td><b>Net Cash Inflow ( ₹ )</b></td>
+                                </tr>
+                                <tr ng-repeat="i in cashFlowStatements">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{i.Year}}</td>
+                                    <td>{{i.TotalCashInflow}}</td>
+                                    <td>{{i.TotalCashOutflow}}</td>
+                                    <td>{{i.NetCashInflow}}</td>
+                                </tr>
+                            </table>
+                            <h3>Key Business Matrix</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Break Even Point</b></td>
+                                    <td style="width: 25%">{{z.BreakEvenPoint}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>DSCR</b></td>
+                                    <td style="width: 25%">{{z.DSCR}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>IRR</b></td>
+                                    <td style="width: 25%">{{z.IRR}}</td>
+                                </tr>
+                            </table>
+                        </center>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="print('printSection1')">Print DPR</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div modal="showFeasibilityReport" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+                    <h3 class="modal-title text-center">View & Print Feasibility Report</h3>
+                </div>
+                <div class="modal-body" id="printSection">
+                    <table style="width: 100%">
+                        <tr>
+                            <td style="width: 120px; padding: 10px"><img src="../Content/images/govtlogo.jpg" /></td>
+                            <td style="text-align: center"><h3>Department of Agriculture and Farmers' Empowerment</h3></td>
+                            <td style="width: 120px; padding: 10px"><img style="height: 80px; width: 86px" src="~/Content/images/ApicolLOGO.jpg" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="text-align: center"><h3>Feasibility Report</h3></td>
+                        </tr>
+                    </table>
+                    <br />
+                    <div class="table table-responsive">
+                        <table style="width: 100%" class="table table-striped">
+                            <tr>
+                                <td style="width: 50%"><b>Reference No</b></td>
+                                <td style="width: 50%">{{m.ReferenceNo}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Previous Experience</b></td>
+                                <td style="width: 50%">{{m.PreviousExperience}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Road Connectivity</b></td>
+                                <td style="width: 50%">{{m.RoadConnectivity}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Distance from nearby Village</b></td>
+                                <td style="width: 50%">{{m.DistanceFromVillage}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Electrification</b></td>
+                                <td style="width: 50%">{{m.ElectrificationStatus}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Pollution Control Clearance</b></td>
+                                <td style="width: 50%">{{m.PollutionControlClearanceStatus}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Self Finance</b></td>
+                                <td style="width: 50%">{{m.SelfFinance}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Uncensored Loan</b></td>
+                                <td style="width: 50%">{{m.UncensoredLoan}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Margin Component</b></td>
+                                <td style="width: 50%">{{m.MarginComponent}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Bank Consent Letter</b></td>
+                                <td style="width: 50%">{{m.BankConsentLetterStatus}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Photo</b></td>
+                                <td style="width: 50%"><img id="landpic" style="width: 250px; height: 150px" /></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Latitude</b></td>
+                                <td style="width: 50%">{{m.Latitude}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Longitude</b></td>
+                                <td style="width: 50%">{{m.Longitude}}</td>
+                            </tr>
+                        </table>
+                    </div><br />
+                    <p style="text-align: justify; font-size: 15px">Verified the above mentioned information submitted by the entrepreneur by personally visiting the project site. I certify that the <b>{{m.ProjectName}}</b> with <b>{{m.Capacity}} {{m.CapacityUnit}}</b> capacity and a project cost of <b>₹ {{m.TotalProjectCost}}</b> is technically feasible and economically viable.</p><br /><br /><br />
+                    <div style="text-align: right">
+                        <img id="labelBloSign" style="height: 50px; width: 200px; border: 1px solid black" /><br />
+                        <label>{{lblDesignation}}, {{m.BlockName | capitalize}}</label><br />
+                        <label>{{labelbloName}}</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="print('printSection')">Print Feasibility Report</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="BackToBLOModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" id="btnCloseBM">&times;</button>
+                    <h4 class="modal-title">Back to BLO</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label>Do you want to revert the record back to BLO?</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div>
+                        <input type="button" value="Yes" class="btn btn-success" ng-click="RevertToBLO()" />
+                        <input type="button" value="No" class="btn btn-warning" data-dismiss="modal" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="BackToDDABLOModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" id="btnCloseBDM">&times;</button>
+                    <h4 class="modal-title">Back to BLO</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label>Do you want to revert the record back to BLO?</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div>
+                        <input type="button" value="Yes" class="btn btn-success" ng-click="RevertDDAToBLO()" />
+                        <input type="button" value="No" class="btn btn-warning" data-dismiss="modal" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ApproveModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" id="btnCloseAppM">&times;</button>
+                    <h4 class="modal-title">Recommended Record</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" ng-show="approveDetail">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label>Do you want to mark the record as recommended?</label>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div ng-show="dnoDetail">
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label>Name</label>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label>{{lbldnoName}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label>Signature</label>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <img id="dnoSign" style="height: 100px; width: 175px; border: 1px solid black" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="modal-footer">
+                    <div ng-show="approveDetail">
+                        <input type="button" value="Yes" class="btn btn-success" ng-click="approveM()" />
+                        <input type="button" value="No" class="btn btn-warning" data-dismiss="modal" />
+                    </div>
+                    <div ng-show="dnoDetail">
+                        <input type="button" value="Submit" class="btn btn-info" ng-click="submitDNORecord()" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ApproveDDAModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" id="btnCloseAppDM">&times;</button>
+                    <h4 class="modal-title">Recommended Record</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" ng-show="approveDetail">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label>Do you want to mark the record as recommended?</label>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div ng-show="dnoDetail">
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label>Name</label>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label>{{lbldnoName}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label>Signature</label>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <img id="dnoISign" style="height: 100px; width: 175px; border: 1px solid black" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="modal-footer">
+                    <div ng-show="approveDetail">
+                        <input type="button" value="Yes" class="btn btn-success" ng-click="approveM()" />
+                        <input type="button" value="No" class="btn btn-warning" data-dismiss="modal" />
+                    </div>
+                    <div ng-show="dnoDetail">
+                        <input type="button" value="Submit" class="btn btn-info" ng-click="submitDDARecord()" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="RejectModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" id="btnCloseRejM">&times;</button>
+                    <h4 class="modal-title">Not Recommended Record</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" ng-show="rejectDetail">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label>Do you want to mark the record as not recommended?</label>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div ng-show="rejectR">
+                        <label>Not Recommended Reason</label>
+                        <div class="row form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                    <label>1.</label>
+                                </div>
+                                <div class="col-md-11 col-sm-11 col-xs-12">
+                                    <textarea rows="2" class="form-control" placeholder="Enter Not Feasible Reason" ng-model="txtReasonOne" ng-trim="false" maxlength="100"></textarea>
+                                </div>
+                                <p class="text-right">{{100 - txtReasonOne.length + ' characters remaining'}}</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                    <label>2.</label>
+                                </div>
+                                <div class="col-md-11 col-sm-11 col-xs-12">
+                                    <textarea rows="2" class="form-control" placeholder="Enter Not Feasible Reason" ng-model="txtReasonTwo" ng-trim="false" maxlength="100"></textarea>
+                                </div>
+                                <p class="text-right">{{100 - txtReasonTwo.length + ' characters remaining'}}</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                    <label>3.</label>
+                                </div>
+                                <div class="col-md-11 col-sm-11 col-xs-12">
+                                    <textarea rows="2" class="form-control" placeholder="Enter Not Feasible Reason" ng-model="txtReasonThree" ng-trim="false" maxlength="100"></textarea>
+                                </div>
+                                <p class="text-right">{{100 - txtReasonThree.length + ' characters remaining'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="dnoRDetail">
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12 text-center">
+                                    <label style="padding-top: 40px">Name : {{lblRdnoName}}</label>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12 text-left">
+                                    <img id="dnoRISign" style="height: 100px; width: 175px; border: 1px solid black" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="modal-footer">
+                    <div ng-show="rejectDetail">
+                        <input type="button" value="Yes" class="btn btn-success" ng-click="rejectM()" />
+                        <input type="button" value="No" class="btn btn-warning" data-dismiss="modal" />
+                    </div>
+                    <div ng-show="dnoRDetail">
+                        <input type="button" value="Submit" class="btn btn-info" ng-click="notsubmitDNORecord()" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="RejectDDAModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" id="btnCloseRejDM">&times;</button>
+                    <h4 class="modal-title">Not Recommended Record</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" ng-show="rejectDetail">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label>Do you want to mark the record as not recommended?</label>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div ng-show="rejectR">
+                        <label>Not Recommended Reason</label>
+                        <div class="row form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                    <label>1.</label>
+                                </div>
+                                <div class="col-md-11 col-sm-11 col-xs-12">
+                                    <textarea rows="2" class="form-control" placeholder="Enter Not Feasible Reason" ng-model="txtDReasonOne" ng-trim="false" maxlength="100"></textarea>
+                                </div>
+                                <p class="text-right">{{100 - txtDReasonOne.length + ' characters remaining'}}</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                    <label>2.</label>
+                                </div>
+                                <div class="col-md-11 col-sm-11 col-xs-12">
+                                    <textarea rows="2" class="form-control" placeholder="Enter Not Feasible Reason" ng-model="txtDReasonTwo" ng-trim="false" maxlength="100"></textarea>
+                                </div>
+                                <p class="text-right">{{100 - txtDReasonTwo.length + ' characters remaining'}}</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                    <label>3.</label>
+                                </div>
+                                <div class="col-md-11 col-sm-11 col-xs-12">
+                                    <textarea rows="2" class="form-control" placeholder="Enter Not Feasible Reason" ng-model="txtDReasonThree" ng-trim="false" maxlength="100"></textarea>
+                                </div>
+                                <p class="text-right">{{100 - txtDReasonThree.length + ' characters remaining'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="dnoRDetail">
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12 text-center">
+                                    <label style="padding-top: 40px">Name : {{lblRdnoName}}</label>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12 text-left">
+                                    <img id="dnoRSign" style="height: 100px; width: 175px; border: 1px solid black" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="modal-footer">
+                    <div ng-show="rejectDetail">
+                        <input type="button" value="Yes" class="btn btn-success" ng-click="rejectM()" />
+                        <input type="button" value="No" class="btn btn-warning" data-dismiss="modal" />
+                    </div>
+                    <div ng-show="dnoRDetail">
+                        <input type="button" value="Submit" class="btn btn-info" ng-click="notsubmitDDARecord()" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="NotFeasibleReason" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center">Not Feasible Reason</h4>
+                </div>
+                <div class="modal-body">
+                    <p ng-show="lblReason1 != ''" style="font-size: 15px">1. {{lblReason1}}</p><br />
+                    <p ng-show="lblReason2 != ''" style="font-size: 15px">2. {{lblReason2}}</p><br />
+                    <p ng-show="lblReason3 != ''" style="font-size: 15px">3. {{lblReason3}}</p><br />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

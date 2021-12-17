@@ -1,0 +1,209 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Free HTML5 Template by FREEHTML5.CO" />
+    <meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
+    <meta name="author" content="FREEHTML5.CO" />
+    <meta property="og:title" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:site_name" content="" />
+    <meta property="og:description" content="" />
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:image" content="" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:card" content="" />
+    <title>Mukhyamantri Krushi Udyoga Yojana</title>
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css' />
+    <link href="~/Content/HomeTheme/css/animate.css" rel="stylesheet" />
+    <link href="~/Content/HomeTheme/css/icomoon.css" rel="stylesheet" />
+    <link href="~/Content/HomeTheme/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/HomeTheme/css/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/Content/HomeTheme/css/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="~/Content/HomeTheme/css/style.css" rel="stylesheet" />
+    <link href="~/Content/HomeTheme/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/HomeTheme/Slide/js-image-slider.css" rel="stylesheet" />
+    <script type="text/javascript">window.onload = window.history.forward(0); function noback() { window.history.forward(); };</script>
+</head>
+<body oncontextmenu="return false;" onload="noback();" onpageshow="if (event.persisted) noback();" unload="">
+    <div class="box-wrap">
+        <header role="banner" id="fh5co-header">
+            <div class="container">
+                <nav class="navbar navbar-default">
+                    <div class="row" style="margin-right: -100px; margin-left: -35px">
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <div class="fh5co-navbar-brand">
+                                <a class="fh5co-logo" href="@Url.Action("Index", "Home")">
+                                    <img style="margin-left: -75px" src="~/Content/images/LOGO.png" />
+                                    Mukhyamantri Krushi Udyoga Yojana
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-7 col-sm-7 col-xs-7 main-nav">
+                            <ul class="nav text-left">
+                                <li class="active"><a href="@Url.Action("Index", "Home")"><span>Home</span></a></li>
+                                <li><a href="#registration"><span>Registration</span></a></li>
+                                <li><a href="#dpr"><span>DPR</span></a></li>
+                                <li><a href="#payment"><span>Payment</span></a></li>
+                                <li><a href="@Url.Action("Login", "Account")">Login</a></li>
+                                <li><a href="@Url.Action("BCompletion", "BeneficiaryCompletion")"><span>Beneficiary Completion</span></a></li>
+                                <li><a href="@Url.Action("GenGoAhead", "GoAhead")"><span>Generate Go-Ahead</span></a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#myModal">Contact Us</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-1 text-right">
+                            <div class="fh5co-navbar-brand">
+                                <a class="fh5co-logo">
+                                    <img style="height: 80px; width: 86px" src="~/Content/images/ApicolLOGO.jpg" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div id="sliderFrame" style="margin-top: 10px">
+                <div id="slider">
+                    <img src="~/Content/images/images.jpg" alt="Agriculture" style="color: #ffd800; font-weight: bold; text-align: center" />
+                    <img src="~/Content/images/image1.jpg" alt="Hoticulture" />
+                    <img src="~/Content/images/fish.jpg" alt="Fishery" />
+                    <img src="~/Content/images/Boergoats1.jpg" alt="Animal Husbandry" />
+                </div>
+                <div class="group1-Wrapper">
+                    <a onclick="imageSlider.previous()" class="group1-Prev"></a>
+                    <a onclick="imageSlider.next()" class="group1-Next"></a>
+                </div>
+                <div style="text-align: center; padding: 20px; z-index: 20">
+                    <a onclick="imageSlider.previous()" class="group2-Prev"></a>
+                    <a id='auto' onclick="switchAutoAdvance()"></a>
+                    <a onclick="imageSlider.next()" class="group2-Next"></a>
+                </div>
+            </div>
+        </header>
+        <div id="fh5co-media-section" style="padding-bottom: 0px">
+            <div class="container">
+                <div class="row animate-box">
+                    <div class="col-md-8 col-md-offset-2 text-center heading-section">
+                        <h3 style="margin-top: 10px">Explore Odisha’s Agriculture Potential...</h3>
+                        <p>APICOL invites investors to establish Commercial Agri Enterprise (CAE) in Agriculture, Horticulture, Fisheries, ARD Sector, Food Processing and avail huge incentive up to Rs.50.00 lakh under State Agriculture Policy – 2013.</p>
+                    </div>
+                </div>
+            </div>
+            <div id="fh5co-section" class="fh5co-grey-section">
+                <div class="container">
+                    <div class="row">
+                        <div id="registration" class="col-md-4 animate-box">
+                            <div class="fh5co-inner">
+                                <i class="fa fa-user"></i>
+                                <div class="holder-section">
+                                    <a href="@Url.Action("Prerequisites", "Prerequisites")"><h3>Registration</h3></a>
+                                    <p>Visit our website at www.apicol.nic.in and register your details related to your chosen enterprise from the enlisted CAE list in your application form .</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="dpr" class="col-md-4 animate-box">
+                            <div class="fh5co-inner">
+                                <i class="fa fa-file"></i>
+                                <div class="holder-section">
+                                    <a href="@Url.Action("Prerequisites", "Prerequisites")"><h3>DPR</h3></a>
+                                    <p>Upload the specific details related to the Capital Investment of your proposed enterprise in the DPR format of the application form.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="payment" class="col-md-4 animate-box">
+                            <div class="fh5co-inner">
+                                <i class="fa fa-inr"></i>
+                                <div class="holder-section">
+                                    <a href="http://164.100.140.92/apicol/Home/PrePayment"><h3>Payment</h3></a>
+                                    <p>Kindly deposit the refundable security   amount of Rs.10,000/- in favour of APICOL CAE security deposit vide  account No.150005001418 of ICICI Bank Limited along with filled in application form.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Contact Below</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <i class="fa fa-phone fa-fw"></i>Contact By Phone
+                            <span class="pull-right text-muted small">9876543210</span>
+                        </div>
+                        <div>
+                            <i class="fa fa-envelope fa-fw"></i>Contact By E-Mail
+                            <span class="pull-right text-muted small">contact@gmail.com</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer id="footer" class="text-center">
+            <a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TO TOP">
+                <span id="back-to-top" class="fa fa-chevron-up"></span>
+            </a>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                        <p>Designed and developed by National Informatics Centre, Odisha</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="~/Content/HomeTheme/js/jquery.min.js"></script>
+    <script src="~/Content/HomeTheme/js/jquery.easing.1.3.js"></script>
+    <script src="~/Content/HomeTheme/js/bootstrap.min.js"></script>
+    <script src="~/Content/HomeTheme/js/owl.carousel.min.js"></script>
+    <script src="~/Content/HomeTheme/js/jquery.waypoints.min.js"></script>
+    <script src="~/Content/HomeTheme/js/jquery.stellar.min.js"></script>
+    <script src="~/Content/HomeTheme/js/js-image-slider.js"></script>
+    <script src="~/Content/HomeTheme/js/main.js"></script>
+    <script src="~/Content/HomeTheme/js/modernizr-2.6.2.min.js"></script>
+    <script src="~/Content/HomeTheme/js/respond.min.js"></script>
+    <script src="~/Content/HomeTheme/js/js-image-slider.js"></script>
+    <script type="text/javascript">
+        function switchAutoAdvance() {
+            imageSlider.switchAuto();
+            switchPlayPauseClass();
+        }
+        function switchPlayPauseClass() {
+            var auto = document.getElementById('auto');
+            var isAutoPlay = imageSlider.getAuto();
+            auto.className = isAutoPlay ? "group2-Pause" : "group2-Play";
+            auto.title = isAutoPlay ? "Pause" : "Play";
+        }
+        switchPlayPauseClass();
+        if ($('#back-to-top').length) {
+            var scrollTrigger = 100,
+                backToTop = function () {
+                    var scrollTop = $(window).scrollTop();
+                };
+            backToTop();
+            $(window).on('scroll', function () {
+                backToTop();
+            });
+            $('#back-to-top').on('click', function (e) {
+                e.preventDefault();
+                $('html,body').animate({
+                    scrollTop: 0
+                }, 700);
+            });
+        }
+    </script>
+</body>
+</html>

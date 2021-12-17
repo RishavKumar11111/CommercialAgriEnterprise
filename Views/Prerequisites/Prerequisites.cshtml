@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Prerequisites";
+    Layout = "~/Views/Shared/_LayoutPrerequisites.cshtml";
+}
+<div class="right_col" role="main" style="margin-left: 0px">
+    <div class="container">
+        <div class="page-title">
+            <div class="title_left" style="color: darkred; white-space: nowrap">
+                <h3>Agricultural Promotion & Investment Corporation of Odisha Limited (APICOL)</h3>
+                <h3>Mukhyamantri Krushi Udyoga Yojana</h3>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel" style="margin-bottom: 75px">
+                    <div class="x_title">
+                        <h3 style="margin: 0; padding-top: 5px" class="text-danger text-left col-md-3 col-sm-3 col-xs-12">Prerequisites</h3>
+                        <div class="text-center col-md-9 col-sm-9 col-xs-12">
+                            @Html.ActionLink("Registration", "Registration", "Registration", null, new { @class = "btn btn-success", @type = "submit" })
+                            @Html.ActionLink("DPR", "DPR", "DPR", null, new { @class = "btn btn-success", @type = "submit" })
+                            @Html.ActionLink("Payment", "PrePayment", "Payment", null, new { @class = "btn btn-success", @type = "submit", target = "_blank" })
+                            @Html.ActionLink("Back to Home Page", "Index", "Home", null, new { @class = "btn btn-success", @type = "submit" })
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <form class="form-horizontal form-label-left">
+                            <div class="form-group" style="color: black">
+                                <h4><b>Before filling the Registration Form you need to have the scanned copy of following documents which are needed to be uploaded for it's successful submission.</b></h4>
+                                <hr />
+                                <ol>
+                                    <li>Passport size photograph of the Applicant. <span class="text-warning">(Maximum 50KB)</span></li>
+                                    <li>Identity Proof.(Voter ID/Aadhaar No.) <span class="text-warning">(Maximum 400KB)</span></li>
+                                    <li>Signature of the Applicant. <span class="text-warning">(Maximum 50KB)</span></li>
+                                    <li>Land record / Lease document (more than 15 years) (where Khata No. / Plot No. is reflected). <span class="text-warning">(Maximum 950KB)</span></li>
+                                    <li>Bank Consent Letter <span class="text-warning">(Maximum 500KB in .pdf format)</span></li>
+                                </ol>
+                                <h4><b>Step 1 : Registration Guidelines</b></h4>
+                                <hr />
+                                <ol>
+                                    <li>Farmer ID, Aadhaar No. and Mobile No. are mandatory for the <b>Registration</b>.</li>
+                                    <li>All the fields marked with (<b style="color: red">*</b>) are mandatory.</li>
+                                </ol>
+                                <h4><b>Step 2 : DPR Guidelines</b></h4>
+                                <hr />
+                                <ol>
+                                    <li>Only those Applicants who have completed the <b>Registration</b> are eligible to fill <b>DPR</b>.</li>
+                                    <li>Reference No, Farmer ID and Aadhaar No. are mandatory for the <b>DPR</b>.</li>
+                                    <li>All the fields marked with (<b style="color: red">*</b>) are mandatory.</li>
+                                </ol>
+                                <h4><b>Step 3 : Payment Guidelines</b></h4>
+                                <hr />
+                                <ol>
+                                    <li>Only those Applicants who have completed the <b>DPR</b> are eligible for <b>Online Payment</b> of ₹ 10000 as the security amount.</li>
+                                    <li>The security amount of ₹ 10000 is refundable.</li>
+                                </ol>
+                            </div>
+                            <div class="ln_solid"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = angular.module("PreApp", []);
+    app.controller("PreCtrl", function ($scope, $http) { });
+</script>

@@ -1,0 +1,855 @@
+﻿@{
+    ViewBag.Title = "BCompletion";
+    Layout = "~/Views/Shared/_LayoutBeneficiaryCompletion.cshtml";
+}
+@using (Html.BeginForm("BCompletion", "BeneficiaryCompletion", FormMethod.Post, new { id = "FormId" }))
+{
+    @Html.AntiForgeryToken()
+}
+<div data-loading></div>
+<div class="title">
+    <h2 style="text-align: center">Mukhyamantri Krushi Udyoga Yojana</h2>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <h3 style="text-align: center">Beneficiary Completion</h3>
+    </div>
+</div>
+<form role="form" autocomplete="off" name="bcompletionchk" ng-submit="bcompletionchk.$valid" class="form-horizontal well" novalidate ng-show="chkDtls">
+    <div class="form-horizontal form-label-left" ng-style="bcblur">
+        <div class="row container">
+            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                <div class="form-group">
+                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                        Farmer ID
+                        <span style="color: red" class="required">*</span>
+                    </label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="text" name="FarmerID" ng-model="txtFarmerID" placeholder="Enter the Farmer ID" hide-zero alpha-numeric capitalize maxlength="12" class="form-control" required>
+                        <div class="has-error" ng-show="bcompletionchk.$submitted || bcompletionchk.FarmerID.$touched" style="color:orangered">
+                            <span ng-show="bcompletionchk.FarmerID.$error.required">This is a required field</span>
+                            <span ng-show="bcompletionchk.FarmerID.$error.ser">Invalid Farmer ID</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                        Aadhar Card No.
+                        <span style="color: red" class="required">*</span>
+                    </label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="text" name="Aadharno" ng-model="txtAadharnumber" placeholder="Enter the Aadhar Card Number" numbers-only class="form-control" maxlength="12" required>
+                        <div class="has-error" ng-show="bcompletionchk.$submitted || bcompletionchk.Aadharno.$touched" style="color:orangered">
+                            <span ng-show="bcompletionchk.Aadharno.$error.required">This is a required field</span>
+                            <span ng-show="bcompletionchk.Aadharno.$error.ser">Invalid Aadhar number</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-5 col-sm-5 col-xs-12"> </div>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="submit" value="Proceed" class="btn btn-info" ng-click="BeneficiaryDetailEntry()" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+        </div>
+    </div>
+</form>
+<form role="form" autocomplete="off" name="bcompletion" ng-submit="bcompletion.$valid" class="form-horizontal well" novalidate ng-show="BeneficiaryInfoDtls">
+    <div class="form-horizontal form-label-left">
+        <div class="box-header bxt">
+            <h3 class="box-title">General Information</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                <div class="form-group">
+                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                        Go-Ahead Number
+                    </label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        {{lblGoaheadno}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                        Beneficiary Name
+                    </label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        {{lblBeneficiaryName}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                        Father's / Husband's Name
+                    </label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        {{lblFatherName}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                        District
+                    </label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        {{lblDist}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                        Block
+                    </label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        {{lblBlock}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                        GP
+                    </label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        {{lblGP}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                        Village
+                    </label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        {{lblVillage}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                        Project Name
+                    </label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        {{lblprojectnm}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                        Employment created or likely to be created
+                        <span style="color: red" class="required">*</span>
+                    </label>
+                    <div class="radio col-md-3 col-sm-3 col-xs-12">
+                        <label>
+                            <input type="radio" name="IsprevEmpcreation" ng-model="EmploymentCreation" value="Yes" required>
+                            <text>Yes</text>
+                        </label>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <input type="number" class="form-control" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                        Date of Starting the Trial Production/Completion of the project
+                        <span style="color: red" class="required">*</span>
+                    </label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="date" class="form-control" name="txtstartcompletiondt" ng-model="strtorcompletionDT" required />
+                        <div class="has-error" ng-show="bcompletion.$submitted || bcompletion.txtstartcompletiondt.$touched" style="color:orangered">
+                            <span ng-show="bcompletion.txtstartcompletiondt.$error.required">This is a required field</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+        </div>
+        <div class="box-header bxt">
+            <h3 class="box-title">Project Cost Details</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                <div class="form-group">
+                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                        Cost of the Buildings Built after issue of Go-Ahead Letter
+                        <span style="color: red" class="required">*</span>
+                    </label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="text" valid-number hide-zero class="form-control" name="buildingcost" ng-model="txtbuildingCost" maxlength="15" required />
+                        <div class="has-error" ng-show="bcompletion.$submitted || bcompletion.buildingcost.$touched" style="color:orangered">
+                            <span ng-show="bcompletion.buildingcost.$error.required">This is a required field</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                        Cost of Electrification
+                        <span style="color: red" class="required">*</span>
+                    </label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="text" valid-number hide-zero class="form-control" name="electrificationcost" ng-model="txtelectrificationCost" maxlength="15" required />
+                        <div class="has-error" ng-show="bcompletion.$submitted || bcompletion.electrificationcost.$touched" style="color:orangered">
+                            <span ng-show="bcompletion.electrificationcost.$error.required">This is a required field</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                        Cost of Machineries/Farm Machineries
+                        <span style="color: red" class="required">*</span>
+                    </label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="text" valid-number hide-zero class="form-control" name="machinarycost" ng-model="txtmachinaryCost" maxlength="15" required />
+                        <div class="has-error" ng-show="bcompletion.$submitted || bcompletion.machinarycost.$touched" style="color:orangered">
+                            <span ng-show="bcompletion.machinarycost.$error.required">This is a required field</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                        Cost of Infrastructure for Creating Irrigation/Water Supply Source
+                        <span style="color: red" class="required">*</span>
+                    </label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="text" valid-number hide-zero class="form-control" name="infrastructurecost" ng-model="txtinfrastructureCost" maxlength="15" required />
+                        <div class="has-error" ng-show="bcompletion.$submitted || bcompletion.infrastructurecost.$touched" style="color:orangered">
+                            <span ng-show="bcompletion.infrastructurecost.$error.required">This is a required field</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                        Cost of Fencing with Gate
+                        <span style="color: red" class="required">*</span>
+                    </label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="text" valid-number hide-zero class="form-control" name="fencingcost" ng-model="txtfencingCost" maxlength="15" required />
+                        <div class="has-error" ng-show="bcompletion.$submitted || bcompletion.fencingcost.$touched" style="color:orangered">
+                            <span ng-show="bcompletion.fencingcost.$error.required">This is a required field</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                        Cost of Plants/Birds/Animals/Fries/Fingerlings etc.
+                        <span style="color: red" class="required">*</span>
+                    </label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="text" valid-number hide-zero class="form-control" name="plancost" ng-model="txtplantsCost" maxlength="15" required />
+                        <div class="has-error" ng-show="bcompletion.$submitted || bcompletion.plancost.$touched" style="color:orangered">
+                            <span ng-show="bcompletion.plancost.$error.required">This is a required field</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                        Cost of other items if not specified (insurance etc.)
+                    </label>
+                    <div class="col-md-7 col-sm-7 col-xs-12">
+                        <input type="text" valid-number hide-zero class="form-control" name="othercost" ng-model="txtotherCost" maxlength="15" required />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+        </div>
+        <div class="box-header bxt">
+            <h3 class="box-title">Guidelines</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                <div class="form-group" style="text-align: justify">
+                    <ul>
+                        <li>
+                            I/we hereby agree that I/We shall forthwith repay the amount disbursed to me/us with interest prescribed by Government from time to time, if the amount of capital investment subsidy is found to have been disbursed in excess of the amount actually admissible for whatsoever reason.
+                        </li>
+                        <li>
+                            It is hereby further certified that I/We have not either applied for or received any amount by way of Capital Investment Subsidy from any other source.
+                        </li>
+                        <li>
+                            I/We hereby undertake to abide by the terms and conditions as laid down under the Guideline.
+                        </li>
+                        <li>
+                            This to certify that the information furnished above are true to the best of my/our knowledge.
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-group" style="text-align:left">
+                    <div class="col-md-5 col-sm-5 col-xs-12">
+                        <br /><br /><br /><br /><div style="width: 100%; clear: both">
+                            Date: {{lbltodayDate}}
+                        </div>
+                        <div style="width:100%; clear:both;">
+                            <div style="width: 15%; float: left"> Place:</div><div style="float: left; width: 85%"><input type="text" class="form-control" name="beneficiaryplace" ng-model="txtPlace" required /></div>
+                            <div class="has-error" ng-show="bcompletion.$submitted || bcompletion.beneficiaryplace.$touched" style="color:orangered">
+                                <span ng-show="bcompletion.beneficiaryplace.$error.required">This is a required field</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                    <div class="col-md-5 col-sm-5 col-xs-12 text-right" style="padding: 0">
+                        <img id="photoSignature" data-ng-src="data:image/jpg;base64,{{Signaturepic}}" style="height: 60px; width: 100%" /><br />
+                        <div class="text-left">
+                            Yours faithfully,<br />
+                            Signature of the Applicant in full,<br />
+                            for and on behalf of Enterprise
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12" style="text-align: right">
+                        <input type="submit" value="submit" class="btn btn-info" ng-click="InsertRecord()" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+        </div>
+    </div>
+</form>
+<div modal="ShowBeneficiaryCompletion">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                APPLICATION FOR SANCTION/DISBURSEMENT OF CAPITAL INVESTMENT SUBSIDY FOR AGRO-ENTERPRISES
+                <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" id="printSection" style="color: black">
+                <center>
+                    <table style="width: 100%">
+                        <tr>
+                            <td style="width: 120px; padding: 10px"><img src="../Content/images/govtlogo.jpg" /></td>
+                            <td style="text-align: center">Department of Agriculture and Farmers' Empowerment</td>
+                            <td style="width: 120px; padding: 10px"><img style="height: 80px; width: 86px" src="~/Content/images/ApicolLOGO.jpg" /></td>
+                        </tr>
+                    </table>
+                    <div class="row">
+                        <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <div class="form-group">
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-left">
+                                    From
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-left">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        Sri/Smt
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <b>{{lblFarmername}}</b>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-left">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        Son/Daughter/Wife of
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <b>{{lblrelationwithfarmer}}</b>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-left">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        At/Village/Town
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <b>{{lblVillagenm}}</b>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-left">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        P.O/Block
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <b>{{lblblocknm}}</b>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-left">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        District
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <b>{{lblDistnm}}</b>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-left form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        Go-Ahead Issue Date
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <b>{{lblGoaheadDOI}}</b>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-left form-group">
+                                    To
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-left form-group" style="padding-left: 50px">
+                                    The District Nodal Officer
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-left form-group" style="padding-left: 50px">
+                                    At <b>{{lblDistrictnm}}</b>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-left form-group" style="padding-left: 50px">
+                                    Sub: Application for Capital Investment Subsidy
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-left form-group">
+                                    Sir,
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 text-left text-justify form-group">
+                                    In accodance with the State Agriculture Policy - 2013, application is herewith submitted for grant/sanction of subsidy of Rs. <b>{{lblsubsidycost}}</b> @*(Rupees: <b>{{lblrupeesinwords}}</b>)*@ only on investment in fixed capital for the Enterprise catagorized/detailed below. The subsidy amount may be credited in my account (for self finance cases)/my loan account (for bank finance cases) through RGTS as follows.
+                                </div>
+                            </div>
+                            <div class="form-group text-left ">
+                                <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        Account Holder Name
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <b>{{lblAccountholdernm}}</b>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        Name of the Bank
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <b>{{lblbanknm}}</b>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        Name of the Branch
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <b>{{lblbranchnm}}</b>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        IFSC Code
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <b>{{lblIfsccode}}</b>
+                                    </div>
+                                </div><br />
+                                <h4>General Information</h4>
+                                <hr style="border-bottom: 2px solid black" />
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        Go-Ahead Number
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12" style="white-space:nowrap">
+                                        <b>{{lblGoAheadno}}</b>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        Employment created or likely to be Created
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <b>{{lblEmployment}}</b>
+                                    </div>
+                                </div>
+                                <h4>Project Cost Details</h4>
+                                <hr style="border-bottom: 2px solid black" />
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        Building Cost
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <b>{{lblbuildingcost}}</b>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        Electrification Cost
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <b>{{lblelectricost}}</b>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        Machineries/Farm Machineries Cost
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <b>{{lblmachinarycost}}</b>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        Infrastructure for Creating Irrigation/Water Supply Source Cost
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <b>{{lblinfacost}}</b>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        Fencing Cost
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <b>{{lblfencingcost}}</b>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        Plants/Birds/Animals/Fries/Fingerlings Cost
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <b>{{lblplantcost}}</b>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        Other Items Cost
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <b>{{lblothercost}}</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                    </div>
+                </center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary icon-printer" data-dismiss="modal" ng-click="print('printSection')">Print</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = angular.module("BcompletionApp", ['ui.bootstrap.modal', 'ngMaterial']);
+
+    app.directive('numbersOnly', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                ngModelCtrl.$parsers.push(function (val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace(/[^0-9]/g, '');
+                    var negativeCheck = clean.split('-');
+                    if (!angular.isUndefined(negativeCheck[1])) {
+                        negativeCheck[1] = negativeCheck[1].slice(0, negativeCheck[1].length);
+                        clean = negativeCheck[0] + '-' + negativeCheck[1];
+                        if (negativeCheck[0].length > 0) {
+                            clean = negativeCheck[0];
+                        }
+                    }
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
+                element.bind('keypress', function (event) {
+                    if (event.keyCode === 32) {
+                        event.preventDefault();
+                    }
+                });
+            }
+        };
+    });
+
+    app.directive('alphaNumeric', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                ngModelCtrl.$parsers.push(function (val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace(/[^a-zA-Z0-9\/]/g, '');
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
+                element.bind('keypress', function (event) {
+                    if (event.keyCode === 32) {
+                        event.preventDefault();
+                    }
+                });
+            }
+        };
+    });
+
+    app.directive('capitalize', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                var capitalize = function (inputValue) {
+                    if (inputValue == undefined) inputValue = '';
+                    var capitalized = inputValue.toUpperCase();
+                    if (capitalized !== inputValue) {
+                        ngModelCtrl.$setViewValue(capitalized);
+                        ngModelCtrl.$render();
+                    }
+                    return capitalized;
+                }
+                ngModelCtrl.$parsers.push(capitalize);
+                capitalize(scope[attrs.ngModel]);
+            }
+        };
+    });
+
+    app.directive('validNumber', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                ngModelCtrl.$parsers.push(function (val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace(/[^0-9\.]/g, '');
+                    var negativeCheck = clean.split('-');
+                    var decimalCheck = clean.split('.');
+                    if (!angular.isUndefined(negativeCheck[1])) {
+                        negativeCheck[1] = negativeCheck[1].slice(0, negativeCheck[1].length);
+                        clean = negativeCheck[0] + '-' + negativeCheck[1];
+                        if (negativeCheck[0].length > 0) {
+                            clean = negativeCheck[0];
+                        }
+                    }
+                    if (!angular.isUndefined(decimalCheck[1])) {
+                        decimalCheck[1] = decimalCheck[1].slice(0, 2);
+                        clean = decimalCheck[0] + '.' + decimalCheck[1];
+                    }
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
+                element.bind('keypress', function (event) {
+                    if (event.keyCode === 32) {
+                        event.preventDefault();
+                    }
+                });
+            }
+        };
+    });
+
+    app.directive('hideZero', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                element.on('input change', function () {
+                    if (this.value === '0' || this.value === '.') {
+                        this.value = null;
+                    }
+                });
+            }
+        };
+    });
+
+
+    app.directive('loading', ['$http', function ($http) {
+        return {
+            restrict: 'A',
+            template: '<div class="loading">Loading&#8230;</div>',
+            link: function (scope, elm, attrs) {
+                scope.isLoading = function () {
+                    return $http.pendingRequests.length > 0;
+                };
+                scope.$watch(scope.isLoading, function (v) {
+                    if (v) {
+                        elm.css('display', 'block');
+                    } else {
+                        elm.css('display', 'none');
+                    }
+                });
+            }
+        };
+    }]);
+
+    app.controller("BcompletionCtrl", function ($scope, $http, $mdDialog, $filter, $timeout) {
+
+        var token = document.getElementsByName('__RequestVerificationToken')[0].value;
+
+        $scope.chkDtls = true;
+        $scope.CorrectDetailbtn = true;
+        $scope.CorrectDetails = false;
+        $scope.Proceedbtn = false;
+        $scope.BeneficiaryInfoDtls = false;
+        var goaheadnumber;
+
+        $scope.$watch('txtFarmerID', function () {
+            $scope.bcompletionchk.FarmerID.$setValidity("ser", true);
+        });
+
+        $scope.$watch('txtAadharnumber', function () {
+            $scope.bcompletionchk.Aadharno.$setValidity("ser", true);
+        });
+
+        $scope.cancel = function () {
+            $scope.ShowBeneficiaryCompletion = false;
+        };
+
+        $scope.BeneficiaryDetailEntry = function () {
+            if ($scope.bcompletionchk.$valid) {
+                $http.get('GetGOAheadnumber?FarmerID=' + $scope.txtFarmerID + '&Aadharno=' + digest($scope.txtAadharnumber)).then(function success(response) {
+                    var t = response.data;
+                    if (t != null && t != "") {
+                        if (t == "Invalid Farmer ID.") {
+                            $scope.bcompletionchk.FarmerID.$setValidity("ser", false);
+                        }
+                        if (t == "Invalid Aadhar Number.") {
+                            $scope.bcompletionchk.Aadharno.$setValidity("ser", false);
+                        }
+                        if (t == "Farmer ID not registered.") {
+                            showAlert(t);
+                            $scope.txtFarmerID = null;
+                            return false;
+                        }
+                        if (t == "Go-ahead is not generated.") {
+                            showAlert(t);
+                            $scope.txtFarmerID = null;
+                            $scope.txtAadharnumber = null;
+                            return false;
+                        }
+                        if (t == "Beneficiary Completion already generated against this GoAhead number.") {
+                            showAlert(t);
+                            return false;
+                        }
+                        if (t == "OK") {
+                            $http.get('GetBeneficiarydetailsfromFarmerID?FarmerID=' + $scope.txtFarmerID).then(function success(response) {
+                                var t = response.data;
+                                if (t != null && t != "") {
+                                    $scope.chkDtls = false;
+                                    $scope.BeneficiaryInfoDtls = true;
+                                    $scope.lblBeneficiaryName = t.Farmernm;
+                                    $scope.lblFatherName = t.Fathernm;
+                                    $scope.lblDist = t.Distnm;
+                                    $scope.lblBlock = t.Blocknm;
+                                    $scope.lblGP = t.GPnm;
+                                    $scope.lblVillage = t.Villagenm;
+                                    $scope.lblGoaheadno = t.GOAheadno;
+                                    $scope.lblprojectnm = t.Projctnm;
+                                    $scope.lbltodayDate = t.TodayDate;
+                                    $scope.lblGoaheadDOI = t.GoaheadDOI;
+                                    $scope.Signaturepic = t.PhotoSIgn;
+                                    goaheadnumber = t.GOAheadno;
+                                }
+                            }, function error(response) {
+                                alert(response.status);
+                            });
+                        }
+                    }
+                }, function error(response) {
+                    alert(response.status);
+                });
+            }
+        };
+
+        $scope.InsertRecord = function () {
+            if ($scope.lblGoaheadno != null && $scope.lblGoaheadno != undefined && $scope.EmploymentCreation != undefined && $scope.EmploymentCreation != null && $scope.strtorcompletionDT != null && $scope.strtorcompletionDT != undefined && $scope.txtbuildingCost != null && $scope.txtbuildingCost != undefined && $scope.txtelectrificationCost != null && $scope.txtelectrificationCost != undefined && $scope.txtmachinaryCost != undefined && $scope.txtmachinaryCost != null && $scope.txtinfrastructureCost != null && $scope.txtinfrastructureCost != undefined && $scope.txtfencingCost != null && $scope.txtfencingCost != undefined && $scope.txtplantsCost != null && $scope.txtplantsCost != undefined && $scope.txtPlace != null && $scope.txtPlace != undefined && $scope.lbltodayDate != null && $scope.lbltodayDate != undefined) {
+                mydata = { GoAheadNumber: $scope.lblGoaheadno, IsEmploymentCreated: $scope.EmploymentCreation, StartOrCompletionDate: $scope.strtorcompletionDT, BuildingCost: $scope.txtbuildingCost, ElectrificationCost: $scope.txtelectrificationCost, MachineryCost: $scope.txtmachinaryCost, InfrastructureCost: $scope.txtinfrastructureCost, FencingCost: $scope.txtfencingCost, PlantOrAnimalCost: $scope.txtplantsCost, OtherCost: $scope.txtotherCost, Place: $scope.txtPlace, CompletionDate: $scope.lbltodayDate };
+                var myreq = {
+                    method: 'POST',
+                    url: 'InsertCompletionBeneficiary',
+                    headers: {
+                        '__RequestVerificationToken': token
+                    },
+                    data: { BC: mydata }
+                };
+                $http(myreq).then(function success(response) {
+                    var t = response.data;
+                    if (t != null && t != "") {
+                        if (t == "Record saved successfully.") {
+                            $scope.chkDtls = false;
+                            $scope.BeneficiaryInfoDtls = false;
+                            showAlert(t);
+                            ShowCompletionreport();
+                            return false;
+                        }
+                        if (t == "false") {
+                            showAlert("Oops! Something is wrong. Please try again.");
+                            return false;
+                        }
+                    }
+                }, function erroe(response) {
+                    alert(response.status);
+                });
+            }
+        };
+
+        $scope.t = [];
+        var ShowCompletionreport = function () {
+            $http.get('CompletionDetailsreport?Goaheadnum=' + goaheadnumber).then(function success(response) {
+                var t = response.data;
+                if (t != null && t != "") {
+                    $scope.lblFarmername = t.VCHFARMERNAME;
+                    $scope.lblrelationwithfarmer = t.VCHFATHERNAME;
+                    $scope.lblVillagenm = t.vch_VillageName;
+                    $scope.lblblocknm = t.vch_BlockName;
+                    $scope.lblDistnm = t.vch_DistrictName;
+                    $scope.lblDistrictnm = t.vch_DistrictName;
+                    $scope.lblAccountholdernm = t.VCHACCHOLDERNM;
+                    $scope.lblbanknm = t.Bank_Name;
+                    $scope.lblIfsccode = t.VCHIFSCCODE;
+                    $scope.lblbranchnm = t.Branch_Name;
+                    $scope.lblGoAheadno = t.GoAheadNumber;
+                    $scope.lblEmployment = t.IsEmploymentCreated;
+                    $scope.lblstartingdt = t.StartOrCompletionDate;
+                    $scope.lblbuildingcost = t.BuildingCost;
+                    $scope.lblelectricost = t.ElectrificationCost;
+                    $scope.lblmachinarycost = t.MachineryCost;
+                    $scope.lblinfacost = t.InfrastructureCost;
+                    $scope.lblfencingcost = t.FencingCost;
+                    $scope.lblplantcost = t.PlantOrAnimalCost;
+                    $scope.lblothercost = t.OtherCost;
+                    $scope.lblsubsidycost = t.SubsidyAmount;
+                    $scope.lblrupeesinwords = t.Amount;
+                    console.log(t.GoaheadDOI);
+                    $scope.ShowBeneficiaryCompletion = true;
+                }
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+
+        $scope.printTo = function (printSectionId) {
+            var innerContents = document.getElementById(printSectionId).innerHTML;
+            var popupWinindow = window.open('', '_blank', 'width=1020,height=900,toolbar=1,resizable=1,location=0, status=0, menubar=0, scrollbars=1');
+            popupWinindow.document.open();
+            popupWinindow.document.write('<html><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></head><body onload="window.print()">' + innerContents + '</html>');
+            popupWinindow.document.close();
+        };
+
+        var showAlert = function (ev) {
+            $mdDialog.show(
+                $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title('Alert')
+                    .textContent(ev)
+                    .ariaLabel('Alert Dialog Demo')
+                    .ok('OK')
+                    .targetEvent(ev)
+            );
+        };
+    });
+</script>

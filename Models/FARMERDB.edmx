@@ -1,0 +1,927 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FARMERDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="LGBlock">
+          <Key>
+            <PropertyRef Name="Block_Code" />
+          </Key>
+          <Property Name="Dist_Code" Type="int" />
+          <Property Name="Block_Code" Type="int" Nullable="false" />
+          <Property Name="Block_Name" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="LGDistrict">
+          <Key>
+            <PropertyRef Name="Dist_Code" />
+          </Key>
+          <Property Name="Dist_Code" Type="int" Nullable="false" />
+          <Property Name="Dist_Name" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="LGGp">
+          <Key>
+            <PropertyRef Name="Gp_Code" />
+          </Key>
+          <Property Name="Dist_Code" Type="int" />
+          <Property Name="Block_Code" Type="int" />
+          <Property Name="Gp_Code" Type="int" Nullable="false" />
+          <Property Name="Gp_Name" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="LGVillage">
+          <Key>
+            <PropertyRef Name="Village_Code" />
+          </Key>
+          <Property Name="Dist_Code" Type="int" />
+          <Property Name="Block_Code" Type="int" />
+          <Property Name="Gp_Code" Type="int" />
+          <Property Name="Village_Code" Type="int" Nullable="false" />
+          <Property Name="Village_Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="status" Type="int" />
+        </EntityType>
+        <EntityType Name="M_FARMER_REGISTRATION">
+          <Key>
+            <PropertyRef Name="VCHFARMERCODE" />
+          </Key>
+          <Property Name="INTFARMERID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CHFARMERTYPE" Type="char" MaxLength="1" />
+          <Property Name="VCHFARMERCODE" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="VCHEXISTFRCODE" Type="varchar" MaxLength="50" />
+          <Property Name="VCHPACSCODE" Type="varchar" MaxLength="50" />
+          <Property Name="VCHDISTID" Type="varchar" MaxLength="50" />
+          <Property Name="VCHBLOCKID" Type="varchar" MaxLength="50" />
+          <Property Name="VCHGPID" Type="varchar" MaxLength="50" />
+          <Property Name="VCHVILLAGEID" Type="varchar" MaxLength="50" />
+          <Property Name="INTTITLE" Type="int" />
+          <Property Name="VCHFARMERNAME" Type="varchar" MaxLength="100" />
+          <Property Name="VCHFATHERNAME" Type="varchar" MaxLength="100" />
+          <Property Name="INTRELATION" Type="int" />
+          <Property Name="INTGENDER" Type="int" />
+          <Property Name="INTCATEGOGY" Type="int" />
+          <Property Name="DTMDOB" Type="date" />
+          <Property Name="INTAGE" Type="int" />
+          <Property Name="CHAGESTATUS" Type="char" MaxLength="1" />
+          <Property Name="VCHVOTERIDCARDNO" Type="varchar" MaxLength="50" />
+          <Property Name="VCHAADHARNO" Type="varchar" MaxLength="50" />
+          <Property Name="VCHMOBILENO" Type="varchar" MaxLength="50" />
+          <Property Name="INTFAMILYMEMBERS" Type="int" />
+          <Property Name="VCHACCHOLDERNM" Type="varchar" MaxLength="100" />
+          <Property Name="VCHACCOUNTNO" Type="varchar" MaxLength="50" />
+          <Property Name="INTBANKID" Type="int" />
+          <Property Name="INTBRANCHID" Type="int" />
+          <Property Name="VCHIFSCCODE" Type="varchar" MaxLength="50" />
+          <Property Name="CHACCSTATUS" Type="char" MaxLength="1" />
+          <Property Name="DTMACCVERIFIEDON" Type="smalldatetime" />
+          <Property Name="VCHPINCODE" Type="varchar" MaxLength="10" />
+          <Property Name="INTDELETEDFLAG" Type="int" />
+          <Property Name="INTCREATEDBY" Type="int" />
+          <Property Name="DTMCREATEDON" Type="smalldatetime" />
+          <Property Name="INTUPDATEDBY" Type="int" />
+          <Property Name="DTMUPDATEDON" Type="smalldatetime" />
+          <Property Name="INTPFMSVERIFIED" Type="int" />
+          <Property Name="INTREJECTED" Type="int" />
+          <Property Name="NICFARMERID" Type="varchar" MaxLength="20" />
+          <Property Name="PFMSST" Type="bit" />
+          <Property Name="CHAPFMSSTATUS" Type="char" MaxLength="1" />
+          <Property Name="ADHARSTATUS" Type="varchar" MaxLength="2" />
+          <Property Name="ADHARUPDT" Type="datetime" />
+        </EntityType>
+        <EntityType Name="M_PDS_BANKBRANCH">
+          <Key>
+            <PropertyRef Name="intBranchId" />
+          </Key>
+          <Property Name="intBranchId" Type="int" Nullable="false" />
+          <Property Name="vchDistId" Type="varchar" MaxLength="5" />
+          <Property Name="vchDistrict" Type="varchar" MaxLength="20" />
+          <Property Name="intBankId" Type="int" />
+          <Property Name="vchBankName" Type="varchar" MaxLength="100" />
+          <Property Name="vchBranchName" Type="varchar" MaxLength="50" />
+          <Property Name="IFSC_CODE" Type="varchar" MaxLength="50" />
+          <Property Name="NEW_IFSC_CODE" Type="varchar" MaxLength="50" />
+          <Property Name="NEW_IFSC_CODE_FM" Type="varchar" MaxLength="50" />
+          <Property Name="intCreatedBy" Type="int" />
+          <Property Name="dtmCreatedOn" Type="datetime" />
+          <Property Name="intUpdatedBy" Type="int" />
+          <Property Name="dtmUpdatedOn" Type="datetime" />
+          <Property Name="intDeletedFlag" Type="int" />
+        </EntityType>
+        <EntityType Name="M_PDS_FARMERBANK">
+          <Key>
+            <PropertyRef Name="intId" />
+          </Key>
+          <Property Name="intId" Type="int" Nullable="false" />
+          <Property Name="vchBankName" Type="varchar" MaxLength="100" />
+          <Property Name="intCreatedBy" Type="int" />
+          <Property Name="dtmCreatedOn" Type="datetime" />
+          <Property Name="intUpdatedBy" Type="int" />
+          <Property Name="dtmUpdatedOn" Type="datetime" />
+          <Property Name="intDeletedFlag" Type="int" />
+        </EntityType>
+        <EntityType Name="M_PDS_RELATIONSHIP">
+          <Key>
+            <PropertyRef Name="INTRELATIONID" />
+          </Key>
+          <Property Name="INTRELATIONID" Type="int" Nullable="false" />
+          <Property Name="VCHRELATION" Type="varchar" MaxLength="50" />
+          <Property Name="VCHORIYAREL" Type="nvarchar" MaxLength="255" />
+          <Property Name="INTSEQUENCE" Type="int" />
+          <Property Name="intFRStatus" Type="int" />
+        </EntityType>
+        <EntityType Name="PDS_BLOCKMASTER">
+          <Key>
+            <PropertyRef Name="int_BlockID" />
+          </Key>
+          <Property Name="int_BlockID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="int_DistrictID" Type="varchar" MaxLength="50" />
+          <Property Name="vch_BlockName" Type="varchar" MaxLength="100" />
+          <Property Name="vch_BlockNameOr" Type="nvarchar" MaxLength="100" />
+          <Property Name="vch_BlockCode" Type="varchar" MaxLength="10" />
+          <Property Name="vch_DistrictCode" Type="varchar" MaxLength="10" />
+          <Property Name="vchBlockType" Type="varchar" MaxLength="10" />
+          <Property Name="intBlockType" Type="int" />
+          <Property Name="intPPASS" Type="int" />
+          <Property Name="dtmCreatedOn" Type="datetime" />
+          <Property Name="NIC_BlockCode" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="PDS_DISTRICTMASTER">
+          <Key>
+            <PropertyRef Name="int_DistrictID" />
+          </Key>
+          <Property Name="int_DistrictID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="vch_DistrictName" Type="varchar" MaxLength="50" />
+          <Property Name="vch_DistrictNameOr" Type="nvarchar" MaxLength="100" />
+          <Property Name="vch_DistrictCode" Type="varchar" MaxLength="10" />
+          <Property Name="int_AdminId" Type="int" />
+          <Property Name="int_RDCType" Type="int" />
+          <Property Name="vch_RDC" Type="varchar" MaxLength="10" />
+          <Property Name="dtmCreatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PDS_GPMASTER">
+          <Key>
+            <PropertyRef Name="int_GPID" />
+          </Key>
+          <Property Name="int_GPID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="int_BlockID" Type="varchar" MaxLength="20" />
+          <Property Name="vch_GPName" Type="varchar" MaxLength="50" />
+          <Property Name="vch_GPNameOr" Type="nvarchar" MaxLength="100" />
+          <Property Name="vch_GPCode" Type="varchar" MaxLength="20" />
+          <Property Name="vch_BlockCode" Type="varchar" MaxLength="20" />
+          <Property Name="dtmCreatedOn" Type="smalldatetime" />
+        </EntityType>
+        <EntityType Name="PDS_VILLAGEMASTER">
+          <Key>
+            <PropertyRef Name="int_VillageID" />
+          </Key>
+          <Property Name="int_VillageID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="int_GPID" Type="varchar" MaxLength="50" />
+          <Property Name="vch_VillageName" Type="varchar" MaxLength="100" />
+          <Property Name="vch_VillageNameOr" Type="nvarchar" MaxLength="100" />
+          <Property Name="vch_censusCode" Type="varchar" MaxLength="50" />
+          <Property Name="vch_RefCode" Type="varchar" MaxLength="50" />
+          <Property Name="dtmCreatedOn" Type="datetime" />
+          <Property Name="lgvillage_code" Type="int" />
+          <Property Name="G_status" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'FARMERDB.dbo.T_FARMER_FAMILYDETAILS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="T_FARMER_FAMILYDETAILS">
+          <Property Name="VCHFARMERCODE" Type="varchar" MaxLength="50" />
+          <Property Name="VCHNAME" Type="varchar" MaxLength="50" />
+          <Property Name="INTRELATION" Type="int" />
+          <Property Name="INTAGE" Type="int" />
+          <Property Name="INTBANKACCSTATUS" Type="int" />
+          <Property Name="INTDELETEDFLAG" Type="int" />
+          <Property Name="INTCREATEDBY" Type="int" />
+          <Property Name="DTMCREATEDON" Type="smalldatetime" />
+          <Property Name="INTUPDATEDBY" Type="int" />
+          <Property Name="DTMUPDATEDON" Type="smalldatetime" />
+          <Property Name="CHACCSTATUS" Type="char" MaxLength="1" />
+          <Property Name="DTMACCVERIFIEDON" Type="smalldatetime" />
+        </EntityType>-->
+        <EntityType Name="Tbl_Bank">
+          <Key>
+            <PropertyRef Name="Bank_Code" />
+          </Key>
+          <Property Name="Dist_Code" Type="varchar" MaxLength="2" />
+          <Property Name="Bank_Code" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Bank_Name" Type="varchar" MaxLength="50" />
+          <Property Name="PFMSStatus" Type="int" />
+          <Property Name="IntegrationStatus" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FARMERDB.dbo.Tbl_Branch' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Tbl_Branch">
+          <Key>
+            <PropertyRef Name="Branch_Code" />
+          </Key>
+          <Property Name="Branch_Code" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Bank_Code" Type="varchar" MaxLength="2" />
+          <Property Name="Branch_Name" Type="varchar" MaxLength="50" />
+          <Property Name="IFSC" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Tbl_Category">
+          <Key>
+            <PropertyRef Name="Category_ID" />
+          </Key>
+          <Property Name="Category_ID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Category_Value" Type="varchar" MaxLength="7" />
+        </EntityType>
+        <EntityType Name="Tbl_Gender">
+          <Key>
+            <PropertyRef Name="Gender_ID" />
+          </Key>
+          <Property Name="Gender_ID" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Gender_Value" Type="varchar" MaxLength="6" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_BlockTab_DistrictTab">
+          <End Role="LGDistrict" Type="Self.LGDistrict" Multiplicity="0..1" />
+          <End Role="LGBlock" Type="Self.LGBlock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LGDistrict">
+              <PropertyRef Name="Dist_Code" />
+            </Principal>
+            <Dependent Role="LGBlock">
+              <PropertyRef Name="Dist_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LGGp_LGBlock">
+          <End Role="LGBlock" Type="Self.LGBlock" Multiplicity="0..1" />
+          <End Role="LGGp" Type="Self.LGGp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LGBlock">
+              <PropertyRef Name="Block_Code" />
+            </Principal>
+            <Dependent Role="LGGp">
+              <PropertyRef Name="Block_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LGVillage_LGBlock">
+          <End Role="LGBlock" Type="Self.LGBlock" Multiplicity="0..1" />
+          <End Role="LGVillage" Type="Self.LGVillage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LGBlock">
+              <PropertyRef Name="Block_Code" />
+            </Principal>
+            <Dependent Role="LGVillage">
+              <PropertyRef Name="Block_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LGVillage_LGDistrict">
+          <End Role="LGDistrict" Type="Self.LGDistrict" Multiplicity="0..1" />
+          <End Role="LGVillage" Type="Self.LGVillage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LGDistrict">
+              <PropertyRef Name="Dist_Code" />
+            </Principal>
+            <Dependent Role="LGVillage">
+              <PropertyRef Name="Dist_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="FarmerFamilyDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vchfarmercode" Type="varchar" Mode="In" />
+          <Parameter Name="intrelationid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FarmerFamilyRelation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vchfarmercode" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="FARMERDBModelStoreContainer">
+          <EntitySet Name="LGBlock" EntityType="Self.LGBlock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LGDistrict" EntityType="Self.LGDistrict" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LGGp" EntityType="Self.LGGp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LGVillage" EntityType="Self.LGVillage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="M_FARMER_REGISTRATION" EntityType="Self.M_FARMER_REGISTRATION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="M_PDS_BANKBRANCH" EntityType="Self.M_PDS_BANKBRANCH" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="M_PDS_FARMERBANK" EntityType="Self.M_PDS_FARMERBANK" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="M_PDS_RELATIONSHIP" EntityType="Self.M_PDS_RELATIONSHIP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PDS_BLOCKMASTER" EntityType="Self.PDS_BLOCKMASTER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PDS_DISTRICTMASTER" EntityType="Self.PDS_DISTRICTMASTER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PDS_GPMASTER" EntityType="Self.PDS_GPMASTER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PDS_VILLAGEMASTER" EntityType="Self.PDS_VILLAGEMASTER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Bank" EntityType="Self.Tbl_Bank" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Category" EntityType="Self.Tbl_Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Gender" EntityType="Self.Tbl_Gender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Branch" EntityType="Self.Tbl_Branch" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Tbl_Branch].[Branch_Code] AS [Branch_Code], 
+    [Tbl_Branch].[Bank_Code] AS [Bank_Code], 
+    [Tbl_Branch].[Branch_Name] AS [Branch_Name], 
+    [Tbl_Branch].[IFSC] AS [IFSC]
+    FROM [dbo].[Tbl_Branch] AS [Tbl_Branch]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_BlockTab_DistrictTab" Association="Self.FK_BlockTab_DistrictTab">
+            <End Role="LGDistrict" EntitySet="LGDistrict" />
+            <End Role="LGBlock" EntitySet="LGBlock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LGGp_LGBlock" Association="Self.FK_LGGp_LGBlock">
+            <End Role="LGBlock" EntitySet="LGBlock" />
+            <End Role="LGGp" EntitySet="LGGp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LGVillage_LGBlock" Association="Self.FK_LGVillage_LGBlock">
+            <End Role="LGBlock" EntitySet="LGBlock" />
+            <End Role="LGVillage" EntitySet="LGVillage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LGVillage_LGDistrict" Association="Self.FK_LGVillage_LGDistrict">
+            <End Role="LGDistrict" EntitySet="LGDistrict" />
+            <End Role="LGVillage" EntitySet="LGVillage" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FARMERDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="FARMERDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="LGBlocks" EntityType="FARMERDBModel.LGBlock" />
+          <EntitySet Name="LGDistricts" EntityType="FARMERDBModel.LGDistrict" />
+          <EntitySet Name="LGGps" EntityType="FARMERDBModel.LGGp" />
+          <EntitySet Name="LGVillages" EntityType="FARMERDBModel.LGVillage" />
+          <EntitySet Name="M_FARMER_REGISTRATION" EntityType="FARMERDBModel.M_FARMER_REGISTRATION" />
+          <EntitySet Name="M_PDS_BANKBRANCH" EntityType="FARMERDBModel.M_PDS_BANKBRANCH" />
+          <EntitySet Name="M_PDS_FARMERBANK" EntityType="FARMERDBModel.M_PDS_FARMERBANK" />
+          <EntitySet Name="M_PDS_RELATIONSHIP" EntityType="FARMERDBModel.M_PDS_RELATIONSHIP" />
+          <EntitySet Name="PDS_BLOCKMASTER" EntityType="FARMERDBModel.PDS_BLOCKMASTER" />
+          <EntitySet Name="PDS_DISTRICTMASTER" EntityType="FARMERDBModel.PDS_DISTRICTMASTER" />
+          <EntitySet Name="PDS_GPMASTER" EntityType="FARMERDBModel.PDS_GPMASTER" />
+          <EntitySet Name="PDS_VILLAGEMASTER" EntityType="FARMERDBModel.PDS_VILLAGEMASTER" />
+          <EntitySet Name="Tbl_Bank" EntityType="FARMERDBModel.Tbl_Bank" />
+          <EntitySet Name="Tbl_Category" EntityType="FARMERDBModel.Tbl_Category" />
+          <EntitySet Name="Tbl_Gender" EntityType="FARMERDBModel.Tbl_Gender" />
+          <EntitySet Name="Tbl_Branch" EntityType="FARMERDBModel.Tbl_Branch" />
+          <AssociationSet Name="FK_BlockTab_DistrictTab" Association="FARMERDBModel.FK_BlockTab_DistrictTab">
+            <End Role="LGDistrict" EntitySet="LGDistricts" />
+            <End Role="LGBlock" EntitySet="LGBlocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LGGp_LGBlock" Association="FARMERDBModel.FK_LGGp_LGBlock">
+            <End Role="LGBlock" EntitySet="LGBlocks" />
+            <End Role="LGGp" EntitySet="LGGps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LGVillage_LGBlock" Association="FARMERDBModel.FK_LGVillage_LGBlock">
+            <End Role="LGBlock" EntitySet="LGBlocks" />
+            <End Role="LGVillage" EntitySet="LGVillages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LGVillage_LGDistrict" Association="FARMERDBModel.FK_LGVillage_LGDistrict">
+            <End Role="LGDistrict" EntitySet="LGDistricts" />
+            <End Role="LGVillage" EntitySet="LGVillages" />
+          </AssociationSet>
+          <FunctionImport Name="FarmerFamilyDetails" ReturnType="Collection(FARMERDBModel.FarmerFamilyDetails_Result)">
+            <Parameter Name="vchfarmercode" Mode="In" Type="String" />
+            <Parameter Name="intrelationid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FarmerFamilyRelation" ReturnType="Collection(FARMERDBModel.FarmerFamilyRelation_Result)">
+            <Parameter Name="vchfarmercode" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="LGBlock">
+          <Key>
+            <PropertyRef Name="Block_Code" />
+          </Key>
+          <Property Name="Dist_Code" Type="Int32" />
+          <Property Name="Block_Code" Type="Int32" Nullable="false" />
+          <Property Name="Block_Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="LGDistrict" Relationship="FARMERDBModel.FK_BlockTab_DistrictTab" FromRole="LGBlock" ToRole="LGDistrict" />
+          <NavigationProperty Name="LGGps" Relationship="FARMERDBModel.FK_LGGp_LGBlock" FromRole="LGBlock" ToRole="LGGp" />
+          <NavigationProperty Name="LGVillages" Relationship="FARMERDBModel.FK_LGVillage_LGBlock" FromRole="LGBlock" ToRole="LGVillage" />
+        </EntityType>
+        <EntityType Name="LGDistrict">
+          <Key>
+            <PropertyRef Name="Dist_Code" />
+          </Key>
+          <Property Name="Dist_Code" Type="Int32" Nullable="false" />
+          <Property Name="Dist_Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="LGBlocks" Relationship="FARMERDBModel.FK_BlockTab_DistrictTab" FromRole="LGDistrict" ToRole="LGBlock" />
+          <NavigationProperty Name="LGVillages" Relationship="FARMERDBModel.FK_LGVillage_LGDistrict" FromRole="LGDistrict" ToRole="LGVillage" />
+        </EntityType>
+        <EntityType Name="LGGp">
+          <Key>
+            <PropertyRef Name="Gp_Code" />
+          </Key>
+          <Property Name="Dist_Code" Type="Int32" />
+          <Property Name="Block_Code" Type="Int32" />
+          <Property Name="Gp_Code" Type="Int32" Nullable="false" />
+          <Property Name="Gp_Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="LGBlock" Relationship="FARMERDBModel.FK_LGGp_LGBlock" FromRole="LGGp" ToRole="LGBlock" />
+        </EntityType>
+        <EntityType Name="LGVillage">
+          <Key>
+            <PropertyRef Name="Village_Code" />
+          </Key>
+          <Property Name="Dist_Code" Type="Int32" />
+          <Property Name="Block_Code" Type="Int32" />
+          <Property Name="Gp_Code" Type="Int32" />
+          <Property Name="Village_Code" Type="Int32" Nullable="false" />
+          <Property Name="Village_Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="Int32" />
+          <NavigationProperty Name="LGBlock" Relationship="FARMERDBModel.FK_LGVillage_LGBlock" FromRole="LGVillage" ToRole="LGBlock" />
+          <NavigationProperty Name="LGDistrict" Relationship="FARMERDBModel.FK_LGVillage_LGDistrict" FromRole="LGVillage" ToRole="LGDistrict" />
+        </EntityType>
+        <EntityType Name="M_FARMER_REGISTRATION">
+          <Key>
+            <PropertyRef Name="VCHFARMERCODE" />
+          </Key>
+          <Property Name="INTFARMERID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CHFARMERTYPE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="VCHFARMERCODE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VCHEXISTFRCODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VCHPACSCODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VCHDISTID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VCHBLOCKID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VCHGPID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VCHVILLAGEID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="INTTITLE" Type="Int32" />
+          <Property Name="VCHFARMERNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VCHFATHERNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="INTRELATION" Type="Int32" />
+          <Property Name="INTGENDER" Type="Int32" />
+          <Property Name="INTCATEGOGY" Type="Int32" />
+          <Property Name="DTMDOB" Type="DateTime" Precision="0" />
+          <Property Name="INTAGE" Type="Int32" />
+          <Property Name="CHAGESTATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="VCHVOTERIDCARDNO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VCHAADHARNO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VCHMOBILENO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="INTFAMILYMEMBERS" Type="Int32" />
+          <Property Name="VCHACCHOLDERNM" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VCHACCOUNTNO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="INTBANKID" Type="Int32" />
+          <Property Name="INTBRANCHID" Type="Int32" />
+          <Property Name="VCHIFSCCODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CHACCSTATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="DTMACCVERIFIEDON" Type="DateTime" Precision="0" />
+          <Property Name="VCHPINCODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="INTDELETEDFLAG" Type="Int32" />
+          <Property Name="INTCREATEDBY" Type="Int32" />
+          <Property Name="DTMCREATEDON" Type="DateTime" Precision="0" />
+          <Property Name="INTUPDATEDBY" Type="Int32" />
+          <Property Name="DTMUPDATEDON" Type="DateTime" Precision="0" />
+          <Property Name="INTPFMSVERIFIED" Type="Int32" />
+          <Property Name="INTREJECTED" Type="Int32" />
+          <Property Name="NICFARMERID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PFMSST" Type="Boolean" />
+          <Property Name="CHAPFMSSTATUS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ADHARSTATUS" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="ADHARUPDT" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="M_PDS_BANKBRANCH">
+          <Key>
+            <PropertyRef Name="intBranchId" />
+          </Key>
+          <Property Name="intBranchId" Type="Int32" Nullable="false" />
+          <Property Name="vchDistId" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="vchDistrict" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="intBankId" Type="Int32" />
+          <Property Name="vchBankName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="vchBranchName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IFSC_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NEW_IFSC_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NEW_IFSC_CODE_FM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="intCreatedBy" Type="Int32" />
+          <Property Name="dtmCreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="intUpdatedBy" Type="Int32" />
+          <Property Name="dtmUpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="intDeletedFlag" Type="Int32" />
+        </EntityType>
+        <EntityType Name="M_PDS_FARMERBANK">
+          <Key>
+            <PropertyRef Name="intId" />
+          </Key>
+          <Property Name="intId" Type="Int32" Nullable="false" />
+          <Property Name="vchBankName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="intCreatedBy" Type="Int32" />
+          <Property Name="dtmCreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="intUpdatedBy" Type="Int32" />
+          <Property Name="dtmUpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="intDeletedFlag" Type="Int32" />
+        </EntityType>
+        <EntityType Name="M_PDS_RELATIONSHIP">
+          <Key>
+            <PropertyRef Name="INTRELATIONID" />
+          </Key>
+          <Property Name="INTRELATIONID" Type="Int32" Nullable="false" />
+          <Property Name="VCHRELATION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VCHORIYAREL" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="INTSEQUENCE" Type="Int32" />
+          <Property Name="intFRStatus" Type="Int32" />
+        </EntityType>
+        <EntityType Name="PDS_BLOCKMASTER">
+          <Key>
+            <PropertyRef Name="int_BlockID" />
+          </Key>
+          <Property Name="int_BlockID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="int_DistrictID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="vch_BlockName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="vch_BlockNameOr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="vch_BlockCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="vch_DistrictCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="vchBlockType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="intBlockType" Type="Int32" />
+          <Property Name="intPPASS" Type="Int32" />
+          <Property Name="dtmCreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="NIC_BlockCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PDS_DISTRICTMASTER">
+          <Key>
+            <PropertyRef Name="int_DistrictID" />
+          </Key>
+          <Property Name="int_DistrictID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="vch_DistrictName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="vch_DistrictNameOr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="vch_DistrictCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="int_AdminId" Type="Int32" />
+          <Property Name="int_RDCType" Type="Int32" />
+          <Property Name="vch_RDC" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="dtmCreatedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="PDS_GPMASTER">
+          <Key>
+            <PropertyRef Name="int_GPID" />
+          </Key>
+          <Property Name="int_GPID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="int_BlockID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="vch_GPName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="vch_GPNameOr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="vch_GPCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="vch_BlockCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="dtmCreatedOn" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="PDS_VILLAGEMASTER">
+          <Key>
+            <PropertyRef Name="int_VillageID" />
+          </Key>
+          <Property Name="int_VillageID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="int_GPID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="vch_VillageName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="vch_VillageNameOr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="vch_censusCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="vch_RefCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dtmCreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="lgvillage_code" Type="Int32" />
+          <Property Name="G_status" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Tbl_Bank">
+          <Key>
+            <PropertyRef Name="Bank_Code" />
+          </Key>
+          <Property Name="Dist_Code" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Code" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PFMSStatus" Type="Int32" />
+          <Property Name="IntegrationStatus" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Tbl_Category">
+          <Key>
+            <PropertyRef Name="Category_ID" />
+          </Key>
+          <Property Name="Category_ID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Category_Value" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Tbl_Gender">
+          <Key>
+            <PropertyRef Name="Gender_ID" />
+          </Key>
+          <Property Name="Gender_ID" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Gender_Value" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Tbl_Branch">
+          <Key>
+            <PropertyRef Name="Branch_Code" />
+          </Key>
+          <Property Name="Branch_Code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Bank_Code" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Branch_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IFSC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_BlockTab_DistrictTab">
+          <End Type="FARMERDBModel.LGDistrict" Role="LGDistrict" Multiplicity="0..1" />
+          <End Type="FARMERDBModel.LGBlock" Role="LGBlock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LGDistrict">
+              <PropertyRef Name="Dist_Code" />
+            </Principal>
+            <Dependent Role="LGBlock">
+              <PropertyRef Name="Dist_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LGGp_LGBlock">
+          <End Type="FARMERDBModel.LGBlock" Role="LGBlock" Multiplicity="0..1" />
+          <End Type="FARMERDBModel.LGGp" Role="LGGp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LGBlock">
+              <PropertyRef Name="Block_Code" />
+            </Principal>
+            <Dependent Role="LGGp">
+              <PropertyRef Name="Block_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LGVillage_LGBlock">
+          <End Type="FARMERDBModel.LGBlock" Role="LGBlock" Multiplicity="0..1" />
+          <End Type="FARMERDBModel.LGVillage" Role="LGVillage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LGBlock">
+              <PropertyRef Name="Block_Code" />
+            </Principal>
+            <Dependent Role="LGVillage">
+              <PropertyRef Name="Block_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LGVillage_LGDistrict">
+          <End Type="FARMERDBModel.LGDistrict" Role="LGDistrict" Multiplicity="0..1" />
+          <End Type="FARMERDBModel.LGVillage" Role="LGVillage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LGDistrict">
+              <PropertyRef Name="Dist_Code" />
+            </Principal>
+            <Dependent Role="LGVillage">
+              <PropertyRef Name="Dist_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="FarmerFamilyDetails_Result">
+          <Property Type="String" Name="VCHNAME" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="INTRELATION" Nullable="true" />
+          <Property Type="String" Name="VCHORIYAREL" Nullable="true" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="FarmerFamilyRelation_Result">
+          <Property Type="Int32" Name="INTRELATION" Nullable="true" />
+          <Property Type="String" Name="VCHORIYAREL" Nullable="true" MaxLength="255" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FARMERDBModelStoreContainer" CdmEntityContainer="FARMERDBEntities">
+          <EntitySetMapping Name="LGBlocks">
+            <EntityTypeMapping TypeName="FARMERDBModel.LGBlock">
+              <MappingFragment StoreEntitySet="LGBlock">
+                <ScalarProperty Name="Block_Name" ColumnName="Block_Name" />
+                <ScalarProperty Name="Block_Code" ColumnName="Block_Code" />
+                <ScalarProperty Name="Dist_Code" ColumnName="Dist_Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LGDistricts">
+            <EntityTypeMapping TypeName="FARMERDBModel.LGDistrict">
+              <MappingFragment StoreEntitySet="LGDistrict">
+                <ScalarProperty Name="Dist_Name" ColumnName="Dist_Name" />
+                <ScalarProperty Name="Dist_Code" ColumnName="Dist_Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LGGps">
+            <EntityTypeMapping TypeName="FARMERDBModel.LGGp">
+              <MappingFragment StoreEntitySet="LGGp">
+                <ScalarProperty Name="Gp_Name" ColumnName="Gp_Name" />
+                <ScalarProperty Name="Gp_Code" ColumnName="Gp_Code" />
+                <ScalarProperty Name="Block_Code" ColumnName="Block_Code" />
+                <ScalarProperty Name="Dist_Code" ColumnName="Dist_Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LGVillages">
+            <EntityTypeMapping TypeName="FARMERDBModel.LGVillage">
+              <MappingFragment StoreEntitySet="LGVillage">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="Village_Name" ColumnName="Village_Name" />
+                <ScalarProperty Name="Village_Code" ColumnName="Village_Code" />
+                <ScalarProperty Name="Gp_Code" ColumnName="Gp_Code" />
+                <ScalarProperty Name="Block_Code" ColumnName="Block_Code" />
+                <ScalarProperty Name="Dist_Code" ColumnName="Dist_Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="M_FARMER_REGISTRATION">
+            <EntityTypeMapping TypeName="FARMERDBModel.M_FARMER_REGISTRATION">
+              <MappingFragment StoreEntitySet="M_FARMER_REGISTRATION">
+                <ScalarProperty Name="ADHARUPDT" ColumnName="ADHARUPDT" />
+                <ScalarProperty Name="ADHARSTATUS" ColumnName="ADHARSTATUS" />
+                <ScalarProperty Name="CHAPFMSSTATUS" ColumnName="CHAPFMSSTATUS" />
+                <ScalarProperty Name="PFMSST" ColumnName="PFMSST" />
+                <ScalarProperty Name="NICFARMERID" ColumnName="NICFARMERID" />
+                <ScalarProperty Name="INTREJECTED" ColumnName="INTREJECTED" />
+                <ScalarProperty Name="INTPFMSVERIFIED" ColumnName="INTPFMSVERIFIED" />
+                <ScalarProperty Name="DTMUPDATEDON" ColumnName="DTMUPDATEDON" />
+                <ScalarProperty Name="INTUPDATEDBY" ColumnName="INTUPDATEDBY" />
+                <ScalarProperty Name="DTMCREATEDON" ColumnName="DTMCREATEDON" />
+                <ScalarProperty Name="INTCREATEDBY" ColumnName="INTCREATEDBY" />
+                <ScalarProperty Name="INTDELETEDFLAG" ColumnName="INTDELETEDFLAG" />
+                <ScalarProperty Name="VCHPINCODE" ColumnName="VCHPINCODE" />
+                <ScalarProperty Name="DTMACCVERIFIEDON" ColumnName="DTMACCVERIFIEDON" />
+                <ScalarProperty Name="CHACCSTATUS" ColumnName="CHACCSTATUS" />
+                <ScalarProperty Name="VCHIFSCCODE" ColumnName="VCHIFSCCODE" />
+                <ScalarProperty Name="INTBRANCHID" ColumnName="INTBRANCHID" />
+                <ScalarProperty Name="INTBANKID" ColumnName="INTBANKID" />
+                <ScalarProperty Name="VCHACCOUNTNO" ColumnName="VCHACCOUNTNO" />
+                <ScalarProperty Name="VCHACCHOLDERNM" ColumnName="VCHACCHOLDERNM" />
+                <ScalarProperty Name="INTFAMILYMEMBERS" ColumnName="INTFAMILYMEMBERS" />
+                <ScalarProperty Name="VCHMOBILENO" ColumnName="VCHMOBILENO" />
+                <ScalarProperty Name="VCHAADHARNO" ColumnName="VCHAADHARNO" />
+                <ScalarProperty Name="VCHVOTERIDCARDNO" ColumnName="VCHVOTERIDCARDNO" />
+                <ScalarProperty Name="CHAGESTATUS" ColumnName="CHAGESTATUS" />
+                <ScalarProperty Name="INTAGE" ColumnName="INTAGE" />
+                <ScalarProperty Name="DTMDOB" ColumnName="DTMDOB" />
+                <ScalarProperty Name="INTCATEGOGY" ColumnName="INTCATEGOGY" />
+                <ScalarProperty Name="INTGENDER" ColumnName="INTGENDER" />
+                <ScalarProperty Name="INTRELATION" ColumnName="INTRELATION" />
+                <ScalarProperty Name="VCHFATHERNAME" ColumnName="VCHFATHERNAME" />
+                <ScalarProperty Name="VCHFARMERNAME" ColumnName="VCHFARMERNAME" />
+                <ScalarProperty Name="INTTITLE" ColumnName="INTTITLE" />
+                <ScalarProperty Name="VCHVILLAGEID" ColumnName="VCHVILLAGEID" />
+                <ScalarProperty Name="VCHGPID" ColumnName="VCHGPID" />
+                <ScalarProperty Name="VCHBLOCKID" ColumnName="VCHBLOCKID" />
+                <ScalarProperty Name="VCHDISTID" ColumnName="VCHDISTID" />
+                <ScalarProperty Name="VCHPACSCODE" ColumnName="VCHPACSCODE" />
+                <ScalarProperty Name="VCHEXISTFRCODE" ColumnName="VCHEXISTFRCODE" />
+                <ScalarProperty Name="VCHFARMERCODE" ColumnName="VCHFARMERCODE" />
+                <ScalarProperty Name="CHFARMERTYPE" ColumnName="CHFARMERTYPE" />
+                <ScalarProperty Name="INTFARMERID" ColumnName="INTFARMERID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="M_PDS_BANKBRANCH">
+            <EntityTypeMapping TypeName="FARMERDBModel.M_PDS_BANKBRANCH">
+              <MappingFragment StoreEntitySet="M_PDS_BANKBRANCH">
+                <ScalarProperty Name="intDeletedFlag" ColumnName="intDeletedFlag" />
+                <ScalarProperty Name="dtmUpdatedOn" ColumnName="dtmUpdatedOn" />
+                <ScalarProperty Name="intUpdatedBy" ColumnName="intUpdatedBy" />
+                <ScalarProperty Name="dtmCreatedOn" ColumnName="dtmCreatedOn" />
+                <ScalarProperty Name="intCreatedBy" ColumnName="intCreatedBy" />
+                <ScalarProperty Name="NEW_IFSC_CODE_FM" ColumnName="NEW_IFSC_CODE_FM" />
+                <ScalarProperty Name="NEW_IFSC_CODE" ColumnName="NEW_IFSC_CODE" />
+                <ScalarProperty Name="IFSC_CODE" ColumnName="IFSC_CODE" />
+                <ScalarProperty Name="vchBranchName" ColumnName="vchBranchName" />
+                <ScalarProperty Name="vchBankName" ColumnName="vchBankName" />
+                <ScalarProperty Name="intBankId" ColumnName="intBankId" />
+                <ScalarProperty Name="vchDistrict" ColumnName="vchDistrict" />
+                <ScalarProperty Name="vchDistId" ColumnName="vchDistId" />
+                <ScalarProperty Name="intBranchId" ColumnName="intBranchId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="M_PDS_FARMERBANK">
+            <EntityTypeMapping TypeName="FARMERDBModel.M_PDS_FARMERBANK">
+              <MappingFragment StoreEntitySet="M_PDS_FARMERBANK">
+                <ScalarProperty Name="intDeletedFlag" ColumnName="intDeletedFlag" />
+                <ScalarProperty Name="dtmUpdatedOn" ColumnName="dtmUpdatedOn" />
+                <ScalarProperty Name="intUpdatedBy" ColumnName="intUpdatedBy" />
+                <ScalarProperty Name="dtmCreatedOn" ColumnName="dtmCreatedOn" />
+                <ScalarProperty Name="intCreatedBy" ColumnName="intCreatedBy" />
+                <ScalarProperty Name="vchBankName" ColumnName="vchBankName" />
+                <ScalarProperty Name="intId" ColumnName="intId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="M_PDS_RELATIONSHIP">
+            <EntityTypeMapping TypeName="FARMERDBModel.M_PDS_RELATIONSHIP">
+              <MappingFragment StoreEntitySet="M_PDS_RELATIONSHIP">
+                <ScalarProperty Name="intFRStatus" ColumnName="intFRStatus" />
+                <ScalarProperty Name="INTSEQUENCE" ColumnName="INTSEQUENCE" />
+                <ScalarProperty Name="VCHORIYAREL" ColumnName="VCHORIYAREL" />
+                <ScalarProperty Name="VCHRELATION" ColumnName="VCHRELATION" />
+                <ScalarProperty Name="INTRELATIONID" ColumnName="INTRELATIONID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PDS_BLOCKMASTER">
+            <EntityTypeMapping TypeName="FARMERDBModel.PDS_BLOCKMASTER">
+              <MappingFragment StoreEntitySet="PDS_BLOCKMASTER">
+                <ScalarProperty Name="NIC_BlockCode" ColumnName="NIC_BlockCode" />
+                <ScalarProperty Name="dtmCreatedOn" ColumnName="dtmCreatedOn" />
+                <ScalarProperty Name="intPPASS" ColumnName="intPPASS" />
+                <ScalarProperty Name="intBlockType" ColumnName="intBlockType" />
+                <ScalarProperty Name="vchBlockType" ColumnName="vchBlockType" />
+                <ScalarProperty Name="vch_DistrictCode" ColumnName="vch_DistrictCode" />
+                <ScalarProperty Name="vch_BlockCode" ColumnName="vch_BlockCode" />
+                <ScalarProperty Name="vch_BlockNameOr" ColumnName="vch_BlockNameOr" />
+                <ScalarProperty Name="vch_BlockName" ColumnName="vch_BlockName" />
+                <ScalarProperty Name="int_DistrictID" ColumnName="int_DistrictID" />
+                <ScalarProperty Name="int_BlockID" ColumnName="int_BlockID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PDS_DISTRICTMASTER">
+            <EntityTypeMapping TypeName="FARMERDBModel.PDS_DISTRICTMASTER">
+              <MappingFragment StoreEntitySet="PDS_DISTRICTMASTER">
+                <ScalarProperty Name="dtmCreatedOn" ColumnName="dtmCreatedOn" />
+                <ScalarProperty Name="vch_RDC" ColumnName="vch_RDC" />
+                <ScalarProperty Name="int_RDCType" ColumnName="int_RDCType" />
+                <ScalarProperty Name="int_AdminId" ColumnName="int_AdminId" />
+                <ScalarProperty Name="vch_DistrictCode" ColumnName="vch_DistrictCode" />
+                <ScalarProperty Name="vch_DistrictNameOr" ColumnName="vch_DistrictNameOr" />
+                <ScalarProperty Name="vch_DistrictName" ColumnName="vch_DistrictName" />
+                <ScalarProperty Name="int_DistrictID" ColumnName="int_DistrictID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PDS_GPMASTER">
+            <EntityTypeMapping TypeName="FARMERDBModel.PDS_GPMASTER">
+              <MappingFragment StoreEntitySet="PDS_GPMASTER">
+                <ScalarProperty Name="dtmCreatedOn" ColumnName="dtmCreatedOn" />
+                <ScalarProperty Name="vch_BlockCode" ColumnName="vch_BlockCode" />
+                <ScalarProperty Name="vch_GPCode" ColumnName="vch_GPCode" />
+                <ScalarProperty Name="vch_GPNameOr" ColumnName="vch_GPNameOr" />
+                <ScalarProperty Name="vch_GPName" ColumnName="vch_GPName" />
+                <ScalarProperty Name="int_BlockID" ColumnName="int_BlockID" />
+                <ScalarProperty Name="int_GPID" ColumnName="int_GPID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PDS_VILLAGEMASTER">
+            <EntityTypeMapping TypeName="FARMERDBModel.PDS_VILLAGEMASTER">
+              <MappingFragment StoreEntitySet="PDS_VILLAGEMASTER">
+                <ScalarProperty Name="G_status" ColumnName="G_status" />
+                <ScalarProperty Name="lgvillage_code" ColumnName="lgvillage_code" />
+                <ScalarProperty Name="dtmCreatedOn" ColumnName="dtmCreatedOn" />
+                <ScalarProperty Name="vch_RefCode" ColumnName="vch_RefCode" />
+                <ScalarProperty Name="vch_censusCode" ColumnName="vch_censusCode" />
+                <ScalarProperty Name="vch_VillageNameOr" ColumnName="vch_VillageNameOr" />
+                <ScalarProperty Name="vch_VillageName" ColumnName="vch_VillageName" />
+                <ScalarProperty Name="int_GPID" ColumnName="int_GPID" />
+                <ScalarProperty Name="int_VillageID" ColumnName="int_VillageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Bank">
+            <EntityTypeMapping TypeName="FARMERDBModel.Tbl_Bank">
+              <MappingFragment StoreEntitySet="Tbl_Bank">
+                <ScalarProperty Name="IntegrationStatus" ColumnName="IntegrationStatus" />
+                <ScalarProperty Name="PFMSStatus" ColumnName="PFMSStatus" />
+                <ScalarProperty Name="Bank_Name" ColumnName="Bank_Name" />
+                <ScalarProperty Name="Bank_Code" ColumnName="Bank_Code" />
+                <ScalarProperty Name="Dist_Code" ColumnName="Dist_Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Category">
+            <EntityTypeMapping TypeName="FARMERDBModel.Tbl_Category">
+              <MappingFragment StoreEntitySet="Tbl_Category">
+                <ScalarProperty Name="Category_Value" ColumnName="Category_Value" />
+                <ScalarProperty Name="Category_ID" ColumnName="Category_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Gender">
+            <EntityTypeMapping TypeName="FARMERDBModel.Tbl_Gender">
+              <MappingFragment StoreEntitySet="Tbl_Gender">
+                <ScalarProperty Name="Gender_Value" ColumnName="Gender_Value" />
+                <ScalarProperty Name="Gender_ID" ColumnName="Gender_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Branch">
+            <EntityTypeMapping TypeName="FARMERDBModel.Tbl_Branch">
+              <MappingFragment StoreEntitySet="Tbl_Branch">
+                <ScalarProperty Name="IFSC" ColumnName="IFSC" />
+                <ScalarProperty Name="Branch_Name" ColumnName="Branch_Name" />
+                <ScalarProperty Name="Bank_Code" ColumnName="Bank_Code" />
+                <ScalarProperty Name="Branch_Code" ColumnName="Branch_Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="FarmerFamilyDetails" FunctionName="FARMERDBModel.Store.FarmerFamilyDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FARMERDBModel.FarmerFamilyDetails_Result">
+                <ScalarProperty Name="VCHNAME" ColumnName="VCHNAME" />
+                <ScalarProperty Name="INTRELATION" ColumnName="INTRELATION" />
+                <ScalarProperty Name="VCHORIYAREL" ColumnName="VCHORIYAREL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FarmerFamilyRelation" FunctionName="FARMERDBModel.Store.FarmerFamilyRelation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FARMERDBModel.FarmerFamilyRelation_Result">
+                <ScalarProperty Name="INTRELATION" ColumnName="INTRELATION" />
+                <ScalarProperty Name="VCHORIYAREL" ColumnName="VCHORIYAREL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

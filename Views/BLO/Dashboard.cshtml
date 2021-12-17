@@ -1,0 +1,2318 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutBLO.cshtml";
+}
+@using (Html.BeginForm("Dashboard", "BLO", FormMethod.Post, new { id = "FormId" }))
+{
+    @Html.AntiForgeryToken()
+}
+<div ng-app="BLODApp" ng-controller="BLODCtrl" ng-cloak>
+    <div data-loading></div>
+    <div class="right_col" role="main">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-xs-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Dashboard for Block Level Officer</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <form class="form-horizontal">
+                            <div class="row form-group">
+                                <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select ng-model="AaoRefno" ng-options="i.refno for i in getall" ng-change="refnoChange()" class="form-control">
+                                        <option value="" disabled style="text-align: center">--Select Reference Number--</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                            </div>
+                            <div class="row form-group" ng-show="DROPDOWNLIST">
+                                <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select ng-model="DocDetali" class="form-control" ng-change="dropdownvalue(DocDetali)">
+                                        <option value="" disabled style="text-align:center">--Select Details--</option>
+                                        <option value="Registration">Registration</option>
+                                        <option value="DPR">DPR</option>
+                                        <option value="FeasibilityRpt">Feasibility Report</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                            </div>
+                            <div class="row form-group" ng-show="approval">
+                                <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#ApproveModal" ng-click="openMA()"><span class="glyphicon glyphicon-ok"></span> Feasible</button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#RejectModal" ng-click="openMR()"><span class="glyphicon glyphicon-remove"></span> Not Feasible</button>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                            </div>
+                            <div class="row form-group" ng-show="notFeasibleView">
+                                <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#RModal" ng-click="getRDetails()">View Registration</button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#DModal" ng-click="getDetails()">View DPR</button>
+                                </div>
+                                <div class="col-md-2 col-sm-2 col-xs-12" ng-show="Integratedproject">
+                                    <select class="form-control" ng-model="ddlBLO" ng-change="getDeptCode(ddlBLO)" ng-options="i for i in getDeptOfficer">
+                                        <option disabled value="">Select BLO</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1 col-sm-1 col-xs-12" ng-show="Integratedproject">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" ng-click="SendBLO()">Send</button>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div modal="showModal" id="RModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg" style="width: 1300px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+                    <h3 class="modal-title text-center">View & Print Registration</h3>
+                </div>
+                <div class="modal-body" id="printSection4">
+                    <center>
+                        <div style="border: 1px solid black; background-color: white; width: 100%">
+                            <table style="width: 100%">
+                                <tr>
+                                    <td style="width: 120px; padding: 10px"><img src="~/Content/images/govtlogo.jpg" /></td>
+                                    <td style="text-align: center"><h3>Department of Agriculture and Farmers' Empowerment</h3></td>
+                                    <td style="width: 120px; padding: 10px"><img style="height: 80px; width: 86px" src="~/Content/images/ApicolLOGO.jpg" /></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center" colspan="3"><h3>Registration</h3></td>
+                                </tr>
+                            </table>
+                            <hr class="form-group" style="border-top: 1px solid black" />
+                            <div class="row form-group">
+                                <table style="width: 90%">
+                                    <tr>
+                                        <td><b>Applicant Details -----</b><br /><input type="image" src="~/Content/images/ul.jpg" /></td>
+                                        <td class="printhide" colspan="2">
+                                            <input type="button" class="btn btn-xs btn-warning" value="Edit Applicant Details" id="btnEAD" ng-show="!adTextBox" ng-click="showTBHLad()" />
+                                            <input type="button" class="btn btn-xs btn-success" value="Update Applicant Details" id="btnUAD" ng-show="!adLabel" ng-click="showLHTBad()" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Reference No.</b></td>
+                                        <td>: {{t.ReferenceNumber}}</td>
+                                        <td rowspan="8" style="text-align: center"><img id="passpic" style="width: 122px; height: 142px; border: 1px solid black" /><br />Photograph</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Date of Application</b></td>
+                                        <td>: {{t.DateOfApplication}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Submited to</b></td>
+                                        <td>: Block Level Officer : {{t.Block}}, {{t.AppliedTo}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Farmer ID</b></td>
+                                        <td>: {{t.FarmerID}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Applicant Type</b></td>
+                                        <td>: {{t.ApplicantType}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Applicant Name</b></td>
+                                        <td>: {{t.ApplicantName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Name of the Father / Husband</b></td>
+                                        <td>: {{t.FatherorHusbandName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Gender</b></td>
+                                        <td>: {{t.Gender}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Category</b></td>
+                                        <td>: {{t.Category}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Educational Qualification</b></td>
+                                        <td>: {{t.EducationalQualification}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Annual Income</b></td>
+                                        <td ng-show="adLabel">: ₹ {{t.AnnualIncome}}</td>
+                                        <td class="printhide" ng-show="adTextBox">
+                                            <input type="text" maxlength="15" valid-number id="textAnnualIncome" ng-model="txtAnnualIncome" placeholder="Enter the Annual Income" class="form-control" style="width: 50%; margin: 5px 0">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Present Occupation</b></td>
+                                        <td ng-show="adLabel">: {{t.PresentOccupation}}</td>
+                                        <td class="printhide" ng-show="adTextBox">
+                                            <input type="text" maxlength="50" alphabet-only id="textPresentOccupation" ng-model="txtPresentOccupation" placeholder="Enter the Present Occupation" class="form-control" style="width: 50%; margin: 5px 0">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Previous Experience</b></td>
+                                        <td ng-show="adLabel">: {{t.PreviousExperience}}</td>
+                                        <td class="printhide" ng-show="adTextBox">
+                                            <label style="font-weight: 100">
+                                                <input type="radio" ng-model="rbPreviousExperience" ng-checked="t.PreviousExperience == true" value="Yes">
+                                                <text>Yes</text>
+                                                <input type="radio" ng-model="rbPreviousExperience" ng-checked="t.PreviousExperience == false" value="No">
+                                                <text>No</text>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr ng-show="t.ApplicantType == 'Group'">
+                                        <td><b>Type of Group</b></td>
+                                        <td ng-show="adLabel">: {{t.GroupType}}</td>
+                                        <td colspan="2" class="printhide" ng-show="adTextBox">
+                                            <label style="font-weight: 100" ng-repeat="i in grouptype">
+                                                <input type="radio" name="i.Code" ng-model="rbGroupType" ng-click="getCV(i.Code)" ng-checked="t.GroupTypeCode == i.Code" value="{{i.Code}}">
+                                                <text>{{i.Name}}</text>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="t.ApplicantType == 'Group'">
+                                        <td><b>Number of Group Members</b></td>
+                                        <td>: {{t.GMNumber}}</td>
+                                    </tr>
+                                    <tr ng-show="t.ApplicantType == 'Group'">
+                                        <td><b>Firm Name</b></td>
+                                        <td ng-show="adLabel">: {{t.FirmName}}</td>
+                                        <td class="printhide" ng-show="adTextBox">
+                                            <input type="text" maxlength="50" alphabet-only id="textFirmName" ng-model="txtFirmName" placeholder="Enter the Present Occupation" class="form-control" style="width: 50%; margin: 5px 0">
+                                        </td>
+                                    </tr>
+                                    <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                    <tr ng-if="t.ApplicantType == 'Group'">
+                                        <td colspan="3"><b>Details of the Group Members -----</b><br /><input type="image" src="~/Content/images/ul.jpg" /></td>
+                                    </tr>
+                                    <tr ng-if="t.ApplicantType == 'Group'">
+                                        <td><b>Sl. No.</b></td>
+                                        <td><b>Group Member Farmer ID</b></td>
+                                        <td><b>Educational Qualification</b></td>
+                                    </tr>
+                                    <tr ng-if="t.ApplicantType == 'Group'" ng-repeat="i in grMem">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{i.GroupMemberFarmerID}}</td>
+                                        <td>{{i.EducationalQualificationName}}</td>
+                                    </tr>
+                                    <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                    <tr>
+                                        <td><b>Applicant's Address Details -----</b><br /><input type="image" src="~/Content/images/ul.jpg" /></td>
+                                        <td class="printhide">
+                                            <input type="button" class="btn btn-xs btn-warning" value="Edit Applicant's Address Details" id="btnEAAD" ng-show="!aadTextBox" ng-click="showTBHLaad()" />
+                                            <input type="button" class="btn btn-xs btn-success" value="Update Applicant's Address Details" id="btnUAAD" ng-show="!aadLabel" ng-click="showLHTBaad()" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Correspondance Address (With PIN)</b></td>
+                                        <td ng-show="aadLabel">: {{t.CorrespondenceAddress}}</td>
+                                        <td class="printhide" ng-show="aadTextBox">
+                                            <textarea class="form-control" placeholder="Enter your Address for Correspondence" id="corespondenceAdd" address-only ng-model="txtAddressForCorrespondence" rows="3" ng-trim="false" maxlength="300" style="width: 50%; margin: 5px 0"></textarea>
+                                            <p class="text-right">{{300 - txtAddressForCorrespondence.length + ' characters remaining'}}</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Permanent Address</b></td>
+                                        <td ng-show="aadLabel">: {{t.PermanentAddress}}</td>
+                                        <td class="printhide" ng-show="aadTextBox">
+                                            <textarea class="form-control" placeholder="Enter your Permanent Address" id="permanentAddress" address-only ng-model="txtPermanentAddress" rows="3" ng-trim="false" maxlength="300" style="width: 50%; margin: 5px 0"></textarea>
+                                            <p class="text-right">{{300 - txtPermanentAddress.length + ' characters remaining'}}</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Pincode</b></td>
+                                        <td ng-show="aadLabel">: {{t.Pincode}}</td>
+                                        <td class="printhide" ng-show="aadTextBox">
+                                            <input type="text" id="Pincode" valid-number hide-zero ng-model="txtPin" placeholder="Enter your Pincode" class="form-control" minlength="6" maxlength="6" style="width: 50%; margin: 5px 0" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Mobile No.</b></td>
+                                        <td>: {{t.MobileNumber}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>E-Mail ID</b></td>
+                                        <td ng-show="aadLabel">: {{t.EmailID == null ? 'NA' : t.EmailID}}</td>
+                                        <td class="printhide" ng-show="aadTextBox">
+                                            <input type="email" id="emailID" ng-model="txtEmailID" placeholder="Enter your Email-ID" class="form-control" ng-blur="EmailCheck(txtEmailID)" maxlength="50" style="width: 50%; margin: 5px 0" />
+                                        </td>
+                                    </tr>
+                                    <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                    <tr>
+                                        <td><b>Project Informations -----</b><br /><input type="image" src="~/Content/images/ul.jpg" /></td>
+                                        <td class="printhide">
+                                            <input type="button" class="btn btn-xs btn-warning" value="Edit Project Informations & Costs" id="btnEPI" ng-show="!piTextBox" ng-click="showTBHLpi()" />
+                                            <input type="button" class="btn btn-xs btn-success" value="Update Project Informations & Costs" id="btnUPI" ng-show="!piLabel" ng-click="showLHTBpi()" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Type of Project</b></td>
+                                        <td>: {{t.Department}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Project Name</b></td>
+                                        <td>: {{t.Project}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Products / Services to be produced / marketed</b></td>
+                                        <td ng-show="piLabel">: {{t.ProductsProduced}}</td>
+                                        <td class="printhide" ng-show="piTextBox">
+                                            <input type="text" maxlength="50" alphabet-only id="textPPSM" ng-model="txtPPSM" placeholder="Enter the Products / Services" class="form-control" style="width: 50%; margin: 5px 0">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Capacity</b></td>
+                                        <td ng-show="piLabel || t.Capacity == null">: {{t.Capacity == null ? 'NA' : t.Capacity}}</td>
+                                        <td class="printhide" ng-show="piTextBox && t.Capacity != null">
+                                            <input type="text" maxlength="15" valid-number id="textCapacity" ng-model="txtCapacity" placeholder="Enter the Capacity" class="form-control" style="width: 50%; margin: 5px 0">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Unit</b></td>
+                                        <td>: {{t.CapacityUnit == null ? 'NA' : t.CapacityUnit}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Means of Finance</b></td>
+                                        <td ng-show="piLabel">: {{t.FinanceType}}</td>
+                                        <td class="printhide" ng-show="piTextBox">
+                                            <label style="font-weight: 100">
+                                                <input type="radio" ng-model="rbFinanceType" ng-checked="t.FinanceType == 'Self'" value="Self" ng-click="ifBank = false; updateSum()">
+                                                <text>Self</text>
+                                                <input type="radio" ng-model="rbFinanceType" ng-checked="t.FinanceType == 'Bank'" value="Bank" ng-click="showTBHLpi(); updateSum()">
+                                                <text>Bank</text>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr ng-show="ifBank">
+                                        <td><b>Bank Name</b></td>
+                                        <td ng-show="piLabel">: {{t.Bank}}</td>
+                                        <td class="printhide" ng-show="piTextBox">
+                                            <select class="form-control" name="Bank" ng-model="ddlBank" ng-change="getBranch(ddlBank)" ng-options="i.intId as i.vchBankName for i in bank" style="width: 50%; margin: 5px 0">
+                                                <option value="" disabled>---Select the Bank---</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr ng-show="ifBank">
+                                        <td><b>Branch Name</b></td>
+                                        <td ng-show="piLabel">: {{t.Branch}}</td>
+                                        <td class="printhide" ng-show="piTextBox">
+                                            <select class="form-control" name="Branch" ng-model="ddlBranch" ng-options="i.intBranchId as i.vchBranchName for i in branch" style="width: 50%; margin: 5px 0">
+                                                <option value="" disabled>---Select the Branch---</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Whether CIS previously availed for any project</b></td>
+                                        <td>: {{t.IsCISPreviouslyAvailed}}</td>
+                                    </tr>
+                                    <tr ng-if="t.IsCISPreviouslyAvailed=='Yes'">
+                                        <td><b>CIS Project Type</b></td>
+                                        <td>: {{t.CISProject}}</td>
+                                    </tr>
+                                    <tr ng-if="t.IsCISPreviouslyAvailed=='Yes'">
+                                        <td><b>CIS Location</b></td>
+                                        <td>: {{t.CISProject}}</td>
+                                    </tr>
+                                    <tr ng-if="t.IsCISPreviouslyAvailed=='Yes'">
+                                        <td><b>CIS Availed Year</b></td>
+                                        <td>: {{t.CISProject}}</td>
+                                    </tr>
+                                    <tr ng-if="t.IsCISPreviouslyAvailed=='Yes'">
+                                        <td><b>CIS Finance Type</b></td>
+                                        <td>: {{t.CISProject}}</td>
+                                    </tr>
+                                    <tr ng-if="t.IsCISPreviouslyAvailed=='Yes'">
+                                        <td><b>CIS Amount</b></td>
+                                        <td>: {{t.CISProject}}</td>
+                                    </tr>
+                                    <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                    <tr ng-if="t.Project == 'Integrated Farming'">
+                                        <td colspan="5"><b>Projects under Integrated Farming -----</b><br /><input type="image" src="~/Content/images/ul.jpg" /></td>
+                                    </tr>
+                                    <tr ng-if="t.Project == 'Integrated Farming'">
+                                        <td><b>Sl. No.</b></td>
+                                        <td><b>Projects</b></td>
+                                        <td><b>Sectors</b></td>
+                                        <td><b>Capacity</b></td>
+                                        <td><b>Unit</b></td>
+                                    </tr>
+                                    <tr ng-if="t.Project == 'Integrated Farming'" ng-repeat="i in iProjects">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{i.ProjectTypeName}}</td>
+                                        <td>{{i.DepartmentName}}</td>
+                                        <td>{{i.Capacity == null ? 'NA' : i.Capacity}}</td>
+                                        <td>{{i.Unit == null ? 'NA' : i.Unit}}</td>
+                                    </tr>
+                                    <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                    <tr>
+                                        <td colspan="2"><b>Tentative Cost of the Project (in ₹) -----</b><br /><input type="image" src="~/Content/images/ul.jpg" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Approximate Cost</b></td>
+                                        <td ng-show="piLabel">: {{t.ApproximateCost}}</td>
+                                        <td class="printhide" ng-show="piTextBox">
+                                            <label style="font-weight: 100">
+                                                <input type="radio" ng-model="rbAC" ng-checked="t.FinanceType == 'Below 1 Crore'" value="Below 1 Crore">
+                                                <text>Below 1 Crore</text>
+                                                <input type="radio" ng-model="rbAC" ng-checked="t.FinanceType == '1 Crore or Above'" value="1 Crore or Above">
+                                                <text>1 Crore or Above</text>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Own Contribution</b></td>
+                                        <td ng-show="piLabel">: ₹ {{t.OwnContribution}}</td>
+                                        <td class="printhide" ng-show="piTextBox">
+                                            <input type="text" maxlength="12" valid-number hide-zero ng-model="txtOwnContribution" ng-change="updateSum()" placeholder="Enter the Own Contribution" class="form-control" style="width: 50%; margin: 5px 0">
+                                        </td>
+                                    </tr>
+                                    <tr ng-show="ifBank">
+                                        <td><b>Bank Loan</b></td>
+                                        <td ng-show="piLabel">: ₹ {{t.BankLoan}}</td>
+                                        <td class="printhide" ng-show="piTextBox">
+                                            <input type="text" maxlength="12" valid-number hide-zero ng-model="txtBankLoan" ng-change="updateSum()" placeholder="Enter the Bank Loan" class="form-control" style="width: 50%; margin: 5px 0">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Total Cost</b></td>
+                                        <td ng-show="piLabel">: ₹ {{t.TotalCost}}</td>
+                                        <td class="printhide" ng-show="piTextBox">
+                                            <input type="text" maxlength="15" valid-number hide-zero disabled ng-model="txtTotal" class="form-control" style="width: 50%; margin: 5px 0">
+                                        </td>
+                                    </tr>
+                                    <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                    <tr>
+                                        <td colspan="2"><b>Documents Attached -----</b><br /><input type="image" src="~/Content/images/ul.jpg" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Land Record / Lease Document</b></td>
+                                        <td>: <input type="checkbox" disabled checked /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Education Certificate</b></td>
+                                        <td>: <input type="checkbox" disabled ng-checked="t.EducationalCertificate != ''" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Bank Consent Letter</b></td>
+                                        <td>: <input type="checkbox" disabled ng-checked="t.BankConsentLeter != ''" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>CIS Bank Clearance Certificate</b></td>
+                                        <td>: <input type="checkbox" disabled ng-checked="t.CISBankConsentLeter != ''" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Photograph of the Applicant</b></td>
+                                        <td>: <input type="checkbox" disabled checked /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Identity Proof</b></td>
+                                        <td>: <input type="checkbox" disabled checked /></td>
+                                    </tr>
+                                </table>
+                                <br />
+                                <table id="ackTable" style="width: 90%; border: 1px solid black">
+                                    <tr>
+                                        <td colspan="17" style="text-align: left"><b>Proposed Location of CAE with land Particulars -----</b><br /><input type="image" src="~/Content/images/ul.jpg" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Sl. No.</b></td>
+                                        <td><b>Khata No.</b></td>
+                                        <td><b>Plot No.</b></td>
+                                        <td><b>District</b></td>
+                                        <td ng-if="localRU == 'Rural'"><b>Block</b></td>
+                                        <td ng-if="localRU == 'Rural'"><b>GP</b></td>
+                                        <td ng-if="localRU == 'Urban'"><b>Tehsil</b></td>
+                                        <td ng-if="localRU == 'Urban'"><b>RI Circle</b></td>
+                                        <td><b>Village</b></td>
+                                        <td><b>Tenant Name</b></td>
+                                        <td><b>Kisam</b></td>
+                                        <td><b>Area In Hectare</b></td>
+                                        <td><b>Area In Acre</b></td>
+                                        <td><b>Area of Execution</b></td>
+                                        <td><b>Unit of Execution Area</b></td>
+                                        <td><b>Relationship</b></td>
+                                        <td><b>Locality</b></td>
+                                    </tr>
+                                    <tr ng-repeat="i in landRecord">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{i.KhataNo}}</td>
+                                        <td>{{i.PlotNo}}</td>
+                                        <td>{{i.DistName}}</td>
+                                        <td ng-if="i.Locality == 'Rural'">{{i.BlockName}}</td>
+                                        <td ng-if="i.Locality == 'Rural'">{{i.GPName}}</td>
+                                        <td ng-if="i.Locality == 'Urban'">{{i.TehsilName}}</td>
+                                        <td ng-if="i.Locality == 'Urban'">{{i.RICircleName}}</td>
+                                        <td>{{i.VillageName}}</td>
+                                        <td>{{i.TenantName}}</td>
+                                        <td>{{i.Kisam == null ? 'NA' : i.Kisam}}</td>
+                                        <td>{{i.AreaInHectare}}</td>
+                                        <td>{{i.AreaInAcre}}</td>
+                                        <td>{{i.ExecArea}}</td>
+                                        <td>{{i.ExecUnit}}</td>
+                                        <td>{{i.Relationship}}</td>
+                                        <td>{{i.Locality}}</td>
+                                    </tr>
+                                </table>
+                                <br />
+                                <table style="width: 90%">
+                                    <tr>
+                                        <td colspan="1"><b>Signature of the Applicant -----</b><br /><input type="image" src="~/Content/images/ul.jpg" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center"><img id="photoSignature" style="height: 100px; width: 200px; border: 1px solid black" /></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </center>
+                </div>
+                <div class="modal-footer">
+                    <div class="row text-left col-md-10 col-sm-10 col-xs-12">
+                        <div class="row col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-4 col-sm-4 col-sm-12">
+                                <div class="col-md-9 col-sm-9 col-xs-12"><b>Preferential Treatment Certificate</b></div>
+                                <div class="col-md-2 col-sm-2 col-xs-12" ng-show="t.EducationalCertificate != ''">
+                                    <input type="button" value="Edit" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#updatePTCCGAADModal" id="btnEditPTCCGAAD" />
+                                </div>
+                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                    <a href="#" ng-show="t.EducationalCertificate != ''" ng-click="viewPTCCGAAD('CGCertificate')"><input type="image" src="~/Content/images/binocular-solid.png" style="width: 20px; height: 20px" /></a>
+                                    <b ng-show="t.EducationalCertificate == ''" style="color: red">NA</b>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-sm-12">
+                                <div class="col-md-9 col-sm-9 col-xs-12"><b>Bank Consent Letter</b></div>
+                                <div class="col-md-2 col-sm-2 col-xs-12" ng-show="t.BankConsentLeter != ''">
+                                    <input type="button" value="Edit" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#updateBCLModal" id="btnEditBankCL" />
+                                </div>
+                                <div class="col-md-2 col-sm-2 col-xs-12" ng-show="t.BankConsentLeter == '' && t.FinanceType == 'Bank'">
+                                    <input type="button" value="Upload" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#updateBCLModal" id="btnInsertBankCL" />
+                                </div>
+                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                    <a href="#" ng-show="t.BankConsentLeter != ''" ng-click="viewBankCL('BankConsent')"><input type="image" src="~/Content/images/binocular-solid.png" style="width: 20px; height: 20px" /></a>
+                                    <b ng-show="t.BankConsentLeter == ''" style="color: red">NA</b>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-sm-12">
+                                <div class="col-md-10 col-sm-10 col-xs-12"><b>CIS Bank Clearance Certificate</b></div>
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    <a href="#" ng-show="t.CISBankConsentLeter != ''" ng-click="viewCISBankCC('BankDocument')"><input type="image" src="~/Content/images/binocular-solid.png" style="width: 20px; height: 20px" /></a>
+                                    <b ng-show="t.CISBankConsentLeter == ''" style="color: red">NA</b>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-4 col-sm-4 col-sm-12">
+                                <div class="col-md-9 col-sm-9 col-xs-12"><b>1st Land Document</b></div>
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    <input type="button" value="Edit" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#updateLandModal1" id="btnEdit1" />
+                                </div>
+                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                    <a href="#" ng-click="viewDocumentFile('LandPdf1')"><input type="image" src="~/Content/images/binocular-solid.png" style="width: 20px; height: 20px" /></a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-sm-12">
+                                <div class="col-md-9 col-sm-9 col-xs-12"><b>2nd Land Document</b></div>
+                                <div class="col-md-2 col-sm-2 col-xs-12" ng-show="result.pdffile2 != null">
+                                    <input type="button" value="Edit" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#updateLandModal2" id="btnEdit2" />
+                                </div>
+                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                    <a href="#" ng-show="result.pdffile2 != null" ng-click="viewDocumentFile('LandPdf2')"><input type="image" src="~/Content/images/binocular-solid.png" style="width: 20px; height: 20px" /></a>
+                                    <b ng-show="result.pdffile2 == null" style="color: red">NA</b>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-sm-12">
+                                <div class="col-md-9 col-sm-9 col-xs-12"><b>ID Proof</b></div>
+                                <div class="col-md-2 col-sm-2 col-xs-12">
+                                    <input type="button" value="Edit" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#updateIDProofModal" id="btnEditIDProof" />
+                                </div>
+                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                    <a href="#" ng-click="viewIDProof('IdentityProof')"><input type="image" src="~/Content/images/binocular-solid.png" style="width: 20px; height: 20px" /></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-md-2 col-sm-2 col-xs-12" style="margin: 10px -10px">
+                        <button type="button" class="btn btn-primary icon-printer" data-dismiss="modal" ng-click="print('printSection4')">Print Registration</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="updateIDProofModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title" style="text-align: center; font-size: 15px"><b>Update Identity Proof</b></h6>
+                </div>
+                <form role="form" novalidate autocomplete="off" name="frmIDP" ng-submit="frmIDP.$valid" class="form-horizontal form-label-left">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <div class="form-group">
+                                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                                        Upload Identity Proof
+                                        <span class="text-warning">(Maximum 400KB)</span>
+                                    </label>
+                                    <div class="col-md-7 col-sm-7 col-xs-12 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                                            <input type="file" class="form-control" name="updateIDProof" id="updateIDProof" ng-model="updateIDProof" onchange="angular.element(this).scope().uploadlandfile5(this.files)" />
+                                            <textarea class="form-control" hidden id="base64textarea8" placeholder="Base64 will appear here" ng-model="InputDocument" style="display: none"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <div class="text-right col-md-12 col-sm-12 col-xs-12">
+                                <input type="submit" class="btn btn-success" ng-click="UpdateIDP()" value="Update" />
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="updateLandModal1" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title" style="text-align: center; font-size: 15px"><b>Update Land Document</b></h6>
+                </div>
+                <form role="form" novalidate autocomplete="off" name="uLanddoc" ng-submit="uLanddoc.$valid" class="form-horizontal form-label-left">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <div class="form-group">
+                                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                                        Upload Land Document
+                                        <span class="text-warning">(Maximum 950KB)</span>
+                                    </label>
+                                    <div class="col-md-7 col-sm-7 col-xs-12 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                                            <input type="file" class="form-control" name="updtlanddocument1" id="updtlanddocument1" ng-model="updtlanddocument1" onchange="angular.element(this).scope().uploadlandfile3(this.files)" />
+                                            <textarea class="form-control" hidden id="base64textarea6" placeholder="Base64 will appear here" ng-model="InputDocument" style="display: none"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <div class="text-right col-md-12 col-sm-12 col-xs-12">
+                                <input type="submit" class="btn btn-success" ng-click="UpdateLandDocument1()" value="Update" />
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="updateLandModal2" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title" style="text-align: center; font-size: 15px"><b>Update Land Document</b></h6>
+                </div>
+                <form role="form" novalidate autocomplete="off" name="uLanddoc" ng-submit="uLanddoc.$valid" class="form-horizontal form-label-left">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <div class="row form-group" ng-show="Secondpdf">
+                                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                                        Upload Land Document
+                                        <span class="text-warning">(Maximum 950KB)</span>
+                                    </label>
+                                    <div class="col-md-7 col-sm-7 col-xs-12 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                                            <input type="file" class="form-control" name="updatelanddocument2" id="updatelanddocument2" ng-model="updatelanddocument2" onchange="angular.element(this).scope().uploadlandfile4(this.files)" />
+                                            <textarea class="form-control" hidden id="base64textarea7" placeholder="Base64 will appear here" ng-model="InputDocument" style="display: none"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <div class="text-right col-md-12 col-sm-12 col-xs-12">
+                                <input type="submit" class="btn btn-success" ng-click="UpdateLandDocument2()" value="Update" />
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="updateBCLModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 ng-show="t.BankConsentLeter != ''" class="modal-title" style="text-align: center; font-size: 15px"><b>Update Bank Consent Letter</b></h6>
+                    <h6 ng-show="t.BankConsentLeter == '' && t.FinanceType == 'Bank'" class="modal-title" style="text-align: center; font-size: 15px"><b>Upload Bank Consent Letter</b></h6>
+                </div>
+                <form role="form" novalidate autocomplete="off" name="uBCL" ng-submit="uBCL.$valid" class="form-horizontal form-label-left">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <div class="form-group">
+                                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                                        Upload Bank Consent Letter
+                                        <span class="text-warning">(Maximum 500KB)</span>
+                                    </label>
+                                    <div class="col-md-7 col-sm-7 col-xs-12 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                                            <input type="file" class="form-control" name="updateBankCL" id="updateBankCL" ng-model="updateBankCL" onchange="angular.element(this).scope().uploadBankCLFile(this.files)" />
+                                            <textarea class="form-control" hidden id="base64textarea18" placeholder="Base64 will appear here" ng-model="InputDocument" style="display: none"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <div class="text-right col-md-12 col-sm-12 col-xs-12">
+                                <input ng-show="t.BankConsentLeter != ''" type="submit" class="btn btn-success" ng-click="UpdateBankCLFile()" value="Update" />
+                                <input ng-show="t.BankConsentLeter == '' && t.FinanceType == 'Bank'" type="submit" class="btn btn-success" ng-click="UpdateBankCLFile()" value="Upload" />
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="updatePTCCGAADModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h6 class="modal-title" style="text-align: center; font-size: 15px"><b>Update Preferential Treatment Certificate (Cast / Graduation in Agriculture and Allied Discipline)</b></h6>
+                </div>
+                <form role="form" novalidate autocomplete="off" name="ptc" ng-submit="ptc.$valid" class="form-horizontal form-label-left">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <div class="form-group">
+                                    <label style="text-align: left" class="control-label col-md-5 col-sm-5 col-xs-12">
+                                        Upload Preferential Treatment Certificate (Cast / Graduation in Agriculture and Allied Discipline)
+                                        <span class="text-warning">(Maximum 500KB)</span>
+                                    </label>
+                                    <div class="col-md-7 col-sm-7 col-xs-12 inputGroupContainer">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                                            <input type="file" class="form-control" name="updatePTCCGAAD" id="updatePTCCGAAD" ng-model="updatePTCCGAAD" onchange="angular.element(this).scope().uploadPTCCGAADFile(this.files)" />
+                                            <textarea class="form-control" hidden id="base64textarea14" placeholder="Base64 will appear here" ng-model="InputDocument" style="display: none"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <div class="text-right col-md-12 col-sm-12 col-xs-12">
+                                <input type="submit" class="btn btn-success" ng-click="UpdatePTCCGAADFile()" value="Update" />
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div modal="showModal1" id="DModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+                    <h3 class="modal-title text-center">View & Print DPR</h3>
+                </div>
+                <div class="modal-body">
+                    <div id="printSection1" class="text-center">
+                        <center>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td style="width: 120px; padding: 10px"><img src="../Content/images/govtlogo.jpg" /></td>
+                                    <td style="text-align: center"><h3>Department of Agriculture and Farmers' Empowerment</h3></td>
+                                    <td style="width: 120px; padding: 10px"><img style="height: 80px; width: 86px" src="~/Content/images/ApicolLOGO.jpg" /></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center" colspan="3"><h3>DPR</h3></td>
+                                </tr>
+                            </table>
+                            <h3>Beneficiary Details</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 50%"><b>Reference No</b></td>
+                                    <td style="width: 50%">{{referenceNo}}</td>
+                                </tr>
+                            </table>
+                            <h3>Land</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Land Development</b></td>
+                                    <td style="width: 25%">₹ {{z.Development}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Fencing <small>(Barbed Wire / Green Fencing)</small></b></td>
+                                    <td style="width: 25%">₹ {{z.Fencing}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.LandTotal}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="printhide" colspan="2" style="text-align: right">
+                                        <input type="button" class="btn btn-warning" data-toggle="modal" data-target="#landModal" id="btnLandModal" value="Edit" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <h3>Civil Construction <small>(Exclusively used for the Project)</small></h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Building</b></td>
+                                    <td style="width: 25%">₹ {{z.Building}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Shed</b></td>
+                                    <td style="width: 25%">₹ {{z.Shed}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Office cum Store</b></td>
+                                    <td style="width: 25%">₹ {{z.OfficeCumStore}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Godown</b></td>
+                                    <td style="width: 25%">₹ {{z.Godown}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Plant Area</b></td>
+                                    <td style="width: 25%">₹ {{z.PlantArea}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Other Necessary Constructions</b></td>
+                                    <td style="width: 25%">₹ {{z.OtherNecessaryConstruction}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.CivilConstructionTotal}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="printhide" colspan="2" style="text-align: right">
+                                        <input type="button" class="btn btn-warning" data-toggle="modal" data-target="#civilConstructionModal" id="btnCivilConstructionModal" value="Edit" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <h3>Water Supply</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Bore Well / Tube Well / Dug Well / River Lift</b></td>
+                                    <td style="width: 25%">₹ {{z.WellOrRiver}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Pump & Pipeline</b></td>
+                                    <td style="width: 25%">₹ {{z.PumpPipeLine}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Tank / Overhead Tank</b></td>
+                                    <td style="width: 25%">₹ {{z.Tank}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sprinkler / Fogger</b></td>
+                                    <td style="width: 25%">₹ {{z.SprinklerFogger}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.WaterSupplyTotal}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="printhide" colspan="2" style="text-align: right">
+                                        <input type="button" class="btn btn-warning" data-toggle="modal" data-target="#waterSupplyModal" id="btnWaterSupplyModal" value="Edit" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <h3>Electrification</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Installation & Fitting</b></td>
+                                    <td style="width: 25%">₹ {{z.InstallationFitting}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Transformer</b></td>
+                                    <td style="width: 25%">₹ {{z.Transformer}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>DG Set</b></td>
+                                    <td style="width: 25%">₹ {{z.DGSet}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.ElectrificationTotal}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="printhide" colspan="2" style="text-align: right">
+                                        <input type="button" class="btn btn-warning" data-toggle="modal" data-target="#electrificationModal" id="btnElectrificationModal" value="Edit" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <h3>Plant & Machinery</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Equipment & Machinery <small>(including Transportation, Tax, & Insurance)</small></b></td>
+                                    <td style="width: 25%">₹ {{z.Equipment}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Manual / Motor Operated Equipment <small>(eg. Poultry Cages / Brooding & Growing Equipments / Milking Machine / Chaff Cutter / Refrigeration / Preservation Unit / Fisheries Equipments, etc)</small></b></td>
+                                    <td style="width: 25%">₹ {{z.ManualOrMotor}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.PlantMachineryTotal}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="printhide" colspan="2" style="text-align: right">
+                                        <input type="button" class="btn btn-warning" data-toggle="modal" data-target="#plantMachineryModal" id="btnPlantMachineryModal" value="Edit" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <h3>Animal & Plant Cost</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td colspan="2">Livestocks :--- <small>(including Transportation, Tax, & Insurance)</small></td>
+                                </tr>
+                                <tr>
+                                    <td ng-if="z.LivestockType != null" style="width: 75%"><b>{{z.LivestockType}}</b></td>
+                                    <td ng-if="z.LivestockType == null" style="width: 75%"><b>NA</b></td>
+                                    <td ng-if="z.Livestock != null" style="width: 25%">₹ {{z.Livestock}}</td>
+                                    <td ng-if="z.Livestock == null" style="width: 25%">NA</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Poultry Layer & Breeder Birds <small>(Broiler not Included)</small></b></td>
+                                    <td style="width: 25%">₹ {{z.PoultryBreeder}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Brood Fish</b></td>
+                                    <td style="width: 25%">₹ {{z.BroodFish}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Plants</b></td>
+                                    <td style="width: 25%">₹ {{z.Plant}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.AnimalPlantTotal}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="printhide" colspan="2" style="text-align: right">
+                                        <input type="button" class="btn btn-warning" data-toggle="modal" data-target="#animalPlantCostModal" id="btnAnimalPlantCostModal" value="Edit" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <h3>Miscellaneous</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td colspan="2">Insurance Premium of Assets :---</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>i. Fixed Assets</b></td>
+                                    <td style="width: 25%">₹ {{z.FixedAsset}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>ii. Livestocks</b></td>
+                                    <td style="width: 25%">₹ {{z.MLivestock}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>iii. Birds</b></td>
+                                    <td style="width: 25%">₹ {{z.Bird}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Perennial Fodder Cultivation</b></td>
+                                    <td style="width: 25%">₹ {{z.Cultivation}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.MiscellaneousTotal}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="printhide" colspan="2" style="text-align: right">
+                                        <input type="button" class="btn btn-warning" data-toggle="modal" data-target="#miscellaneousModal" id="btnMiscellaneousModal" value="Edit" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <h3>Total Capital Investment Cost</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Total Capital Investment Cost <small>(A. Land - G. Miscellaneous)</small></b></td>
+                                    <td style="width: 25%">₹ {{z.TotalCapitalInvestmentCost}}</td>
+                                </tr>
+                            </table>
+                            <h3>Recurring Expenditure upto trial Production (not Eligible for CIS)</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Raw Material (Food, Seeds, Medicines, Fertilizers, Chemicals, etc)</b></td>
+                                    <td style="width: 25%">₹ {{z.RawMaterial}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Salary / labour</b></td>
+                                    <td style="width: 25%">₹ {{z.Salary}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Reparing & Maintainence, etc</b></td>
+                                    <td style="width: 25%">₹ {{z.Maintenance}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.RecurringExpenditureTotal}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="printhide" colspan="2" style="text-align: right">
+                                        <input type="button" class="btn btn-warning" data-toggle="modal" data-target="#recurringExpenditureModal" id="btnRecurringExpenditureModal" value="Edit" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <h3>Total Project Cost</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Total Project Cost <small>(1. Capital Investment + 2. Recurring Expenditure)</small></b></td>
+                                    <td style="width: 25%">₹ {{z.TotalProjectCost}}</td>
+                                </tr>
+                            </table>
+                            <h3>Means of Finance</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 50%"><b>Own Investment</b></td>
+                                    <td style="width: 25%">₹ {{z.OwnInvestment}}</td>
+                                    <td style="width: 25%">Remark: {{z.OwnInvestmentRemark == null ? "NA" : z.OwnInvestmentRemark}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%"><b>Term Loan</b></td>
+                                    <td style="width: 25%">₹ {{z.TermLoan}}</td>
+                                    <td style="width: 25%">Remark: {{z.TermLoanRemark == null ? "NA" : z.TermLoanRemark}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%"><b>Working Capital Loan</b></td>
+                                    <td style="width: 25%">₹ {{z.WorkingCapitalLoan}}</td>
+                                    <td style="width: 25%">Remark: {{z.WorkingCapitalLoanRemark == null ? "NA" : z.WorkingCapitalLoanRemark}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%"><b>Any Other Source</b></td>
+                                    <td style="width: 25%">₹ {{z.OtherSource}}</td>
+                                    <td style="width: 25%">Remark: {{z.OtherSourceRemark == null ? "NA" : z.OtherSourceRemark}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%"><b>Total Finance</b></td>
+                                    <td style="width: 25%">₹ {{z.TotalAmount}}</td>
+                                    <td style="width: 25%"></td>
+                                </tr>
+                                <tr>
+                                    <td class="printhide" colspan="3" style="text-align: right">
+                                        <input type="button" class="btn btn-warning" data-toggle="modal" data-target="#meansOfFinanceModal" id="btnMeansOfFinanceModal" value="Edit" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <h3>Profitability Projection</h3><hr />
+                            <table style="width: 87.5%; text-align: center" class="table table-striped table-bordered">
+                                <tr style="font-size: smaller">
+                                    <td><b>Serial No.</b></td>
+                                    <td><b>Year</b></td>
+                                    <td><b>Gross Revenue / Income ( ₹ )</b></td>
+                                    <td><b>Total Expenditure ( ₹ )</b></td>
+                                    <td><b>Gross Profit <small>(PBDIT)</small> ( ₹ )</b></td>
+                                    <td><b>Net Profit ( ₹ )</b></td>
+                                    <td class="printhide"><b>Action</b></td>
+                                </tr>
+                                <tr ng-repeat="i in profitabilityProjectionDetails">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{i.Year}}</td>
+                                    <td>{{i.GrossRevenue}}</td>
+                                    <td>{{i.TotalExpenditure}}</td>
+                                    <td>{{i.GrossProfit}}</td>
+                                    <td>{{i.NetProfit}}</td>
+                                    <td class="printhide">
+                                        <input type="button" id="btnPP" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#profitabilityProjectionModal" value="Edit" ng-click="editProfitabilityProjection(i.ReferenceNo, i.Year)" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <h3>Cash Flow Statement</h3><hr />
+                            <table style="width: 87.5%; text-align: center" class="table table-striped table-bordered">
+                                <tr style="font-size: smaller">
+                                    <td><b>Serial No.</b></td>
+                                    <td><b>Year</b></td>
+                                    <td><b>Total Cash Inflow ( ₹ )</b></td>
+                                    <td><b>Total Cash Outflow ( ₹ )</b></td>
+                                    <td><b>Net Cash Inflow ( ₹ )</b></td>
+                                    <td class="printhide"><b>Action</b></td>
+                                </tr>
+                                <tr ng-repeat="i in cashFlowStatements">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{i.Year}}</td>
+                                    <td>{{i.TotalCashInflow}}</td>
+                                    <td>{{i.TotalCashOutflow}}</td>
+                                    <td>{{i.NetCashInflow}}</td>
+                                    <td class="printhide">
+                                        <input type="button" id="btnCFS" class="btn btn-warning" data-toggle="modal" data-target="#cashFlowStatementModal" value="Edit" ng-click="editCashFlowStatement(i.ReferenceNo, i.Year)" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <h3>Key Business Matrix</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Break Even Point</b></td>
+                                    <td style="width: 25%">{{z.BreakEvenPoint}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>DSCR</b></td>
+                                    <td style="width: 25%">{{z.DSCR}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>IRR</b></td>
+                                    <td style="width: 25%">{{z.IRR}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="printhide" colspan="2" style="text-align: right">
+                                        <input type="button" class="btn btn-warning" data-toggle="modal" data-target="#keyBusinessMatrixModal" id="btnKeyBusinessMatrixModal" value="Edit" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </center>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="print('printSection1')">Print DPR</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="landModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Land</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="frmLand" role="form" autocomplete="off" novalidate>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Land Development ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="Development" maxlength="12" ng-model="LandDevelopment" ng-change="LandSum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmLand.Development.$touched && frmLand.Development.$invalid && frmLand.Development.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Fencing <small>(Barbed Wire / Green Fencing)</small> ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="Fencing" maxlength="12" ng-model="Fencing" ng-change="LandSum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmLand.Fencing.$touched && frmLand.Fencing.$invalid && frmLand.Fencing.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Sub Total ( ₹ )
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="LandSubTotal" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Total Capital Investment Cost ( ₹ )
+                                <small>(A. Land - G. Miscellaneous)</small>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="TotalCapitalInvestmentCost" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Total Project Cost ( ₹ )
+                                <small>(1. Capital Investment + 2. Recurring Expenditure)</small>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="TotalProjectCost" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <label class="text-left"><b>Note: </b>If no investment is done in a particular field then fill the field with "0"</label>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="frmLand.$invalid || frmLand.$pristine" ng-click="updateInvestmentLand(); frmLand.$setPristine()">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="frmLand.$setPristine()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="civilConstructionModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Civil Construction</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="frmCivilConstruction" role="form" autocomplete="off" novalidate>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Building ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="Building" maxlength="12" ng-model="Building" ng-change="CivilConstructionSum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmCivilConstruction.Building.$touched && frmCivilConstruction.Building.$invalid && frmCivilConstruction.Building.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Shed ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="Shed" maxlength="12" ng-model="Shed" ng-change="CivilConstructionSum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmCivilConstruction.Shed.$touched && frmCivilConstruction.Shed.$invalid && frmCivilConstruction.Shed.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Office cum Store ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="OfficeCumStore" maxlength="12" ng-model="OfficeCumStore" ng-change="CivilConstructionSum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmCivilConstruction.OfficeCumStore.$touched && frmCivilConstruction.OfficeCumStore.$invalid && frmCivilConstruction.OfficeCumStore.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Godown ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="Godown" maxlength="12" ng-model="Godown" ng-change="CivilConstructionSum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmCivilConstruction.Godown.$touched && frmCivilConstruction.Godown.$invalid && frmCivilConstruction.Godown.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Plant Area ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="PlantArea" maxlength="12" ng-model="PlantArea" ng-change="CivilConstructionSum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmCivilConstruction.PlantArea.$touched && frmCivilConstruction.PlantArea.$invalid && frmCivilConstruction.PlantArea.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Other Necessary Constructions ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="OtherNecessaryConstruction" maxlength="12" ng-model="OtherNecessaryConstruction" ng-change="CivilConstructionSum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmCivilConstruction.OtherNecessaryConstruction.$touched && frmCivilConstruction.OtherNecessaryConstruction.$invalid && frmCivilConstruction.OtherNecessaryConstruction.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Sub Total ( ₹ )
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="CivilConstructionSubTotal" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Total Capital Investment Cost ( ₹ )
+                                <small>(A. Land - G. Miscellaneous)</small>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="TotalCapitalInvestmentCost" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Total Project Cost ( ₹ )
+                                <small>(1. Capital Investment + 2. Recurring Expenditure)</small>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="TotalProjectCost" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <label class="text-left"><b>Note: </b>If no investment is done in a particular field then fill the field with "0"</label>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="frmCivilConstruction.$invalid || frmCivilConstruction.$pristine" ng-click="updateInvestmentCivilConstruction(); frmCivilConstruction.$setPristine()">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="frmCivilConstruction.$setPristine()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="waterSupplyModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Water Supply</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="frmWaterSupply" role="form" autocomplete="off" novalidate>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Bore Well / Tube Well / Dug Well / River Lift ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="WellOrRiver" maxlength="12" ng-model="WellOrRiver" ng-change="WaterSupplySum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmWaterSupply.WellOrRiver.$touched && frmWaterSupply.WellOrRiver.$invalid && frmWaterSupply.WellOrRiver.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Pump & Pipeline ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="PumpPipeline" maxlength="12" ng-model="PumpPipeline" ng-change="WaterSupplySum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmWaterSupply.PumpPipeline.$touched && frmWaterSupply.PumpPipeline.$invalid && frmWaterSupply.PumpPipeline.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Tank / Overhead Tank ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="Tank" maxlength="12" ng-model="Tank" ng-change="WaterSupplySum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmWaterSupply.Tank.$touched && frmWaterSupply.Tank.$invalid && frmWaterSupply.Tank.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Sprinkler / Fogger ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="SprinklerFogger" maxlength="12" ng-model="SprinklerFogger" ng-change="WaterSupplySum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmWaterSupply.SprinklerFogger.$touched && frmWaterSupply.SprinklerFogger.$invalid && frmWaterSupply.SprinklerFogger.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Sub Total ( ₹ )
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="WaterSupplySubTotal" disabled class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Total Capital Investment Cost ( ₹ )
+                                <small>(A. Land - G. Miscellaneous)</small>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="TotalCapitalInvestmentCost" disabled class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Total Project Cost ( ₹ )
+                                <small>(1. Capital Investment + 2. Recurring Expenditure)</small>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="TotalProjectCost" disabled class="form-control">
+                            </div>
+                        </div>
+                        <label class="text-left"><b>Note: </b>If no investment is done in a particular field then fill the field with "0"</label>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="frmWaterSupply.$invalid || frmWaterSupply.$pristine" ng-click="updateInvestmentWaterSupply(); frmWaterSupply.$setPristine()">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="frmWaterSupply.$setPristine()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="electrificationModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Electrification</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="frmElectrification" role="form" autocomplete="off" novalidate>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Installation & Fitting ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="InstallationFitting" maxlength="12" ng-model="InstallationFitting" ng-change="ElectrificationSum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmElectrification.InstallationFitting.$touched && frmElectrification.InstallationFitting.$invalid && frmElectrification.InstallationFitting.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Transformer ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="Transformer" maxlength="12" ng-model="Transformer" ng-change="ElectrificationSum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmElectrification.Transformer.$touched && frmElectrification.Transformer.$invalid && frmElectrification.Transformer.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                DG Set ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="DGSet" maxlength="12" ng-model="DGSet" ng-change="ElectrificationSum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmElectrification.DGSet.$touched && frmElectrification.DGSet.$invalid && frmElectrification.DGSet.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Sub Total ( ₹ )
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="ElectrificationSubTotal" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Total Capital Investment Cost ( ₹ )
+                                <small>(A. Land - G. Miscellaneous)</small>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="TotalCapitalInvestmentCost" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Total Project Cost ( ₹ )
+                                <small>(1. Capital Investment + 2. Recurring Expenditure)</small>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="TotalProjectCost" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <label class="text-left"><b>Note: </b>If no investment is done in a particular field then fill the field with "0"</label>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="frmElectrification.$invalid || frmElectrification.$pristine" ng-click="updateInvestmentElectrification(); frmElectrification.$setPristine()">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="frmElectrification.$setPristine()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="plantMachineryModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Plant & Machinery</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="frmPlantMachinery" role="form" autocomplete="off" novalidate>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Equipment & Machinery <small>(including Transportation, Tax, & Insurance)</small> ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="EquipmentMachinery" maxlength="12" ng-model="EquipmentMachinery" ng-change="PlantMachinerySum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmPlantMachinery.EquipmentMachinery.$touched && frmPlantMachinery.EquipmentMachinery.$invalid && frmPlantMachinery.EquipmentMachinery.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Manual / Motor Operated Equipment ( ₹ )
+                                <small>(eg. Poultry Cages / Brooding & Growing Equipments / Milking Machine / Chaff Cutter / Refrigeration / Preservation Unit / Fisheries Equipments, etc)</small>
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="ManualOrMotor" maxlength="12" ng-model="ManualOrMotor" ng-change="PlantMachinerySum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmPlantMachinery.ManualOrMotor.$touched && frmPlantMachinery.ManualOrMotor.$invalid && frmPlantMachinery.ManualOrMotor.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Sub Total ( ₹ )
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="PlantMachinerySubTotal" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Total Capital Investment Cost ( ₹ )
+                                <small>(A. Land - G. Miscellaneous)</small>
+                                <span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="TotalCapitalInvestmentCost" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Total Project Cost ( ₹ )
+                                <small>(1. Capital Investment + 2. Recurring Expenditure)</small>
+                                <span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="TotalProjectCost" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <label class="text-left"><b>Note: </b>If no investment is done in a particular field then fill the field with "0"</label>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="frmPlantMachinery.$invalid || frmPlantMachinery.$pristine" ng-click="updateInvestmentPlantMachinery(); frmPlantMachinery.$setPristine()">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="frmPlantMachinery.$setPristine()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="animalPlantCostModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Animal & Plant Cost</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="frmAnimalPlantCost" role="form" autocomplete="off" novalidate>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Livestocks :--- <small>(including Transportation, Tax, & Insurance)</small>
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                <input type="checkbox" name="LivestockType" ng-model="LivestockTypeC" ng-change="updateCheckArr()" value="Cow">
+                                <text>Cow</text>
+                                <input type="checkbox" name="LivestockType" ng-model="LivestockTypeB" ng-change="updateCheckArr()" value="Buffalo">
+                                <text>Buffalo</text>
+                                <input type="checkbox" name="LivestockType" ng-model="LivestockTypeS" ng-change="updateCheckArr()" value="Sheep">
+                                <text>Sheep</text>
+                                <input type="checkbox" name="LivestockType" ng-model="LivestockTypeG" ng-change="updateCheckArr()" value="Goat">
+                                <text>Goat</text>
+                                <input type="checkbox" name="LivestockType" ng-model="LivestockTypeP" ng-change="updateCheckArr()" value="Pig">
+                                <text>Pig</text>
+                                <text>( ₹ )</text>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="LivestockAmount" maxlength="12" ng-model="Livestock" ng-change="AnimalPlantSum(); TotalSum(); CapitalInvestmentSum()" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <span style="color: red" ng-show="frmAnimalPlantCost.LivestockType.$invalid && frmAnimalPlantCost.LivestockType.$error.required">This is a required field.</span>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <span style="color: red" ng-show="frmAnimalPlantCost.LivestockAmount.$touched && frmAnimalPlantCost.LivestockAmount.$invalid && frmAnimalPlantCost.LivestockAmount.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Poultry Layer & Breeder Birds ( ₹ )
+                                <small>(Broiler not Included)</small>
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="PoultryBreeder" maxlength="12" ng-model="PoultryBreeder" ng-change="AnimalPlantSum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmAnimalPlantCost.PoultryBreeder.$touched && frmAnimalPlantCost.PoultryBreeder.$invalid && frmAnimalPlantCost.PoultryBreeder.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Brood Fish ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="BroodFish" maxlength="12" ng-model="BroodFish" ng-change="AnimalPlantSum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmAnimalPlantCost.BroodFish.$touched && frmAnimalPlantCost.BroodFish.$invalid && frmAnimalPlantCost.BroodFish.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Plants ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="Plant" maxlength="12" ng-model="Plant" ng-change="AnimalPlantSum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmAnimalPlantCost.Plant.$touched && frmAnimalPlantCost.Plant.$invalid && frmAnimalPlantCost.Plant.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Sub Total ( ₹ )
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="AnimalPlantSubTotal" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Total Capital Investment Cost ( ₹ )
+                                <small>(A. Land - G. Miscellaneous)</small>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="TotalCapitalInvestmentCost" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Total Project Cost ( ₹ )
+                                <small>(1. Capital Investment + 2. Recurring Expenditure)</small>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="TotalProjectCost" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <label class="text-left"><b>Note: </b>If no investment is done in a particular field then fill the field with "0"</label>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="frmAnimalPlantCost.$invalid || frmAnimalPlantCost.$pristine" ng-click="updateInvestmentAnimalPlant(); frmAnimalPlantCost.$setPristine()">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="frmAnimalPlantCost.$setPristine()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="miscellaneousModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Miscellaneous</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="frmMiscellaneous" role="form" autocomplete="off" novalidate>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Insurance Premium of Assets :---
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                i. Fixed Assets ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="FixedAsset" maxlength="12" ng-model="FixedAsset" ng-change="MiscellaneousSum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmMiscellaneous.FixedAsset.$touched && frmMiscellaneous.FixedAsset.$invalid && frmMiscellaneous.FixedAsset.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                ii. Livestocks ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="MLivestock" maxlength="12" ng-model="MLivestock" ng-change="MiscellaneousSum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmMiscellaneous.MLivestock.$touched && frmMiscellaneous.MLivestock.$invalid && frmMiscellaneous.MLivestock.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                iii. Birds ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="Bird" maxlength="12" ng-model="Bird" ng-change="MiscellaneousSum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmMiscellaneous.Bird.$touched && frmMiscellaneous.Bird.$invalid && frmMiscellaneous.Bird.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Perennial Fodder Cultivation ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="Cultivation" maxlength="12" ng-model="Cultivation" ng-change="MiscellaneousSum(); TotalSum(); CapitalInvestmentSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmMiscellaneous.Cultivation.$touched && frmMiscellaneous.Cultivation.$invalid && frmMiscellaneous.Cultivation.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Sub Total ( ₹ )
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="MiscellaneousTotal" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Total Capital Investment Cost ( ₹ )
+                                <small>(A. Land - G. Miscellaneous)</small>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="TotalCapitalInvestmentCost" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Total Project Cost ( ₹ )
+                                <small>(1. Capital Investment + 2. Recurring Expenditure)</small>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="TotalProjectCost" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <label class="text-left"><b>Note: </b>If no investment is done in a particular field then fill the field with "0"</label>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="frmMiscellaneous.$invalid || frmMiscellaneous.$pristine" ng-click="updateInvestmentMiscellaneous(); frmMiscellaneous.$setPristine()">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="frmMiscellaneous.$setPristine()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="recurringExpenditureModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Recurring Expenditure upto trial Production (not Eligible for CIS)</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="frmRecurringExpenditure" role="form" autocomplete="off" novalidate>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Raw Material (Food, Seeds, Medicines, Fertilizers, Chemicals, etc) ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="RawMaterial" maxlength="12" ng-model="RawMaterial" ng-change="RecurringExpenditureSum(); TotalSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmRecurringExpenditure.RawMaterial.$touched && frmRecurringExpenditure.RawMaterial.$invalid && frmRecurringExpenditure.RawMaterial.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Salary / labour ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="SalaryLabour" maxlength="12" ng-model="SalaryLabour" ng-change="RecurringExpenditureSum(); TotalSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmRecurringExpenditure.SalaryLabour.$touched && frmRecurringExpenditure.SalaryLabour.$invalid && frmRecurringExpenditure.SalaryLabour.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Reparing & Maintainence, etc ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="RepairingMaintainenceEtc" maxlength="12" ng-model="RepairingMaintainenceEtc" ng-change="RecurringExpenditureSum(); TotalSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmRecurringExpenditure.RepairingMaintainenceEtc.$touched && frmRecurringExpenditure.RepairingMaintainenceEtc.$invalid && frmRecurringExpenditure.RepairingMaintainenceEtc.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Sub Total ( ₹ )
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="RecurringExpenditureSubTotal" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Total Project Cost ( ₹ )
+                                <small>(1. Capital Investment + 2. Recurring Expenditure)</small>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="TotalProjectCost" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <label class="text-left"><b>Note: </b>If no investment is done in a particular field then fill the field with "0"</label>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="frmRecurringExpenditure.$invalid || frmRecurringExpenditure.$pristine" ng-click="updateCapitalRecurring(); frmRecurringExpenditure.$setPristine()">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="frmRecurringExpenditure.$setPristine()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="meansOfFinanceModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Means of Finance</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="frmMeansOfFinance" role="form" autocomplete="off" novalidate>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Own Investment ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <input type="text" valid-number name="OwnInvestment" maxlength="12" ng-model="OwnInvestment" ng-change="MeansOfFinanceSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmMeansOfFinance.OwnInvestment.$touched && frmMeansOfFinance.OwnInvestment.$invalid && frmMeansOfFinance.OwnInvestment.$error.required">This is a required field.</span>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <textarea rows="1" wrap="soft" name="AreaOwnInvestment" maxlength="300" placeholder="Enter remarks if any..." ng-model="areaOwnInvestment" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Term Loan ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <input type="text" valid-number name="TermLoan" maxlength="12" ng-model="TermLoan" ng-change="MeansOfFinanceSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmMeansOfFinance.TermLoan.$touched && frmMeansOfFinance.TermLoan.$invalid && frmMeansOfFinance.TermLoan.$error.required">This is a required field.</span>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <textarea rows="1" wrap="soft" name="AreaTermLoan" maxlength="300" placeholder="Enter remarks if any..." ng-model="areaTermLoan" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Working Capital Loan ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <input type="text" valid-number name="WorkingCapitalLoan" maxlength="12" ng-model="WorkingCapitalLoan" ng-change="MeansOfFinanceSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmMeansOfFinance.WorkingCapitalLoan.$touched && frmMeansOfFinance.WorkingCapitalLoan.$invalid && frmMeansOfFinance.WorkingCapitalLoan.$error.required">This is a required field.</span>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <textarea rows="1" wrap="soft" name="AreaWorkingCapitalLoan" maxlength="300" placeholder="Enter remarks if any..." ng-model="areaWorkingCapitalLoan" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Any Other Source ( ₹ )
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <input type="text" valid-number name="AnyOtherSource" maxlength="12" ng-model="AnyOtherSource" ng-change="MeansOfFinanceSum()" class="form-control" required>
+                                <span style="color: red" ng-show="frmMeansOfFinance.AnyOtherSource.$touched && frmMeansOfFinance.AnyOtherSource.$invalid && frmMeansOfFinance.AnyOtherSource.$error.required">This is a required field.</span>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                <textarea rows="1" wrap="soft" name="AreaAnyOtherSource" maxlength="300" placeholder="Enter remarks if any..." ng-model="areaAnyOtherSource" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Total Finance
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" maxlength="15" valid-number ng-model="TotalFinance" disabled readonly class="form-control">
+                            </div>
+                        </div>
+                        <label class="text-left"><b>Note: </b>If no investment is done in a particular field then fill the field with "0"</label>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="frmMeansOfFinance.$invalid || frmMeansOfFinance.$pristine" ng-click="updateMeansOfFinance(); frmMeansOfFinance.$setPristine()">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="frmMeansOfFinance.$setPristine()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="profitabilityProjectionModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" id="btnProfitabilityProjectionModal" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Profitability Projections</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="frmProfitabilityProjection" role="form" autocomplete="off" novalidate>
+                        <div class="row" style="margin: 0px">
+                            <div class="form-group">
+                                <label style="text-align: center" class="control-label col-md-2 col-sm-2 col-xs-12">
+                                    Year
+                                    <span style="color: red" class="required">*</span>
+                                </label>
+                                <label style="text-align: center" class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    Gross Revenue / Income ( ₹ )
+                                    <span style="color: red" class="required">*</span>
+                                </label>
+                                <label style="text-align: center" class="control-label col-md-2 col-sm-2 col-xs-12">
+                                    Total Expenditure ( ₹ )
+                                    <span style="color: red" class="required">*</span>
+                                </label>
+                                <label style="text-align: center" class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    Gross Profit <small>(PBDIT)</small> ( ₹ )
+                                    <span style="color: red" class="required">*</span>
+                                </label>
+                                <label style="text-align: center" class="control-label col-md-2 col-sm-2 col-xs-12">
+                                    Net Profit ( ₹ )
+                                    <span style="color: red" class="required">*</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="row" style="margin: 0px">
+                            <div class="form-group" style="text-align: center">
+                                <div style="text-align: center" class="col-md-2 col-sm-2 col-xs-12">
+                                    {{PYear}}
+                                </div>
+                                <div style="text-align: center" class="col-md-3 col-sm-3 col-xs-12">
+                                    <input ng-show="ppInteger" type="text" valid-number name="GrossRevenue" maxlength="15" class="form-control" ng-model="GrossRevenue" required />
+                                    <input ng-show="npInteger" type="text" integer-all name="GrossRevenue" maxlength="15" class="form-control" ng-model="GrossRevenue" allow-decimal="true" allow-negative="true" required />
+                                    <span style="color: red" ng-show="frmProfitabilityProjection.GrossRevenue.$touched && frmProfitabilityProjection.GrossRevenue.$invalid && frmProfitabilityProjection.GrossRevenue.$error.required">This is a required field.</span>
+                                </div>
+                                <div style="text-align: center" class="col-md-2 col-sm-2 col-xs-12">
+                                    <input ng-show="ppInteger" type="text" valid-number name="TotalExpenditure" maxlength="15" class="form-control" ng-model="TotalExpenditure" required />
+                                    <input ng-show="npInteger" type="text" integer-all name="TotalExpenditure" maxlength="15" class="form-control" ng-model="TotalExpenditure" allow-decimal="true" allow-negative="true" required />
+                                    <span style="color: red" ng-show="frmProfitabilityProjection.TotalExpenditure.$touched && frmProfitabilityProjection.TotalExpenditure.$invalid && frmProfitabilityProjection.TotalExpenditure.$error.required">This is a required field.</span>
+                                </div>
+                                <div style="text-align: center" class="col-md-3 col-sm-3 col-xs-12">
+                                    <input ng-show="ppInteger" type="text" valid-number name="GrossProfit" maxlength="15" class="form-control" ng-model="GrossProfit" required />
+                                    <input ng-show="npInteger" type="text" integer-all name="GrossProfit" maxlength="15" class="form-control" ng-model="GrossProfit" allow-decimal="true" allow-negative="true" required />
+                                    <span style="color: red" ng-show="frmProfitabilityProjection.GrossProfit.$touched && frmProfitabilityProjection.GrossProfit.$invalid && frmProfitabilityProjection.GrossProfit.$error.required">This is a required field.</span>
+                                </div>
+                                <div style="text-align: center" class="col-md-2 col-sm-2 col-xs-12">
+                                    <input ng-show="ppInteger" type="text" valid-number name="NetProfit" maxlength="15" class="form-control" ng-model="NetProfit" required />
+                                    <input ng-show="npInteger" type="text" integer-all name="NetProfit" maxlength="15" class="form-control" ng-model="NetProfit" allow-decimal="true" allow-negative="true" required />
+                                    <span style="color: red" ng-show="frmProfitabilityProjection.NetProfit.$touched && frmProfitabilityProjection.NetProfit.$invalid && frmProfitabilityProjection.NetProfit.$error.required">This is a required field.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <label class="text-left"><b>Note: </b>If no investment is done in a particular field then fill the field with "0"</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="frmProfitabilityProjection.$invalid || frmProfitabilityProjection.$pristine" ng-click="updateProfitabilityProjection(); frmProfitabilityProjection.$setPristine()">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="frmProfitabilityProjection.$setPristine()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="cashFlowStatementModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" id="btnCashFlowStatementModal" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Cash Flow Statement</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="frmCashFlowStatement" role="form" autocomplete="off" novalidate>
+                        <div class="row" style="margin: 0px">
+                            <div class="form-group">
+                                <label style="text-align: center" class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    Year
+                                    <span class="required">*</span>
+                                </label>
+                                <label style="text-align: center" class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    Total Cash Inflow ( ₹ )
+                                    <span class="required">*</span>
+                                </label>
+                                <label style="text-align: center" class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    Total Cash Outflow ( ₹ )
+                                    <span class="required">*</span>
+                                </label>
+                                <label style="text-align: center" class="control-label col-md-3 col-sm-3 col-xs-12">
+                                    Net Cash Inflow ( ₹ )
+                                    <span class="required">*</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="row" style="margin: 0px">
+                            <div class="form-group" style="text-align: center">
+                                <div style="text-align: center" class="col-md-3 col-sm-3 col-xs-12">
+                                    {{CYear}}
+                                </div>
+                                <div style="text-align: center" class="col-md-3 col-sm-3 col-xs-12">
+                                    <input ng-show="pcInteger" type="text" valid-number name="TotalCashInflow" maxlength="15" class="form-control" ng-model="TotalCashInflow" required />
+                                    <input ng-show="ncInteger" type="text" integer-all name="TotalCashInflow" maxlength="15" class="form-control" ng-model="TotalCashInflow" allow-decimal="true" allow-negative="true" required />
+                                    <span style="color: red" ng-show="frmCashFlowStatement.TotalCashInflow.$touched && frmCashFlowStatement.TotalCashInflow.$invalid && frmCashFlowStatement.TotalCashInflow.$error.required">This is a required field.</span>
+                                </div>
+                                <div style="text-align: center" class="col-md-3 col-sm-3 col-xs-12">
+                                    <input ng-show="pcInteger" type="text" valid-number name="TotalCashOutflow" maxlength="15" class="form-control" ng-model="TotalCashOutflow" required />
+                                    <input ng-show="ncInteger" type="text" integer-all name="TotalCashOutflow" maxlength="15" class="form-control" ng-model="TotalCashOutflow" allow-decimal="true" allow-negative="true" required />
+                                    <span style="color: red" ng-show="frmCashFlowStatement.TotalCashOutflow.$touched && frmCashFlowStatement.TotalCashOutflow.$invalid && frmCashFlowStatement.TotalCashOutflow.$error.required">This is a required field.</span>
+                                </div>
+                                <div style="text-align: center" class="col-md-3 col-sm-3 col-xs-12">
+                                    <input ng-show="pcInteger" type="text" valid-number name="NetCashInflow" maxlength="15" class="form-control" ng-model="NetCashInflow" required />
+                                    <input ng-show="ncInteger" type="text" integer-all name="NetCashInflow" maxlength="15" class="form-control" ng-model="NetCashInflow" allow-decimal="true" allow-negative="true" required />
+                                    <span style="color: red" ng-show="frmCashFlowStatement.NetCashInflow.$touched && frmCashFlowStatement.NetCashInflow.$invalid && frmCashFlowStatement.NetCashInflow.$error.required">This is a required field.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <label class="text-left"><b>Note: </b>If no investment is done in a particular field then fill the field with "0"</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-disabled="frmCashFlowStatement.$invalid || frmCashFlowStatement.$pristine" ng-click="updateCashFlowStatement(); frmCashFlowStatement.$setPristine()">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="frmCashFlowStatement.$setPristine()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="keyBusinessMatrixModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Key Business Matrix</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" name="frmKeyBusinessMatrix" role="form" autocomplete="off" novalidate>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                Break Even Point
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="BreakEvenPoint" maxlength="15" ng-model="BreakEvenPoint" class="form-control" @*ng-change="analyze(BreakEvenPoint)"*@ required>
+                                @*<label ng-show="errorField" style="color: red">{{errorMessage}}</label>*@
+                                <span style="color: red" ng-show="frmKeyBusinessMatrix.BreakEvenPoint.$touched && frmKeyBusinessMatrix.BreakEvenPoint.$invalid && frmKeyBusinessMatrix.BreakEvenPoint.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                DSCR
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="DSCR" maxlength="15" ng-model="DSCR" class="form-control" required>
+                                <span style="color: red" ng-show="frmKeyBusinessMatrix.DSCR.$touched && frmKeyBusinessMatrix.DSCR.$invalid && frmKeyBusinessMatrix.DSCR.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="text-align: left" class="control-label col-md-6 col-sm-6 col-xs-12">
+                                IRR
+                                <span style="color: red" class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" valid-number name="IRR" maxlength="15" ng-model="IRR" class="form-control" required>
+                                <span style="color: red" ng-show="frmKeyBusinessMatrix.IRR.$touched && frmKeyBusinessMatrix.IRR.$invalid && frmKeyBusinessMatrix.IRR.$error.required">This is a required field.</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnUpdateKeyBusinessMatrix" type="button" class="btn btn-primary" ng-disabled="frmKeyBusinessMatrix.$invalid || frmKeyBusinessMatrix.$pristine" ng-click="updateKeyBusinessMatrix(); frmKeyBusinessMatrix.$setPristine()">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="frmKeyBusinessMatrix.$setPristine()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div modal="showFeasibilityReport" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+                    <h3 class="modal-title text-center">View & Print Feasibility Report</h3>
+                </div>
+                <div class="modal-body" id="printSection">
+                    <table style="width: 100%">
+                        <tr>
+                            <td style="width: 120px; padding: 10px"><img src="../Content/images/govtlogo.jpg" /></td>
+                            <td style="text-align: center"><h3>Department of Agriculture and Farmers' Empowerment</h3></td>
+                            <td style="width: 120px; padding: 10px"><img style="height: 80px; width: 86px" src="~/Content/images/ApicolLOGO.jpg" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align: center"><h3>Feasibility Report</h3></td>
+                            <td class="printhide">
+                                <input type="button" class="btn btn-warning" value="Edit Feasibility Report" id="btnEFR" ng-show="!fTextBox" ng-click="showTBHL()" />
+                                <input type="button" class="btn btn-success" value="Update Feasibility Report" id="btnUFR" ng-show="!fLabel" ng-click="showLHTB()" />
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <div class="table table-responsive">
+                        <table style="width: 100%" class="table table-striped">
+                            <tr>
+                                <td style="width: 50%"><b>Reference No</b></td>
+                                <td style="width: 50%">{{m.ReferenceNo}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Previous Experience</b></td>
+                                <td ng-show="fLabel" style="width: 50%">{{m.PreviousExperience}}</td>
+                                <td class="printhide" ng-show="fTextBox">
+                                    <label style="font-weight: 100">
+                                        <input type="radio" ng-model="rbPE" ng-checked="m.PreviousExperience == true" value="Yes">
+                                        <text>Yes</text>
+                                        <input type="radio" ng-model="rbPE" ng-checked="m.PreviousExperience == false" value="No">
+                                        <text>No</text>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Road Connectivity</b></td>
+                                <td ng-show="fLabel" style="width: 50%">{{m.RoadConnectivity}}</td>
+                                <td class="printhide" ng-show="fTextBox">
+                                    <label style="font-weight: 100">
+                                        <input type="radio" ng-model="rbRC" ng-checked="m.RoadConnectivity == true" value="Yes">
+                                        <text>Yes</text>
+                                        <input type="radio" ng-model="rbRC" ng-checked="m.RoadConnectivity == false" value="No">
+                                        <text>No</text>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Distance from nearby Village</b></td>
+                                <td ng-show="fLabel" style="width: 50%">{{m.DistanceFromVillage}} KM</td>
+                                <td class="printhide" ng-show="fTextBox">
+                                    <input type="text" maxlength="10" valid-number ng-model="txtDFV" placeholder="Enter the Distance from Village" class="form-control" style="width: 55%">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Electrification</b></td>
+                                <td ng-show="fLabel" style="width: 50%">{{m.ElectrificationStatus}}</td>
+                                <td class="printhide" ng-show="fTextBox">
+                                    <label style="font-weight: 100">
+                                        <input type="radio" ng-model="rbES" ng-checked="m.ElectrificationStatus == true" value="Yes">
+                                        <text>Yes</text>
+                                        <input type="radio" ng-model="rbES" ng-checked="m.ElectrificationStatus == false" value="No">
+                                        <text>No</text>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Pollution Control Clearance</b></td>
+                                <td ng-show="fLabel" style="width: 50%">{{m.PollutionControlClearanceStatus}}</td>
+                                <td class="printhide" ng-show="fTextBox">
+                                    <label style="font-weight: 100">
+                                        <input type="radio" ng-model="rbPCCS" ng-checked="m.PollutionControlClearanceStatus == true" value="Yes">
+                                        <text>Yes</text>
+                                        <input type="radio" ng-model="rbPCCS" ng-checked="m.PollutionControlClearanceStatus == false" value="No">
+                                        <text>No</text>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Self Finance</b></td>
+                                <td ng-show="fLabel" style="width: 50%">₹ {{m.SelfFinance}}</td>
+                                <td class="printhide" ng-show="fTextBox">
+                                    <input type="text" maxlength="10" valid-number ng-model="txtSF" placeholder="Enter the Self Finance" class="form-control" style="width: 55%">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Uncensored Loan</b></td>
+                                <td ng-show="fLabel" style="width: 50%">₹ {{m.UncensoredLoan}}</td>
+                                <td class="printhide" ng-show="fTextBox">
+                                    <input type="text" maxlength="10" valid-number ng-model="txtUL" placeholder="Enter the Uncensored Loan" class="form-control" style="width: 55%">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Margin Component</b></td>
+                                <td ng-show="fLabel" style="width: 50%">₹ {{m.MarginComponent}}</td>
+                                <td class="printhide" ng-show="fTextBox">
+                                    <input type="text" maxlength="10" valid-number ng-model="txtMC" placeholder="Enter the Margin Component" class="form-control" style="width: 55%">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Bank Consent Letter</b></td>
+                                <td ng-show="fLabel" style="width: 50%">{{m.BankConsentLetterStatus}}</td>
+                                <td class="printhide" ng-show="fTextBox">
+                                    <label style="font-weight: 100">
+                                        <input type="radio" ng-model="rbBCLS" ng-checked="m.BankConsentLetterStatus == true" value="Yes">
+                                        <text>Yes</text>
+                                        <input type="radio" ng-model="rbBCLS" ng-checked="m.BankConsentLetterStatus == false" value="No">
+                                        <text>No</text>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Photo</b></td>
+                                <td style="width: 50%"><img id="landpic" style="width: 250px; height: 150px" /></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Latitude</b></td>
+                                <td style="width: 50%">{{m.Latitude}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Longitude</b></td>
+                                <td style="width: 50%">{{m.Longitude}}</td>
+                            </tr>
+                        </table>
+                    </div><br />
+                    <p style="text-align: justify; font-size: 15px">Verified the above mentioned information submitted by the entrepreneur by personally visiting the project site. I certify that the <b>{{m.ProjectName}}</b> with <b>{{m.Capacity}} {{m.CapacityUnit}}</b> capacity and a project cost of <b>₹ {{m.TotalProjectCost}}</b> is technically feasible and economically viable.</p><br /><br /><br />
+                    <div style="text-align: right">
+                        <img id="labelBloSign" style="height: 50px; width: 200px; border: 1px solid black" /><br />
+                        <label>{{lblDesignation}}, {{m.BlockName | capitalize}}</label><br />
+                        <label>{{labelbloName}}</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="print('printSection')">Print Feasibility Report</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ApproveModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" id="btnCloseAppM">&times;</button>
+                    <h4 class="modal-title">Feasible Record</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" ng-show="approveDetail">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label>Do you want to mark the record as feasible?</label>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div ng-show="bloDetail">
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label>Name</label>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label>{{lblbloName}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label>Signature</label>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <img id="bloSign" style="height: 100px; width: 175px; border: 1px solid black" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="modal-footer">
+                    <div ng-show="approveDetail">
+                        <input type="button" value="Yes" class="btn btn-success" ng-click="approveM()" />
+                        <input type="button" value="No" class="btn btn-warning" data-dismiss="modal" />
+                    </div>
+                    <div ng-show="bloDetail">
+                        <input type="button" value="Submit" class="btn btn-info" ng-click="submitBLORecord()" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="RejectModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" id="btnCloseRejM">&times;</button>
+                    <h4 class="modal-title">Not Feasible Record</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" ng-show="rejectDetail">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label>Do you want to mark the record as not feasible?</label>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div ng-show="rejectR">
+                        <label>Not Feasible Reason</label>
+                        <div class="row form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                    <label>1.</label>
+                                </div>
+                                <div class="col-md-11 col-sm-11 col-xs-12">
+                                    <textarea rows="2" class="form-control" placeholder="Enter Not Feasible Reason" ng-model="txtReasonOne" ng-trim="false" maxlength="100"></textarea>
+                                </div>
+                                <p class="text-right">{{100 - txtReasonOne.length + ' characters remaining'}}</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                    <label>2.</label>
+                                </div>
+                                <div class="col-md-11 col-sm-11 col-xs-12">
+                                    <textarea rows="2" class="form-control" placeholder="Enter Not Feasible Reason" ng-model="txtReasonTwo" ng-trim="false" maxlength="100"></textarea>
+                                </div>
+                                <p class="text-right">{{100 - txtReasonOne.length + ' characters remaining'}}</p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                    <label>3.</label>
+                                </div>
+                                <div class="col-md-11 col-sm-11 col-xs-12">
+                                    <textarea rows="2" class="form-control" placeholder="Enter Not Feasible Reason" ng-model="txtReasonThree" ng-trim="false" maxlength="100"></textarea>
+                                </div>
+                                <p class="text-right">{{100 - txtReasonOne.length + ' characters remaining'}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="bloRDetail">
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12 text-center">
+                                    <label style="padding-top: 40px">Name : {{lblRbloName}}</label>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12 text-left">
+                                    <img id="bloRSign" style="height: 100px; width: 175px; border: 1px solid black" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="modal-footer">
+                    <div ng-show="rejectDetail">
+                        <input type="button" value="Yes" class="btn btn-success" ng-click="rejectM()" />
+                        <input type="button" value="No" class="btn btn-warning" data-dismiss="modal" />
+                    </div>
+                    <div ng-show="bloRDetail">
+                        <input type="button" value="Submit" class="btn btn-info" ng-click="notsubmitBLORecord()" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

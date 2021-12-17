@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_LayoutDNO.cshtml";
+}
+@using (Html.BeginForm("Home", "DNO", FormMethod.Post, new { id = "FormId" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="right_col" role="main" ng-app="DNOApp" ng-controller="DNOCtrl" ng-cloak>
+        <div class="page-title">
+            <div class="mid_center" style="padding: 250px 20px">
+                <h1>Welcome {{desgName}}, {{districtName | capitalize}}</h1>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+}
+
+<script>
+    var app = angular.module("DNOApp", []);
+    app.controller("DNOCtrl", function ($scope, $http) {
+        var token = document.getElementsByName('__RequestVerificationToken')[0].value;
+        $scope.districtName = "@ViewBag.DistrictName";
+        if ("@ViewBag.Department" == "Agriculture") { $scope.desgName = "DDA"; } else if ("@ViewBag.Department" == "Animal Resources Development") { $scope.desgName = "CDVO"; } else if ("@ViewBag.Department" == "Horticulture") { $scope.desgName = "DHO"; } else if ("@ViewBag.Department" == "Fishery") { $scope.desgName = "DFO"; }
+    });
+    app.filter('capitalize', function () {
+        return function (input) {
+            return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+        }
+    });
+</script>

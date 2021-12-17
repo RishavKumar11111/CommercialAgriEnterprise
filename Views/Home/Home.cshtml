@@ -1,0 +1,462 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+<style>
+    @@media only screen and (max-width: 480px) {
+        .js-tabs .js-tabs_panel {
+            display: block !important;
+            padding-left: 0px !important;
+            padding-right: 0px !important;
+        }
+        #st3 {
+            height: 250px !important;
+            width: 250px !important;
+        }
+    }
+</style>
+<div class="slider-outer">
+    <script type="text/javascript" src="../../Resource/nielit.gov.in/sites/all/themes/berry/js/jssor.core.js"></script>
+    <script type="text/javascript" src="../../Resource/nielit.gov.in/sites/all/themes/berry/js/jssor.utils.js"></script>
+    <script type="text/javascript" src="../../Resource/nielit.gov.in/sites/all/themes/berry/js/jssor.slider.js"></script>
+    <div id="sliderb_container" style="position: relative; width:1349px;
+        height: 370px; overflow: hidden; margin:0 auto;">
+        <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
+            <div style="filter: alpha(opacity=70); opacity:0.7; position: absolute; display: block;
+                background-color: #000; top: 0px; left: 0px;width: 100%;height:100%;">
+            </div>
+            <div style="position: absolute; display: block;
+                top: 0px; left: 0px;width: 100%;height:100%;">
+            </div>
+        </div>
+        <div data-u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 1349px; height: 370px;
+            overflow: hidden;">
+            <div>
+                <a href="#"><img alt="home slider" src="../../Resource/nielit.gov.in/sites/default/files/Agriculture.jpg" /></a>
+            </div>
+            <div>
+                <a href="#"><img alt="home slider" src="../../Resource/nielit.gov.in/sites/default/files/Animal.jpg" /></a>
+            </div>
+            <div>
+                <a href="#"><img alt="home slider" src="../../Resource/nielit.gov.in/sites/default/files/Fish.jpg" /></a>
+            </div>
+            <div>
+                <a href="#"><img alt="home slider" src="../../Resource/nielit.gov.in/sites/default/files/Horticulture.jpg" /></a>
+            </div>
+        </div>
+        <div data-u="navigator" class="jssorb01" style="position: absolute; bottom: 16px; right: 60px;">
+            <div data-u="prototype" style="POSITION: absolute; WIDTH: 12px; HEIGHT: 12px;"></div>
+        </div>
+        <span data-u="arrowleft" class="jssora05l" style="width: 40px; height: 40px; top: 123px; left: 8px;">
+        </span>
+        <span data-u="arrowright" class="jssora05r" style="width: 40px; height: 40px; top: 123px; right: 8px">
+        </span>
+        <a style="display: none" href="http:/www.jssor.com/">slider html</a>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="container clearfix" ng-app="myApp" ng-controller="myctr">
+    <div class="messages error">
+        <h2 class="element-invisible">Error message</h2>
+        <em class="placeholder">Warning</em>: Creating default object from empty value in <em class="placeholder">ctools_access_get_loggedin_context()</em> (line <em class="placeholder">1411</em> of <em class="placeholder">/var/www/html/sites/all/modules/ctools/includes/context.inc</em>).
+    </div>
+    <div class="full">
+    </div>
+    <div class="clear"></div>
+    <div class="content-outer" id="COntentDiv">
+        <div class="content">
+            @*<div style="margin-bottom:20px;" class="message_boxmain">
+                    <div class="boxmain">
+                        <div class="bottom-panel-box boxmain1">
+                            <div class="bottom-panel-box-pic boxmain3"><img alt="Union Ministor" src="../../Resource/nielit.gov.in/sites/all/themes/berry/images/Ravi_Shankar.jpg"></div>
+                            <div class="bottom-panel-box-content1 boxmain4">
+                                <h2 class="boxmain5">
+                                    Message from Hon'ble Minister Electronics & IT, L&J (Chairperson, Governing Council)
+                                </h2>
+                            </div>
+                            <p>
+                                Technology has made giant strides and today India is sitting on ... <a href="node/2867.html">Read More</a>
+                            </p>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <!--      second message start           -->
+                    <div class="boxmain">
+                        <div class="bottom-panel-box boxmain1">
+                            <div class="bottom-panel-box-pic boxmain3"><img width="87" height="78" alt="Union Ministor" src="../../Resource/nielit.gov.in/sites/all/themes/berry/images/mos.jpg"></div>
+                            <div class="bottom-panel-box-content1 boxmain4">
+                                <h2 class="boxmain5">
+                                    Message from Hon'ble MoS(Electronics & IT), Tourism (I/C) (Deputy Chairperson, Governing Council)
+                                </h2>
+                            </div>
+                            <p>
+                                <a href="node/8018.html"></a>
+                            </p>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <!--      second message end             -->
+                    <!--      Third message start             -->
+                    <div class="boxmain">
+                        <div class="bottom-panel-box boxmain1">
+                            <div class="bottom-panel-box-pic boxmain3"><img alt="Secretary" src="../../Resource/nielit.gov.in/sites/all/themes/berry/images/secretary.png"></div>
+                            <div class="bottom-panel-box-content1 boxmain4">
+                                <h2 class="boxmain5">
+                                    Message from Secretary, Ministry of Electronics & IT (MeitY) (Chairperson, Management Board)
+                                </h2>
+                            </div>
+                            <p style="margin-top:65px;">
+                                India has taken a number of landmark initiatives. The ‘Digital...<a href="node/2868.html">Read More</a>
+                            </p>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <!--      Third message end             -->
+                    <!--      fourth message start             -->
+                    <div class="boxmain">
+                        <div class="bottom-panel-box boxmain1">
+                            <div class="bottom-panel-box-pic boxmain3"><img alt="Director General" src="../../Resource/nielit.gov.in/sites/all/themes/berry/images/md-nielit.jpg"></div>
+                            <div class="bottom-panel-box-content1 boxmain4">
+                                <h2 class="boxmain5">
+                                    Message from the Desk of Director General
+                                </h2>
+                            </div>
+                            <p style="margin-top:65px;">
+                                The education system in this country is undergoing a... <a href="node/19.html">Read More</a>
+                            </p>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <!--      fourth message end             -->
+                    <div class="clear"></div>
+                </div>*@
+            <div class="latestnews">
+                <div class="breakingNews" id="bn3">
+                    <div class="bn-title"><h2>Latest News</h2><span></span></div>
+                    <ul>
+                        <li ng-repeat="a in eventData">
+                            <a href="{{a.url}}">
+                                <p>{{a.title}}</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="bn-navi">
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <span class="latest-news-span"><a href="#">View More</a></span>
+                </div>
+            </div>
+            <div class="focus-panel">
+                <div class="tab-panel">
+                    <div class="tabs example-a">
+                        <h3>APICOL in Brief</h3>
+                        <div class="bottom-panel-box">
+                            <div style="margin-top: 15px" class="responsive">
+                                @*<center><div id="st3" class="showdiv" data-nic="OSS1" style="height: 450px;width: 750px;"></div></center>*@
+                                @*<center><div class="container-fluid" id="st1">  <div class="row" id="st2">  <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" id="st3"><div id="st4" class="showdiv"><ul class="nav navbar-right" style="margin: -30px -15px 0px 0px;"><li><a onclick="removediv(this.parentElement.parentElement.parentElement)" style="height: 10px;"><i class="fa fa-close"></i></a></li></ul><div id="st5" class="showdiv" data-nic="OSS1" style="height: 300px;"></div></div></div> </div></div></center>*@
+                                <p class="rtejustify" style="font-size: 18px">
+                                    It was established on 01-03-1996 as envisaged in State Agriculture Policy 1996. It started functioning since 01-06-1996 with the sole objective of promoting agro-based industries/food processing industries including commercial agriculture/horticulture/animal husbandry/fisheries, in broad terms to promote investment in Agriculture and allied sectors.
+                                </p>
+                                <br />
+                                <p class="rtejustify" style="font-size: 18px">
+                                    The Agricultural Promotion and Investment Corporation of Odisha Limited(APICOL), a Government of Odisha undertaking, coming up as a promotional organisation for providing assistance to agricultural enterprises in the state of Odisha. Apicol would promote enterprises in agriculture within the state with suitable guidance for project formulation, counseling, enterprise development and assistance in project implementation.
+                                </p>
+                            </div>
+                        </div>
+                        <h3>About APICOL</h3>
+                        <div style="padding-top:15px; height:267px !important">
+                            <div class="bottom-panel-box">
+                                @*<div class="bottom-panel-box-pic"><img alt="" src="~/Docs/seed1.png" class="aboutnielitimages"></div>*@
+                                <div class="bottom-panel-box-content" style="width: 100%; margin-left: 0%; text-align: justify">
+                                    <h2 style="font-weight: bold">Introduction</h2><br />
+                                    <div class="wrapstagp" style="font-size: 18px">
+                                        <p class="rtejustify">
+                                            The Agricultural Promotion & Investment Corporation of Odisha Limited (APICOL) was incorporated on 01-03-1996 with the intention of bringing enterprise into agriculture as envisaged in State Agriculture Policy 1996. It started functioning since 01-06-1996 with the sole objective of promoting agro-based industries/food processing industries including commercial agriculture/horticulture/animal husbandry/fisheries, in broad terms to promote investment in Agriculture and allied sector.
+                                            ...
+                                        </p>
+                                        <a href="~/Home/Introduction">Read More</a>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="bottom-panel-box">
+                                @*<div class="bottom-panel-box-pic"><img alt="" src="~/Docs/seed2.png" class="aboutnielitimages"></div>*@
+                                <div class="bottom-panel-box-content" style="width: 100%; margin-left: 0%; text-align: justify">
+                                    <h2 style="font-weight: bold">Mission & Vision</h2><br />
+                                    <div class="wrapstagp" style="font-size: 18px">
+                                        <p class="rtejustify">
+                                            To proactively contribute to the all-round economic and social development of the state by being responsive, competitive and efficient while, at the same time, protecting and improving the natural environment and livelihoods of local communities.
+                                            ...
+                                        </p>
+                                        <a href="~/Home/Profile">Read More</a>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            @*<div class="bottom-panel-box">
+                                    <div class="bottom-panel-box-pic"><img alt="" src="~/Docs/seed3.png" class="aboutnielitimages"></div>
+                                    <div class="bottom-panel-box-content">
+                                        <h2>Services</h2><br />
+                                        <div class="wrapstagp">
+                                            <p>
+                                                Odisha Sate Seeds Corporation Ltd., popularly known by its brand name “ORISEED” is one of the leading State Seeds Corporation among all State Seed
+                                                Corporations in India serving in the larger interest of farmers from three decades with farmer’s faith brand loyalty, quality assurance, dedicated service and sustainable contribution for upliftment of farmers with Glorious achievements.
+                                            </p>
+                                            <a href="#">Read More</a>
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>*@
+                        </div>
+                        <h3>To be added...</h3>
+                        <div style="padding-top:15px; height:267px !important">
+                            @*<div class="bottom-panel-box">
+                                    <div class="bottom-panel-box-pic"><img alt="" src="~/Docs/images (1).jpg" class="aboutnielitimages"></div>
+                                    <div class="bottom-panel-box-content">
+                                        <h2></h2><br />
+                                        <div class="wrapstagp">
+                                            <p class="rtejustify">
+
+                                                ...
+                                            </p>
+                                            <a href="~/Production/multiplicationfromfoundationtocertified">Read More</a>
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                                <div class="bottom-panel-box">
+                                    <div class="bottom-panel-box-pic"><img alt="" src="~/Docs/images (2).jpg" class="aboutnielitimages"></div>
+                                    <div class="bottom-panel-box-content">
+                                        <h2></h2><br />
+                                        <div class="wrapstagp">
+                                            <p></p>
+                                            <a href="~/Production/multiplicationfrombreedertofoundation">Read More</a>
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                                <div class="bottom-panel-box">
+                                    <div class="bottom-panel-box-pic"><img alt="" src="~/Docs/images.jpg" class="aboutnielitimages"></div>
+                                    <div class="bottom-panel-box-content">
+                                        <h2></h2><br />
+                                        <div class="wrapstagp">
+                                            <p>
+
+                                            </p>
+                                            <a href="~/Production/ProcurementofCertifiedSeeds">Read More</a>
+                                        </div>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    function display_con(xv) {
+                        if (xv == '1') {
+                            document.getElementById('img2').style.display = 'block';
+                            document.getElementById('img1').style.display = 'none';
+                        } else {
+                            document.getElementById('img1').style.display = 'block';
+                            document.getElementById('img2').style.display = 'none';
+                        }
+                    }
+                    $(document).ready(function () {
+                        $(".bottom-panel-box-content p").contents().unwrap();
+                        $(".bottom-panel-box-content span").wrap("<p></p>");
+                    });
+                </script>
+                <div class="events-panel" style="height: 335px">
+                    <h1 style="margin-top: 10px;">Latest Events</h1>
+                    <div id="multilines">
+                        <div style="text-align:right; margin-right:15px;">
+                            <div id="img1">
+                                <a class="stop-button" onclick="return display_con(1);">
+                                    <img alt="pause" src="../../Resource/nielit.gov.in/sites/all/themes/berry/images/pause.gif">
+                                </a>
+                            </div><div id="img2" style="display:none;">
+                                <a onclick="display_con(2);" class="start-button">
+                                    <img alt="play" src="../../Resource/nielit.gov.in/sites/all/themes/berry/images/play.gif">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <ul class="newsticker" style="height:275px">
+                                @*<li ng-repeat="a in event">
+                                        <div class="homeWMission">
+                                            <a href="{{a.url}}" target="_blank">
+                                                <img src="{{a.image}}" />
+                                                <p>
+                                                    {{a.title}}
+                                            </a><br><p>
+                                                <a href="{{a.url}}" target="_blank" class="readmorelinknews" style="color:#253570;font-weight: bold;">View More</a>
+                                            </p>
+                                            <div class="clear"></div>
+                                        </div>
+                                    </li>*@
+                                @*
+                                    <li ng-repeat="a in event">
+                                        <a href="#">
+                                            <p><a href="{{a.url}}" target="_blank"><img src="{{a.image}}" /></a></p>
+                                        </a>
+                                    </li>*@
+                                @*
+                                    <li>
+                                        <div class="homeWMission">
+                                            @*<img src="~/Docs/cm.jpg" />
+                                            <img src="~/Docs/CM-Naveen-Patnaik-distributes-Digitized-Ration-Cards.jpg" />
+                                            <img src="~/Docs/Chief-Minister-Naveen-Patnaik-launches-the-Facebook-page-and-a-helpline-number-of-the-vigilance-department-300x281.jpg" />
+                                            <img alt="" src="../../Resource/nielit.gov.in/sites/default/files/nielitnews/2017/10/171017_Imphal2_0.jpg">
+                                            <p>
+                                                <a href="nielit-news-galleryd2a4.html?gallery=10514" target="_blank">
+                                                    Visit of DG, NIELIT to NIELIT Kohima wherein he launched
+                                                </a><br />
+                                                <a href="nielit-news-galleryd2a4.html?gallery=10514" class="readmorelinknews"
+                                                   style="color:#253570;font-weight: bold;">View More</a>
+                                            </p>
+                                            <div class="clear"></div>
+                                        </div>
+                                    </li>*@
+                            </ul>
+                        </div>
+                    </div>
+                    <script src="../../Resource/nielit.gov.in/sites/all/themes/berry/js/newsTicker.js"></script>
+                    <script>
+                        var multilines = $('#multilines .newsticker').newsTicker({
+                            row_height: 115,
+                            speed: 800,
+                            prevButton: $('#multilines .prev-button'),
+                            nextButton: $('#multilines .next-button'),
+                            stopButton: $('#multilines .stop-button'),
+                            startButton: $('#multilines .start-button'),
+                        });
+                        var oneliner = $('#oneliner .newsticker').newsTicker({
+                            row_height: 44,
+                            max_rows: 1,
+                            time: 5000,
+                            nextButton: $('#oneliner .header')
+                        });
+                        $('#oneliner .header').hover(function () {
+                            oneliner.newsTicker('pause');
+                        }, function () {
+                            oneliner.newsTicker('unpause');
+                        });
+                        $(document).ready(function () {
+                            $('.language-link').click(function () {
+                                $(this).target = "_blank";
+                                window.open($(this).prop('href'));
+                                return false;
+                            });
+                        });
+                        $(".menu").flexNav();
+                        $(document).ready(function () {
+                            $("ul.menu li").hover(function () { //When trigger is hovered...
+                                $(this).children("ul.menu").show();
+                            }, function () {
+                                $(this).children("ul.menu").slideUp();
+                            });
+                        });
+                    </script>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="panels">
+                <div class="panel-box">
+                    <div class="wrapper">
+                        <a href="http://agrisnetodisha.ori.nic.in/stock/farmer/FarmerList.aspx" target="_blank" onclick="return confirm('This link will take you to an external web site.')"><img alt="button menu" src="../../Resource/www.nielit.gov.in/sites/default/files/seeddbt.jpg" /></a>
+                    </div>
+                </div>
+                <div class="panel-box">
+                    <div class="wrapper">
+                        <a href="http://odishaseedsportal.nic.in/" target="_blank" onclick="return confirm('This link will take you to an external web site.')"><img alt="button menu" src="../../Resource/www.nielit.gov.in/sites/default/files/Seedsportal.jpg" /></a>
+                    </div>
+                </div>
+                <div class="panel-box">
+                    <div class="wrapper">
+                        <a href="http://agrisnetodisha.ori.nic.in/stock/farmer/VarietySearch.aspx" target="_blank" onclick="return confirm('This link will take you to an external web site.')"><img alt="button menu" src="../../Resource/www.nielit.gov.in/sites/default/files/stockposition.jpg" /></a>
+                    </div>
+                </div>
+                <div class="panel-box">
+                    <div class="wrapper">
+                        <a href="https://ossopca.nic.in/" target="_blank" onclick="return confirm('This link will take you to an external web site.')"><img alt="button menu" src="../../Resource/www.nielit.gov.in/sites/default/files/ossopcaicon.jpg" /></a>
+                    </div>
+                </div>
+                <div class="panel-box">
+                    <div class="wrapper">
+                        <a href="http://agrisnetodisha.ori.nic.in/" target="_blank" onclick="return confirm('This link will take you to an external web site.')"><img alt="button menu" src="../../Resource/www.nielit.gov.in/sites/default/files/AGRISNETICON.jpg" /></a>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    <script src="../../Resource/nielit.gov.in/sites/all/themes/berry/jquery.accTabs.js"></script>
+    <script>
+        $(function () {
+            $('.example-a').accTabs();
+            $('.example-b').accTabs({
+                defaultTab: 1
+            });
+            (function () {
+                var target = $('.example-c'),
+                    buttonContainer = $('<div />'),
+                    buttonRebuild = $('<button class="js-btn">Rebuild</button>'),
+                    buttonDestroy = $('<button class="js-btn">Destroy</button>');
+                target.accTabs({
+                    defaultTab: 1
+                });
+                buttonRebuild.attr('disabled', 'disabled');
+                buttonRebuild.on('click', function (event) {
+                    event.preventDefault();
+                    target.data('plugin_accTabs').rebuild();
+                    $(this).attr('disabled', 'disabled');
+                    buttonDestroy.removeAttr('disabled');
+                });
+                buttonDestroy.on('click', function (event) {
+                    event.preventDefault();
+                    target.data('plugin_accTabs').destroy();
+                    $(this).attr('disabled', 'disabled');
+                    buttonRebuild.removeAttr('disabled');
+                });
+                buttonContainer.append(buttonDestroy, buttonRebuild);
+                target.after(buttonContainer);
+            })();
+        });
+        $(document).ready(function () {
+            $("#block-menu-menu-footer-follow-us .menu li").each(function (n) {
+                $(this).attr("id", "social" + n);
+            });
+        });
+        $(document).ready(function () {
+            $("#multilines .newsticker").css("height", "300px");
+            $("#js-tabs_panel--03").css("height", "285px");
+            $("#js-tabs_panel--04").css("height", "285px");
+        });
+    </script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script>
+        var app = angular.module("myApp", []);
+        app.controller('myctr', function ($scope, $http) {
+            //$scope.eventData = [];
+            //$scope.event = [];
+            //$scope.latestnews = function () {
+            //    $http.get('/Home/GetLatestNews').success(function (data) {
+            //        $scope.eventData = data;
+            //    }).error(function (e) {
+            //    })
+            //};
+            //$scope.latestnews();
+            //$scope.latestevent = function () {
+            //    $http.get('/Home/GetLatestEvents').success(function (data) {
+            //        $scope.event = data;
+            //        //alert(data[0].title);
+            //    }).error(function (e) {
+            //    })
+            //};
+            //$scope.latestevent();
+        });
+    </script>
+    <div class="clear"></div>
+</div>
+<div id="totopscroller" title="scroller"></div>

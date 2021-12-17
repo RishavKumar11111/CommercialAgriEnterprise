@@ -1,0 +1,596 @@
+﻿@{
+    ViewBag.Title = "BLODetailEntry";
+    Layout = "~/Views/Shared/_LayoutDNO.cshtml";
+}
+@using (Html.BeginForm("BLODetailEntry", "DNO", FormMethod.Post, new { id = "FormId" }))
+{
+    @Html.AntiForgeryToken()
+}
+<div class="right_col" role="main" ng-app="BLOEntryApp" ng-controller="BLOEntryCtrl" ng-cloak>
+    <div data-loading></div>
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Block Level Officers (BLO) Details Entry</h3>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row" ng-show="recordEntry">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><i class="fa fa-bars"></i> Enter Block Level Officers (BLO) Details</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <form class="form-horizontal" name="formRecord" role="form" autocomplete="off" novalidate>
+                        <div class="row">
+                            <div class="form-group col-md-2 col-sm-2 col-xs-12">
+                                <label class="control-label">
+                                    <input style="margin: 5px" type="checkbox" ng-model="cbSelectAll" ng-click="checkAll()" />
+                                    Select All
+                                </label>
+                            </div>
+                            <div class="form-group col-md-2 col-sm-2 col-xs-12">
+                                <label class="control-label">Name</label>
+                            </div>
+                            <div class="form-group col-md-2 col-sm-2 col-xs-12">
+                                <label class="control-label">Mobile No.</label>
+                            </div>
+                            <div class="form-group col-md-2 col-sm-2 col-xs-12">
+                                <label class="control-label">Email ID</label>
+                            </div>
+                            <div class="form-group col-md-2 col-sm-2 col-xs-12">
+                                <label class="control-label">Signature</label>
+                            </div>
+                            <div class="form-group text-center col-md-2 col-sm-2 col-xs-12">
+                                <label class="control-label">Action</label>
+                            </div>
+                        </div>
+                        <div ng-repeat="i in arrBlocks">
+                            <div class="row">
+                                <div class="form-group col-md-2 col-sm-2 col-xs-12">
+                                    <div style="display: block">
+                                        <input style="margin: 5px" type="checkbox" name="dCode" value="{{i.BlockCode}}" id="{{i.BlockCode}}" ng-model="i.selected" ng-click="getBlocks()" />
+                                        <label style="padding: 0 25px 0 0; font-weight: normal" class="control-label">{{i.BlockName | capitalize}}</label>
+                                    </div>
+                                    <span style="color: red" ng-show="formRecord.bCode.$touched && formRecord.bCode.$invalid && formRecord.bCode.$error.required">This is a required field.</span>
+                                </div>
+                                <div class="form-group col-md-2 col-sm-2 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                        <input type="text" class="form-control" name="bloName" ng-model="i.Name" placeholder="Enter BLO's Name" alphabet-only maxlength="50" required />
+                                    </div>
+                                    <span style="color: red" ng-show="formRecord.bloName.$touched && formRecord.bloName.$invalid && formRecord.bloName.$error.required">This is a required field.</span>
+                                </div>
+                                <div class="form-group col-md-2 col-sm-2 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><b>+91</b></span>
+                                        <input type="text" class="form-control" name="bloMobileNo" ng-model="i.MobileNo" placeholder="Enter BLO's Mobile No" numbers-only mobile-no maxlength="10" required />
+                                    </div>
+                                    <span style="color: red" ng-show="formRecord.bloMobileNo.$touched && formRecord.bloMobileNo.$invalid && formRecord.bloMobileNo.$error.required">This is a required field.</span>
+                                </div>
+                                <div class="form-group col-md-2 col-sm-2 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                        <input type="text" class="form-control" name="bloEmailID" ng-model="i.EmailID" placeholder="Enter BLO's Email ID" maxlength="50" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2 col-sm-2 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
+                                        <input type="text" class="form-control" hidden id="sign{{$index + 1}}" placeholder="Base64 will appear here" ng-model="i.base64textarea" disabled style="display: none" required />
+                                        <input type="file" id="{{$index}}" name="bloSign" ng-model="i.bloSign" class="form-control" onchange="angular.element(this).scope().uploadSign(this.files, event)" required />
+                                    </div>
+                                </div>
+                                <div class="form-group text-center col-md-2 col-sm-2 col-xs-12">
+                                    <input type="button" value="Submit" class="btn btn-primary" ng-click="submitRecords(i, $index)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-right col-md-12 col-sm-12 col-xs-12">
+                            <input type="button" value="Submit All" class="btn btn-primary" ng-disabled="formRecord.$invalid" ng-click="submitAllRecords()" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="enteredDetails">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><i class="fa fa-bars"></i> View entered BLO's Details</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="table-responsive text-center">
+                        <table class="table table-striped table-bordered jambo_table bulk_action">
+                            <thead>
+                                <tr class="headings">
+                                    <th class="column-title text-center">Sl No.</th>
+                                    <th class="column-title text-center">Block</th>
+                                    <th class="column-title text-center">Name</th>
+                                    <th class="column-title text-center">Mobile No.</th>
+                                    <th class="column-title text-center">Email ID</th>
+                                    <th class="column-title text-center">Signature</th>
+                                    <th class="column-title text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="i in enteredBlocks">
+                                    <td style="vertical-align: middle">{{$index+1}}</td>
+                                    <td style="vertical-align: middle">{{i.BlockName}}</td>
+                                    <td style="vertical-align: middle">{{i.Name}}</td>
+                                    <td style="vertical-align: middle">{{i.MobileNo}}</td>
+                                    <td style="vertical-align: middle">{{i.EmailID == null ? 'NA' : i.EmailID}}</td>
+                                    <td style="vertical-align: middle">
+                                        <img src="data:image/jpeg;base64, {{i.Sign}}" style="height: 110px; width: 180px; border: 1px solid black" />
+                                    </td>
+                                    <td style="vertical-align: middle">
+                                        <input type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#recordModal" value="Edit" ng-click="editRecord(i.BlockCode)" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="recordModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form class="form-horizontal" name="frmRecord" role="form" autocomplete="off" novalidate>
+                    <div class="modal-header">
+                        <button type="button" id="btnRecordModal" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Edit Record</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div style="text-align: center" class="col-md-12 col-sm-12 col-xs-12">
+                                <label class="control-label">Block: {{w.BlockName | capitalize}}</label>
+                            </div>
+                        </div>
+                        <div class="row" style="margin: 0px">
+                            <div class="form-group">
+                                <label style="text-align: center" class="control-label col-md-3 col-sm-3 col-xs-12">BLO's Name</label>
+                                <label style="text-align: center" class="control-label col-md-3 col-sm-3 col-xs-12">BLO's Mobile No.</label>
+                                <label style="text-align: center" class="control-label col-md-3 col-sm-3 col-xs-12">BLO's Email ID</label>
+                                <label style="text-align: center" class="control-label col-md-3 col-sm-3 col-xs-12">BLO's Signature</label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="row" style="margin: 0px">
+                            <div class="form-group" style="text-align: center">
+                                <div style="text-align: center" class="col-md-3 col-sm-3 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                        <input type="text" class="form-control" name="bloName" ng-model="txtBLOName" placeholder="Enter BLO's Name" alphabet-only maxlength="50" required />
+                                    </div>
+                                    <span style="color: red" ng-show="frmRecord.bloName.$touched && frmRecord.bloName.$invalid && frmRecord.bloName.$error.required">This is a required field.</span>
+                                </div>
+                                <div style="text-align: center" class="col-md-3 col-sm-3 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><b>+91</b></span>
+                                        <input type="text" class="form-control" name="bloMobileNo" ng-model="txtBLOMobileNo" placeholder="Enter BLO's Mobile No" numbers-only mobile-no maxlength="10" required />
+                                        <span style="color: red" ng-show="frmRecord.bloMobileNo.$touched && frmRecord.bloMobileNo.$invalid && frmRecord.bloMobileNo.$error.required">This is a required field.</span>
+                                    </div>
+                                </div>
+                                <div style="text-align: center" class="col-md-3 col-sm-3 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                        <input type="text" class="form-control" name="bloEmailID" ng-model="txtBLOEmailID" placeholder="Enter BLO's Email ID" />
+                                    </div>
+                                </div>
+                                <div style="text-align: center" class="col-md-3 col-sm-3 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
+                                        <input type="file" id="bloSignature" name="bloSign" ng-model="txtBLOSign" class="form-control" onchange="angular.element(this).scope().updateSign(this.files)" />
+                                        <textarea class="form-control" hidden id="base64textarea" placeholder="Base64 will appear here" ng-model="InputDocument" style="display: none"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btnUpdateSign" type="button" class="btn btn-success" ng-disabled="frmRecord.$invalid || frmRecord.$pristine" ng-click="updateRecord(); frmRecord.$setPristine()">Update</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="frmRecord.$setPristine()">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = angular.module("BLOEntryApp", []);
+
+    app.controller("BLOEntryCtrl", function ($scope, $http, $timeout) {
+
+        var token = document.getElementsByName('__RequestVerificationToken')[0].value;
+
+        $scope.recordEntry = true;
+
+        $scope.blocks = [];
+        var getBlocks = function () {
+            $http.get('Block').then(function success(response) {
+                $scope.blocks = response.data;
+                if ($scope.blocks.length == 0) {
+                    $scope.recordEntry = false;
+                }
+                else if ($scope.blocks.length > 0) {
+                    $scope.recordEntry = true;
+                }
+                var a = 0;
+                $scope.arrBlocks = [];
+                angular.forEach($scope.blocks, function (i) {
+                    i.ID = a;
+                    a++;
+                    $scope.arrBlocks.push(i);
+                });
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+        getBlocks();
+
+        $scope.populateBlocks = [];
+        $scope.getBlocks = function () {
+            $scope.populateBlocks = [];
+            angular.forEach($scope.blocks, function (i) {
+                if (i.selected) {
+                    $scope.populateBlocks.push(i);
+                }
+                else {
+                    return false;
+                }
+            });
+        };
+
+        $scope.checkAll = function () {
+            if ($scope.cbSelectAll) {
+                $scope.populateBlocks = [];
+                $scope.cbSelectAll = true;
+                angular.forEach($scope.blocks, function (i) {
+                    i.selected = $scope.cbSelectAll;
+                    $scope.populateBlocks.push(i);
+                });
+            }
+            else {
+                $scope.cbSelectAll = false;
+                angular.forEach($scope.blocks, function (i) {
+                    i.selected = $scope.cbSelectAll;
+                });
+                $scope.populateBlocks = [];
+            }
+        };
+
+        $scope.uploadSign = function (files, evt) {
+            if (files.length != 0) {
+                var ext = files[0].name.match(/\.(.+)$/)[1];
+                if (!(angular.lowercase(ext) === 'jpeg' || angular.lowercase(ext) === 'jpg')) {
+                    alert("Invalid Signature file, must select a *.jpg , *.jpeg  file.");
+                    document.getElementById('bloSign').value = null;
+                    return false;
+                }
+                if (files.fileSize == -1) {
+                    alert("Couldn't load Signature file size. Please try to save again.");
+                    return false;
+                }
+                else {
+                    var as = files[0].size;
+                    if (files[0].size > 51200) {
+                        alert("File is too large, you must select file under 50KB.");
+                        document.getElementById('bloSign').value = null;
+                        return false;
+                    }
+                    else {
+                        if (window.File && window.FileReader && window.FileList && window.Blob) {
+                            var files = evt.target.files;
+                            var file = files[0];
+                            if (files && file) {
+                                var reader = new FileReader();
+                                reader.onloadend = function () {
+                                    var v = reader.result.split('base64,')[1];
+                                    var u = parseInt(evt.target.id) + 1;
+                                    document.getElementById("sign" + u).value = v;
+                                }
+                                reader.readAsDataURL(file)
+                            }
+                        } else {
+                            alert('The File APIs are not fully supported in this browser.');
+                        };
+                    }
+                }
+            }
+        };
+
+        $http.get('GetDepartment').then(function success(response) {
+            $scope.department = response.data;
+            if ($scope.department == "agr") {
+                $scope.designation = "aao";
+            }
+            else if ($scope.department == "hor") {
+                $scope.designation = "aho";
+            }
+            else if ($scope.department == "fis") {
+                $scope.designation = "afo";
+            }
+            else if ($scope.department == "ani") {
+                $scope.designation = "bvo";
+            }
+        }, function error(response) {
+            alert(response.status);
+        });
+
+        $scope.submitRecords = function (i, j) {
+            var sign = document.getElementById("sign" + parseInt(j + 1)).value;
+            if (sign != null && sign != undefined && sign != "") {
+                if (i.BlockCode != 0 && i.BlockName != null && i.selected) {
+                    if (i.Name != undefined && i.Name != null) {
+                        if (i.MobileNo != undefined && i.MobileNo != null) {
+                            var myData = { BlockCode: i.BlockCode, Name: i.Name, MobileNo: i.MobileNo, EmailID: i.EmailID, Signature: sign };
+                            var myData1 = { UserID: $scope.designation + '_' + i.BlockCode };
+                            var req = {
+                                method: 'POST',
+                                url: 'SubmitBLORecords',
+                                headers: {
+                                    '__RequestVerificationToken': token
+                                },
+                                data: { x: myData, y: myData1 }
+                            };
+                            $http(req).then(function success(response) {
+                                var k = response.data;
+                                if (k == true) {
+                                    alert("Records submitted successfully.");
+                                    getBlocks();
+                                    getRecords();
+                                    $scope.enteredDetails = true;
+                                }
+                                else {
+                                    alert("Oops!!! Something is wrong.Please try again.");
+                                    return false;
+                                }
+                            }, function error(response) {
+                                alert(response.status);
+                            });
+                        }
+                        else {
+                            alert("Please enter the BLO's Mobile No.");
+                        }
+                    }
+                    else {
+                        alert("Please enter the BLO's Name.");
+                    }
+                }
+                else {
+                    alert("Please select the Block.");
+                }
+            }
+            else {
+                alert("Please upload the Signature.");
+            }
+        };
+
+        $scope.updateRecord = function () {
+            if (document.getElementById("bloSignature").files.length == 0) {
+                alert("Plesase upload a Signature to update.");
+                return false;
+            }
+            if (document.getElementById("bloSignature").files.length > 0) {
+                var sign = document.getElementById("base64textarea").value;
+            }
+            if (sign != null && sign != undefined && sign != "") {
+                if ($scope.txtBLOName != undefined && $scope.txtBLOName != null) {
+                    if ($scope.txtBLOMobileNo != undefined && $scope.txtBLOMobileNo != null) {
+                        var myData = { Name: $scope.txtBLOName, MobileNo: $scope.txtBLOMobileNo, EmailID: $scope.txtBLOEmailID, Signature: sign };
+                        var req = {
+                            method: 'POST',
+                            url: 'UpdateBLORecord?blockCode=' + $scope.BCode,
+                            headers: {
+                                '__RequestVerificationToken': token
+                            },
+                            data: { x: myData }
+                        };
+                        $http(req).then(function success(response) {
+                            var k = response.data;
+                            if (k == true) {
+                                alert("Records updated successfully.");
+                                getBlocks();
+                                getRecords();
+                                $scope.enteredDetails = true;
+                                document.getElementById('recordModal').style.display = "none";
+                                $timeout(function () {
+                                    document.getElementById("btnRecordModal").click();
+                                }, 1);
+                            }
+                            else {
+                                alert("Oops!!! Something is wrong.Please try again.");
+                                return false;
+                            }
+                        }, function error(response) {
+                            alert(response.status);
+                        });
+                    }
+                    else {
+                        alert("Please enter the BLO's Mobile No.");
+                    }
+                }
+                else {
+                    alert("Please enter the BLO's Name.");
+                }
+            }
+            else {
+                alert("Please upload the Signature.");
+            }
+        };
+
+        $scope.enteredBlocks = [];
+        var getRecords = function () {
+            $http.get('GetBLOSignatures').then(function success(response) {
+                $scope.enteredBlocks = response.data;
+                if ($scope.enteredBlocks.length != 0) {
+                    $scope.enteredDetails = true;
+                }
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+        getRecords();
+
+
+
+        $scope.editRecord = function (a) {
+            $scope.BCode = a;
+            $http.get('GetBLORecordsbyBlock?blockCode=' + a).then(function success(response) {
+                $scope.w = response.data;
+                $scope.txtBLOName = $scope.w.Name;
+                $scope.txtBLOMobileNo = $scope.w.MobileNo;
+                $scope.txtBLOEmailID = $scope.w.EmailID;
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+
+        $scope.updateSign = function (files) {
+            var ext = files[0].name.match(/\.(.+)$/)[1];
+            if (!(angular.lowercase(ext) === 'jpeg' || angular.lowercase(ext) === 'jpg')) {
+                alert("Invalid Signature file, you must select a *.jpg , *.jpeg  file.");
+                document.getElementById('bloSignature').value = null;
+                return false;
+            }
+            if (files.fileSize == -1) {
+                alert("Couldn't load Signature file size. Please try to save again.");
+                return false;
+            }
+            else {
+                var as = files[0].size;
+                if (files[0].size > 51200) {
+                    alert("File is too large, you must select file under 50KB.");
+                    document.getElementById('bloSignature').value = null;
+                    return false;
+                }
+                else {
+                    document.getElementById('btnUpdateSign').disabled = false;
+                    return;
+                }
+            }
+        };
+
+        var handleFileSelect = function (evt) {
+            var files = evt.target.files;
+            var file = files[0];
+            if (files && file) {
+                var reader = new FileReader();
+                reader.onload = function (readerEvt) {
+                    var binaryString = readerEvt.target.result;
+                    document.getElementById("base64textarea").value = btoa(binaryString);
+                };
+                reader.readAsBinaryString(file);
+            }
+        };
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+            document.getElementById('bloSignature').addEventListener('change', handleFileSelect, false);
+        } else {
+            alert('The File APIs are not fully supported in this browser.');
+        };
+    });
+
+    app.directive('alphabetOnly', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                ngModelCtrl.$parsers.push(function (val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace(/[^a-zA-Z\s]/g, '');
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
+            }
+        };
+    });
+
+    app.directive('numbersOnly', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                ngModelCtrl.$parsers.push(function (val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace(/[^0-9]/g, '');
+                    var negativeCheck = clean.split('-');
+                    if (!angular.isUndefined(negativeCheck[1])) {
+                        negativeCheck[1] = negativeCheck[1].slice(0, negativeCheck[1].length);
+                        clean = negativeCheck[0] + '-' + negativeCheck[1];
+                        if (negativeCheck[0].length > 0) {
+                            clean = negativeCheck[0];
+                        }
+                    }
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
+                element.bind('keypress', function (event) {
+                    if (event.keyCode === 32) {
+                        event.preventDefault();
+                    }
+                });
+            }
+        };
+    });
+
+    app.directive('mobileNo', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                element.on('input change', function () {
+                    if (this.value === '0' || this.value === '1' || this.value === '2' || this.value === '3' || this.value === '4' || this.value === '5') {
+                        this.value = null;
+                    }
+                });
+            }
+        };
+    });
+
+    app.directive('loading', ['$http', function ($http) {
+        return {
+            restrict: 'A',
+            template: '<div class="loading">Loading&#8230;</div>',
+            link: function (scope, elm, attrs) {
+                scope.isLoading = function () {
+                    return $http.pendingRequests.length > 0;
+                };
+                scope.$watch(scope.isLoading, function (v) {
+                    if (v) {
+                        elm.css('display', 'block');
+                    } else {
+                        elm.css('display', 'none');
+                    }
+                });
+            }
+        };
+    }]);
+
+    app.filter('capitalize', function () {
+        return function (input) {
+            return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+        }
+    });
+</script>

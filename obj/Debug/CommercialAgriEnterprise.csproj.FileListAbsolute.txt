@@ -1,0 +1,324 @@
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\ApplicationInsights.config
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\CommercialAgriEnterprise.dll.config
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\CommercialAgriEnterprise.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\CommercialAgriEnterprise.pdb
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Antlr3.Runtime.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\EntityFramework.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\EntityFramework.SqlServer.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.Web.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.ApplicationInsights.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Newtonsoft.Json.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Owin.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Net.Http.Formatting.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Cors.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Helpers.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.Cors.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.WebHost.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Mvc.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Optimization.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Razor.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.Razor.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\WebGrease.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Net.Http.Formatting.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.Cors.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Helpers.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Mvc.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Optimization.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Razor.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.Razor.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Antlr3.Runtime.pdb
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Newtonsoft.Json.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.WebHost.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\EntityFramework.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\EntityFramework.SqlServer.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.ApplicationInsights.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.Web.xml
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.csprojResolveAssemblyReference.cache
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.csproj.CoreCompileInputs.cache
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.csproj.CopyComplete
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.dll
+C:\Users\Rishav Kumar\Desktop\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.pdb
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\ApplicationInsights.config
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\CommercialAgriEnterprise.dll.config
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\CommercialAgriEnterprise.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\CommercialAgriEnterprise.pdb
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Antlr3.Runtime.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\EntityFramework.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\EntityFramework.SqlServer.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.Web.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.ApplicationInsights.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Newtonsoft.Json.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Owin.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Net.Http.Formatting.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Cors.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Helpers.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.Cors.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.WebHost.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Mvc.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Optimization.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Razor.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.Razor.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\WebGrease.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Net.Http.Formatting.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.Cors.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Helpers.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Mvc.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Optimization.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Razor.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.Razor.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Antlr3.Runtime.pdb
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Newtonsoft.Json.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.WebHost.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\EntityFramework.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\EntityFramework.SqlServer.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.ApplicationInsights.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.Web.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.csprojAssemblyReference.cache
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.csproj.CoreCompileInputs.cache
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.csproj.CopyComplete
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Local\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.pdb
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\ApplicationInsights.config
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\CommercialAgriEnterprise.dll.config
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\CommercialAgriEnterprise.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\CommercialAgriEnterprise.pdb
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Antlr3.Runtime.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\EntityFramework.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\EntityFramework.SqlServer.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.Web.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.ApplicationInsights.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Newtonsoft.Json.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Owin.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Net.Http.Formatting.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Cors.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Helpers.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.Cors.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.WebHost.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Mvc.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Optimization.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Razor.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.Razor.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\WebGrease.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Net.Http.Formatting.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.Cors.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Helpers.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Mvc.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Optimization.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Razor.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.Razor.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Antlr3.Runtime.pdb
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Newtonsoft.Json.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.WebHost.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\EntityFramework.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\EntityFramework.SqlServer.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.ApplicationInsights.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.ServerTelemetryChannel.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.Web.xml
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.csprojAssemblyReference.cache
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.csproj.CoreCompileInputs.cache
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.csproj.CopyComplete
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.dll
+C:\Users\Rishav Kumar\Desktop\APICOL\Server\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.pdb
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\ApplicationInsights.config
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\CommercialAgriEnterprise.dll.config
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\CommercialAgriEnterprise.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\CommercialAgriEnterprise.pdb
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Antlr3.Runtime.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\EntityFramework.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\EntityFramework.SqlServer.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.Agent.Intercept.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.DependencyCollector.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.PerfCounterCollector.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.ServerTelemetryChannel.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.Web.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.WindowsServer.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.ApplicationInsights.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.Core.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.Owin.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Host.SystemWeb.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Cookies.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Facebook.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Google.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.OAuth.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Twitter.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Web.Infrastructure.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Newtonsoft.Json.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Owin.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Net.Http.Formatting.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Cors.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Helpers.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.Cors.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.WebHost.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Mvc.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Optimization.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Razor.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.Deployment.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.Razor.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\WebGrease.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Net.Http.Formatting.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.Cors.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Helpers.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Mvc.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Optimization.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Razor.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.Deployment.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.WebPages.Razor.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Antlr3.Runtime.pdb
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Newtonsoft.Json.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\System.Web.Http.WebHost.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\EntityFramework.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\EntityFramework.SqlServer.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.Core.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.Owin.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Host.SystemWeb.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Facebook.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Cookies.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.OAuth.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Google.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.Twitter.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.ApplicationInsights.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.DependencyCollector.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.ServerTelemetryChannel.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.WindowsServer.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\bin\Microsoft.AI.Web.xml
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.csprojAssemblyReference.cache
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.csproj.CoreCompileInputs.cache
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.csproj.CopyComplete
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.dll
+D:\Projects\4\CommercialAgriEnterprise\CommercialAgriEnterprise\obj\Debug\CommercialAgriEnterprise.pdb

@@ -1,0 +1,49 @@
+﻿@using CommercialAgriEnterprise.Models
+@model LoginModel
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Content/encoder.js"></script>
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal text-center", role = "form", @style = "padding: 50px 0px" }))
+{
+    @Html.AntiForgeryToken()
+    <p style="white-space: nowrap; margin-left: -45px" class="headStyle">Mukhyamantri Krushi Udyoga Yojana</p>
+    <p class="headStyle">Login</p>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <div class="col-md-12">
+            @Html.TextBoxFor(m => m._email, new { @class = "form-control", autocomplete = "off", placeholder = "User ID" })
+            @Html.HiddenFor(m => m.Key, new { @class = "form-control", autocomplete = "off", id = "pkey" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            @Html.PasswordFor(m => m._em, new { @class = "form-control", id = "pa", placeholder = "Password" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Captcha", new { @class = "col-md-2 control-label" })
+        <div class="col-md-12">
+            <img src="@Url.Action("CaptchaImage")" alt="CAPTCHA" class="form-control" style="width:49%; float:left;" />
+            @Html.TextBoxFor(m => m.Captcha, new { @class = "form-control", @autocomplete = "off", placeholder = "CAPTCHA", id = "captcha", style = "width:49%; float:right;" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12" style="text-align:center;">
+            <h3 style="color:white;">@Html.ValidationMessage("Msg")</h3>
+            <h3 style="color:white;">@ViewBag.Errmsg</h3>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <input type="submit" value="Log in" class="pass-reset-submit btn btn-block btn-success" id="ck" />
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    function resetCaptcha() {
+        $('#captcha').val("");
+    }
+    $(document).contextmenu(function () { return false; }); $(document).ready(function () { $('#pkey').val("@Session["Key"]"); var flag = false; $("input:text, form").attr("autocomplete", "off"); $('#pa').focusout(function () { flag = true; $(this).val(digest("@Session["Key"]" + digest(digest($(this).val())))) }); $("#ck").click(function () { if (flag == false) { $('#pa').val(digest("@Session["Key"]" + digest(digest($('#pa').val())))) } else { } }); resetCaptcha(); });
+</script>

@@ -1,0 +1,812 @@
+﻿
+@{
+    ViewBag.Title = "BloDashboard";
+    Layout = "~/Views/Shared/_LayoutBLO.cshtml";
+}
+
+@using (Html.BeginForm("BloDashboard", "BLO", FormMethod.Post, new { id = "FormId" }))
+{
+    @Html.AntiForgeryToken()
+}
+
+<div ng-app="BLOApp" ng-controller="BLOCtrl" ng-cloak>
+    <div data-loading></div>
+    <div class="right_col" role="main">
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-xs-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Dashboard for District Nodal Officer</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <form class="form-horizontal">
+                            <div class="table table-responsive">
+                                <table class="table table-bordered table-striped" style="white-space:nowrap">
+                                    <tr style="background-color:gray;color:white;white-space:nowrap;text-align:center; width:950px;">
+                                        <td><b>SLNO.</b></td>
+                                        <td><b>Ref NO.</b></td>
+                                        <td><b>Payment Status</b></td>
+                                        <td><b>View Registration</b></td>
+                                        <td><b>View DPR</b></td>
+                                        <td><b>View Feasibility Report</b></td>
+                                        <td>BLO Status</td>
+                                        @if (ViewBag.Department == "Animal Resources Development")
+                                        {
+                                            <td>Send To</td>
+                                        }
+
+                                        <td><b>Action</b></td>
+                                    </tr>
+                                    <tr ng-repeat="i in getall" style="background-color:white;color:black;white-space:nowrap;text-align:center">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{i.refno}}</td>
+                                        <td>
+                                            {{i.StatusPayment}}
+                                            <span class="glyphicon glyphicon-ok" style="color:green;" ng-if="i.StatusPayment == 'Success'"></span>
+                                            <span class="glyphicon glyphicon-refresh" style="color:orangered;" ng-if="i.StatusPayment =='Pending'"></span>
+                                        </td>
+                                        <td>
+                                            <a href="" ng-click="open(i.refno)"><center><input type="image" src="~/Content/images/binocular-solid.png" style="height:20px;width:20px;" /></center></a>
+                                        </td>
+                                        <td>
+                                            <a href="" ng-click="openmodal(i.refno)"><center><input type="image" src="~/Content/images/binocular-solid.png" style="height:20px;width:20px;" /></center></a>
+                                        </td>
+                                        <td>
+                                            <span ng-if="i.StatusFeasibility == 'Success'"><a href="" ng-click="openfeasibility(i.refno)"><input type="image" src="~/Content/images/binocular-solid.png" style="height:20px;width:20px;" /></a></span>
+                                            <a ng-if="i.StatusFeasibility =='Pending'">
+                                                Pending
+                                                <span class="glyphicon glyphicon-refresh" style="color:orangered;"></span>
+                                            </a>
+
+                                        </td>
+
+                                        <td>
+                                            {{i.BloStatus}}
+                                            <span class="glyphicon glyphicon-ok" style="color:green;" ng-if="i.BloStatus == 'Feasible'"></span>
+                                            <span class="glyphicon glyphicon-remove" style="color:red;" ng-if="i.BloStatus =='Not Feasible'">
+                                            </span>
+                                            <span class="glyphicon glyphicon-refresh" style="color:orangered;" ng-if="i.BloStatus =='Pending'"></span>
+                                        </td>
+                                        @if (ViewBag.Department == "Animal Resources Development")
+                                        {
+                                            <td>
+                                                <div style="width:250px;">
+                                                    <div style="width:140px; float:left;">
+                                                        <select class="form-control" ng-if="(i.DeptCode == '04' && i.ProjectCode=='04P15' && i.StatusPayment == 'Success' && i.StatusFeasibility == 'Pending')" ng-model="ddlBlo" ng-change="ddlChooseBlo(ddlBlo)">
+                                                            <option value="">Select BLO</option>
+                                                            <option value="01">AAO</option>
+                                                            <option value="02">AHO</option>
+                                                            <option value="03">AFO</option>
+                                                        </select>
+                                                    </div><div style="width:99px; float:left;">
+                                                        <button type="button" class="btn btn-sm btn-success" data-toggle="modal" ng-if="(i.DeptCode == '04' && i.ProjectCode=='04P15' && i.StatusPayment == 'Success' && i.StatusFeasibility == 'Pending')" ng-click="SendBlo(i.refno)"><span class="glyphicon glyphicon-ok"></span> Send</button>
+                                                    </div>
+                                                </div>
+
+
+                                            </td>
+                                        }
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal" ng-if="(i.statusBlo == '0' && i.StatusPayment == 'Success' &&  i.StatusFeasibility == 'Success')" data-target="#ApproveModal" ng-click="openMA(i.refno)"><span class="glyphicon glyphicon-ok"></span> Feasible</button>
+                                            <button type="button" class="btn btn-sm btn-danger" value="Reject" ng-if="(i.statusBlo == '0' && i.StatusPayment == 'Success' &&  i.StatusFeasibility == 'Success')" data-toggle="modal" data-target="#RejectModal" ng-click="openMR(i.refno)"><span class="glyphicon glyphicon-remove"></span> Not Feasible</button>
+                                        </td>
+                                    </tr>
+                                    <tr style="color:red;text-align:center;font-size:20px" ng-if="Errorshow"><td colspan="8"><b>{{ErrorMSg}}</b></td></tr>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div modal="ShowRegistrationModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="printSection4">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="text-align:center">Registration Detail Report</h4>
+                </div>
+                <div class="modal-body" style="color:black">
+                    <center>
+                        <div class="row form-group">
+                            <div class="col-md-4 col-sm-4 col-xs-12"></div>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <img src="../Content/images/govtlogo.jpg" />
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12"></div>
+                        </div>
+                        <div class="form-group" style="border-top:1px solid black;"></div>
+                        <div class="row form-group">
+                            <table style="width:90%">
+                                <tr>
+                                    <td colspan="3">
+                                        <b>Applicant Details </b><br />
+                                        <input type="image" src="~/Content/images/ul.jpg" />
+                                    </td>
+                                </tr>
+                                <tr><td><b>Reference Number</b></td><td>: {{t.ReferenceNumber}}</td><td rowspan="4" style="text-align:center;"><img id="passpic" style="width:122px;height:142px;" /><br />Photograph</td></tr>
+                                <tr><td><b>Date of Application</b></td><td>: {{t.DateofApplication}}</td></tr>
+                                <tr><td><b>Submited To</b> </td><td>: Nodal Officer {{t.AppliedTO}},{{t.District}}</td></tr>
+                                <tr><td><b>Applicant Name</b></td><td>: {{t.ApplicantName}}</td></tr>
+                                <tr><td><b> Name of the Father / Husband</b> </td><td>: {{t.FatherorHusbandName}}</td></tr>
+                                <tr><td><b>Date of birth</b> </td><td>: {{t.DateofBirth}}</td></tr>
+                                <tr><td><b>Gender</b> </td><td>: {{t.Gender}}</td></tr>
+                                <tr><td><b>Category</b> </td><td>: {{t.Catagory}}</td></tr>
+                                <tr><td><b>Educational Qualification</b> </td><td>: {{t.EducationalQualification}}</td></tr>
+                                <tr><td><b>Present Occupation</b> </td><td>: {{t.PresentOccupation}}</td></tr>
+                                <tr><td><b>Annual Income(Rs.)</b> </td><td>: {{t.AnnualIncome}}</td></tr>
+                                <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <b>Address Details </b><br />
+                                        <input type="image" src="~/Content/images/ul.jpg" />
+                                    </td>
+                                </tr>
+                                <tr><td><b>Correspondance Address(With PIN)</b> </td><td>: {{t.CorrespondenceAddress}}</td></tr>
+                                <tr><td><b>Permanent Address</b> </td><td>: {{t.PermanentAddress}}</td></tr>
+                                <tr><td><b>Mobile No</b> </td><td>: {{t.MobileNumber}}</td></tr>
+                                <tr><td><b>Email ID</b> </td><td>: {{t.EmailID}}</td></tr>
+                                <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <b>Porposed Location of CAE with land Particulars</b><br />
+                                        <input type="image" src="~/Content/images/ul.jpg" />
+                                    </td>
+                                </tr>
+                                <tr><td><b>District</b> </td><td>: {{t.District}}</td></tr>
+                                <tr><td><b>Block</b> </td><td>: {{t.Block}}</td></tr>
+                                <tr><td><b>Gram Panchayat</b> </td><td>: {{t.GP}}</td></tr>
+                                <tr><td><b>Village</b> </td><td>: {{t.Village}}</td></tr>
+                                <tr><td><b>Khata No/Plot No</b> </td><td ng-repeat="i in AckLand">: Khatano-{{i.KhataNo}},Plotno-{{i.PlotNo}}</td></tr>
+                                <tr>
+                                    <td><b>View Land Document</b></td>
+                                    <td>
+                                        : <a ng-show="firstpdf" href="" ng-click="viewDocumentFile(t.ReferenceNumber,'LandPdf1')"><b style="color:red;height:50px;width:50px"><input type="image" src="~/Content/images/binocular-solid.png" style="width:20px;height:20px" /></b></a>
+                                        <a ng-if="Secondpdf" href="" ng-click="viewDocumentFile(t.ReferenceNumber,'LandPdf2')"><b style="color:black"><input type="image" src="~/Content/images/binocular-solid.png" style="width:20px;height:20px" /></b></a>
+                                    </td>
+                                </tr>
+                                <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <b>General Information</b><br />
+                                        <input type="image" src="~/Content/images/ul.jpg" />
+                                    </td>
+                                </tr>
+                                <tr><td><b>Type of Project</b> </td><td>: {{t.ProjectType}}</td></tr>
+                                <tr><td><b>Project Name</b> </td><td>: {{t.ProjectName}}</td></tr>
+                                <tr><td><b>Means of finance</b> </td><td>: {{t.FinanceType}}</td></tr>
+                                <tr><td><b>Product/services to be produced/marketed</b> </td><td>: {{t.ProducttobeProduced}}</td></tr>
+                                <tr ng-if="t.FinanceType=='Bank'"><td><b>Bank Name</b> </td><td>: {{t.Bank}}</td></tr>
+                                <tr ng-if="t.FinanceType=='Bank'"><td><b>Branch Name</b> </td><td>: {{t.Branch}}</td></tr>
+                                <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <b>Tentative cost of the Project (in rupees)</b><br />
+                                        <input type="image" src="~/Content/images/ul.jpg" />
+                                    </td>
+                                </tr>
+                                <tr><td><b>Own Contribution(Rs.)</b> </td><td>: {{t.Owncontribution}}</td></tr>
+                                <tr ng-if="t.FinanceType=='Bank'"><td><b>Bank Loan(Rs)</b> </td><td>: {{t.BankLoan}}</td></tr>
+                                <tr><td><b>&nbsp;</b> </td><td>---------------------</td></tr>
+                                <tr><td><b>Total</b> </td><td>: {{t.Owncontribution+t.BankLoan}}</td></tr>
+                                <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <b>Documents Attached </b><br />
+                                        <input type="image" src="~/Content/images/ul.jpg" />
+                                    </td>
+                                </tr>
+                                <tr><td><b>Land record/Lease document</b> </td><td>: <input type="checkbox" checked /></td></tr>
+                                <tr><td><b>Photograph of the Applicant</b> </td><td>: <input type="checkbox" checked /></td></tr>
+                                <tr><td><b>Identity Proof</b> </td><td>: <input type="checkbox" checked /></td></tr>
+                                <tr><td><b>View Identity Document</b></td><td>: <a target="_blank" href="" {{t.document}} ng-click="viewpdffile(t.ReferenceNumber)" style="width:50%;height:50%"><b style="color:black"><input type="image" src="~/Content/images/binocular-solid.png" style="width:20px;height:20px" /></b></a></td></tr>
+                                <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <b>Applicant Signature</b><br />
+                                        <input type="image" src="~/Content/images/ul.jpg" />
+                                    </td>
+                                </tr>
+                                <tr><td></td><td><img id="photoSignature" style="height:110px;width:180px;" /></td></tr>
+                                <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+                            </table>
+                        </div>
+                    </center>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="print('printSection4')">Print Registration</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div modal="ShowDprModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+                    <h4 class="modal-title">DPR</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="printSection1" class="text-center">
+                        <center>
+                            <h3>Beneficiary Details</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 50%"><b>Reference No</b></td>
+                                    <td style="width: 50%">{{z.ReferenceNo}}</td>
+                                </tr>
+                            </table>
+                            <h3>Land</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Land Development</b></td>
+                                    <td style="width: 25%">₹ {{z.Development}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Fencing <small>(Barbed Wire / Green Fencing)</small></b></td>
+                                    <td style="width: 25%">₹ {{z.Fencing}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.LandTotal}}</td>
+                                </tr>
+                            </table>
+                            <h3>Civil Construction <small>(Exclusively used for the Project)</small></h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Building</b></td>
+                                    <td style="width: 25%">₹ {{z.Development}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Shed</b></td>
+                                    <td style="width: 25%">₹ {{z.Fencing}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Office cum Store</b></td>
+                                    <td style="width: 25%">₹ {{z.OfficeCumStore}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Godown</b></td>
+                                    <td style="width: 25%">₹ {{z.Godown}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Plant Area</b></td>
+                                    <td style="width: 25%">₹ {{z.PlantArea}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Other Necessary Constructions</b></td>
+                                    <td style="width: 25%">₹ {{z.OtherNecessaryConstruction}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.CivilConstructionTotal}}</td>
+                                </tr>
+                            </table>
+                            <h3>Water Supply</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Bore Well / Tube Well / Dug Well / River Lift</b></td>
+                                    <td style="width: 25%">₹ {{z.WellOrRiver}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Pump & Pipeline</b></td>
+                                    <td style="width: 25%">₹ {{z.PumpPipeLine}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Tank / Overhead Tank</b></td>
+                                    <td style="width: 25%">₹ {{z.Tank}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sprinkler / Fogger</b></td>
+                                    <td style="width: 25%">₹ {{z.SprinklerFogger}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.WaterSupplyTotal}}</td>
+                                </tr>
+                            </table>
+                            <h3>Electrification</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Installation & Fitting</b></td>
+                                    <td style="width: 25%">₹ {{z.InstallationFitting}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Transformer</b></td>
+                                    <td style="width: 25%">₹ {{z.Transformer}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>DG Set</b></td>
+                                    <td style="width: 25%">₹ {{z.DGSet}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.ElectrificationTotal}}</td>
+                                </tr>
+                            </table>
+                            <h3>Plant & Machinery</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Equipment & Machinery</b></td>
+                                    <td style="width: 25%">₹ {{z.Equipment}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Manual / Motor Operated Equipment <small>(eg. Poultry Cages / Brooding & Growing Equipments / Milking Machine / Chaff Cutter / Refrigeration / Preservation Unit / Fisheries Equipments, etc)</small></b></td>
+                                    <td style="width: 25%">₹ {{z.ManualOrMotor}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.PlantMachineryTotal}}</td>
+                                </tr>
+                            </table>
+                            <h3>Animal & Plant Cost</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td colspan="2">Livestocks :---</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>{{z.LivestockType}}</b></td>
+                                    <td style="width: 25%">{{z.Livestock}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Poultry Layer & Breeder Birds <small>(Broiler not Included)</small></b></td>
+                                    <td style="width: 25%">₹ {{z.PoultryBreeder}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Brood Fish</b></td>
+                                    <td style="width: 25%">₹ {{z.BroodFish}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Plants</b></td>
+                                    <td style="width: 25%">₹ {{z.Plant}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.AnimalPlantTotal}}</td>
+                                </tr>
+                            </table>
+                            <h3>Miscellaneous</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td colspan="2">Insurance Premium of Assets :---</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>i. Fixed Assets</b></td>
+                                    <td style="width: 25%">₹ {{z.FixedAsset}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>ii. Livestocks</b></td>
+                                    <td style="width: 25%">₹ {{z.MLivestock}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>iii. Birds</b></td>
+                                    <td style="width: 25%">₹ {{z.Bird}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Perennial Fodder Cultivation</b></td>
+                                    <td style="width: 25%">₹ {{z.Cultivation}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.MiscellaneousTotal}}</td>
+                                </tr>
+                            </table>
+                            <h3>Total Capital Investment Cost</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Total Capital Investment Cost <small>(A. Land - G. Miscellaneous)</small></b></td>
+                                    <td style="width: 25%">₹ {{z.TotalCapitalInvestmentCost}}</td>
+                                </tr>
+                            </table>
+                            <h3>Recurring Expenditure</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Raw Material</b></td>
+                                    <td style="width: 25%">₹ {{z.RawMaterial}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Salary / labour</b></td>
+                                    <td style="width: 25%">₹ {{z.Salary}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Reparing & Maintainence, etc</b></td>
+                                    <td style="width: 25%">₹ {{z.Maintenance}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>Sub Total</b></td>
+                                    <td style="width: 25%">₹ {{z.RecurringExpenditureTotal}}</td>
+                                </tr>
+                            </table>
+                            <h3>Total Project Cost</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Total Project Cost <small>(1. Capital Investment + 2. Recurring Expenditure)</small></b></td>
+                                    <td style="width: 25%">₹ {{z.TotalProjectCost}}</td>
+                                </tr>
+                            </table>
+                            <h3>Means of Finance</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 50%"><b>Own Investment</b></td>
+                                    <td style="width: 25%">₹ {{z.OwnInvestment}}</td>
+                                    <td style="width: 25%">Remark: {{z.OwnInvestmentRemark}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%"><b>Term Loan</b></td>
+                                    <td style="width: 25%">₹ {{z.TermLoan}}</td>
+                                    <td style="width: 25%">Remark: {{z.TermLoanRemark}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%"><b>Working Capital Loan</b></td>
+                                    <td style="width: 25%">₹ {{z.WorkingCapitalLoan}}</td>
+                                    <td style="width: 25%">Remark: {{z.WorkingCapitalLoanRemark}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%"><b>Any Other Source</b></td>
+                                    <td style="width: 25%">₹ {{z.OtherSource}}</td>
+                                    <td style="width: 25%">Remark: {{z.OtherSourceRemark}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%"><b>Total Finance</b></td>
+                                    <td style="width: 25%">₹ {{z.TotalAmount}}</td>
+                                    <td style="width: 25%"></td>
+                                </tr>
+                            </table>
+                            <h3>Profitability Projection</h3><hr />
+                            <table style="width: 87.5%; text-align: center" class="table table-striped table-bordered">
+                                <tr style="font-size: smaller">
+                                    <td><b>Serial No.</b></td>
+                                    <td><b>Year</b></td>
+                                    <td><b>Gross Revenue / Income ( ₹ )</b></td>
+                                    <td><b>Total Expenditure ( ₹ )</b></td>
+                                    <td><b>Gross Profit <small>(PBDIT)</small> ( ₹ )</b></td>
+                                    <td><b>Net Profit ( ₹ )</b></td>
+                                </tr>
+                                <tr ng-repeat="i in profitabilityProjectionDetails">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{i.Year}}</td>
+                                    <td>{{i.GrossRevenue}}</td>
+                                    <td>{{i.TotalExpenditure}}</td>
+                                    <td>{{i.GrossProfit}}</td>
+                                    <td>{{i.NetProfit}}</td>
+                                </tr>
+                            </table>
+                            <h3>Cash Flow Statement</h3><hr />
+                            <table style="width: 87.5%; text-align: center" class="table table-striped table-bordered">
+                                <tr style="font-size: smaller">
+                                    <td><b>Serial No.</b></td>
+                                    <td><b>Year</b></td>
+                                    <td><b>Total Cash Inflow ( ₹ )</b></td>
+                                    <td><b>Total Cash Outflow ( ₹ )</b></td>
+                                    <td><b>Net Cash Inflow ( ₹ )</b></td>
+                                </tr>
+                                <tr ng-repeat="i in cashFlowStatements">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{i.Year}}</td>
+                                    <td>{{i.TotalCashInflow}}</td>
+                                    <td>{{i.TotalCashOutflow}}</td>
+                                    <td>{{i.NetCashInflow}}</td>
+                                </tr>
+                            </table>
+                            <h3>Key Business Matrix</h3><hr />
+                            <table style="width: 75%" class="table table-striped">
+                                <tr>
+                                    <td style="width: 75%"><b>Break Even Point</b></td>
+                                    <td style="width: 25%">{{z.BreakEvenPoint}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>DSCR</b></td>
+                                    <td style="width: 25%">{{z.DSCR}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 75%"><b>IRR</b></td>
+                                    <td style="width: 25%">{{z.IRR}}</td>
+                                </tr>
+                            </table>
+                        </center>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="print('printSection1')">Print DPR</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div modal="showFeasibilityReport" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+                    <h4 class="modal-title text-center">View & Print Feasibility Report</h4>
+                </div>
+                <div class="modal-body" id="printSection">
+                    <table style="width:100%;">
+                        <tr><td style="width:120px; padding:10px;"><img src="../Content/images/govtlogo.jpg" /></td><td style="text-align: center"><h4>Department of Agriculture and Farmers' Empowerment</h4></td><td style="width:120px; padding:10px;"><img style="height: 80px; width: 86px" src="~/Content/images/ApicolLOGO.jpg" /></td></tr>
+                        <tr>
+                            <td colspan="3"><h4 class="modal-title text-center" style="text-align: center">Feasibility Report</h4></td>
+                        </tr>
+                    </table>
+                    <br />
+                    <div class="table table-responsive">
+                        <table style="width: 100%" class="table table-striped">
+                            <tr>
+                                <td style="width: 50%"><b>Reference No</b></td>
+                                <td style="width: 50%">{{m.ReferenceNo}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Previous Experience</b></td>
+                                <td style="width: 50%">{{m.PreviousExperience}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Road Connectivity</b></td>
+                                <td style="width: 50%">{{m.RoadConnectivity}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Distance from nearby Village</b></td>
+                                <td style="width: 50%">{{m.DistanceFromVillage}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Electrification</b></td>
+                                <td style="width: 50%">{{m.ElectrificationStatus}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Pollution Control Clearance</b></td>
+                                <td style="width: 50%">{{m.PollutionControlClearanceStatus}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Self Finance</b></td>
+                                <td style="width: 50%">{{m.SelfFinance}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Uncensored Loan</b></td>
+                                <td style="width: 50%">{{m.UncensoredLoan}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Margin Component</b></td>
+                                <td style="width: 50%">{{m.MarginComponent}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Bank Consent Letter</b></td>
+                                <td style="width: 50%">{{m.BankConsentLetterStatus}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Photo</b></td>
+                                <td style="width: 50%"><img id="landpic" style="width: 250px; height: 150px" /></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Latitude</b></td>
+                                <td style="width: 50%">{{m.Latitude}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Longitude</b></td>
+                                <td style="width: 50%">{{m.Longitude}}</td>
+                            </tr>
+                        </table>
+                    </div><br />
+                    <p style="text-align: justify; font-size: 15px">Verified the above mentioned information submitted by the entrepreneur by personally visiting the project site. I certify that the <b>{{m.ProjectName}}</b> with <b>{{m.Capacity}} {{m.CapacityUnit}}</b> capacity and a project cost of <b>₹ {{m.TotalProjectCost}}</b> is technically feasible and economically viable.</p><br /><br /><br />
+                    <div style="text-align: right">
+                        <img id="labelBloSign" style="height: 50px; width: 200px; border: 1px solid black" /><br />
+                        <label>{{lblDesignation}}, {{m.BlockName | capitalize}}</label><br />
+                        <label>{{labelbloName}}</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="print('printSection')">Print Feasibility Report</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*<div modal="ShowFeasibilityModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+                    <h4 class="modal-title">Feasibility Report</h4>
+                </div>
+                <div class="modal-body" id="printSection">
+                    <table style="width:100%;">
+                        <tr><td style="width:120px; padding:10px;"><img src="../Content/images/govtlogo.jpg" /></td><td style="text-align: center"><h4>Department of Agriculture and Farmers' Empowerment</h4></td><td style="width:120px; padding:10px;"><img style="height: 80px; width: 86px" src="~/Content/images/ApicolLOGO.jpg" /></td></tr>
+                    </table>
+                    <div class="table table-responsive">
+                        <table style="width: 100%" class="table table-striped">
+                            <tr>
+                                <td style="width: 50%"><b>Reference No</b></td>
+                                <td style="width: 50%">{{m.ReferenceNo}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Previous Experience</b></td>
+                                <td style="width: 50%">{{m.PreviousExperience}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Road Connectivity</b></td>
+                                <td style="width: 50%">{{m.RoadConnectivity}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Distance from nearby Village</b></td>
+                                <td style="width: 50%">{{m.DistanceFromVillage}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Electrification</b></td>
+                                <td style="width: 50%">{{m.ElectrificationStatus}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Pollution Control Clearance</b></td>
+                                <td style="width: 50%">{{m.PollutionControlClearanceStatus}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Self Finance</b></td>
+                                <td style="width: 50%">{{m.SelfFinance}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Uncensored Loan</b></td>
+                                <td style="width: 50%">{{m.UncensoredLoan}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Margin Component</b></td>
+                                <td style="width: 50%">{{m.MarginComponent}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Bank Consent Letter</b></td>
+                                <td style="width: 50%">{{m.BankConsentLetterStatus}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Photo</b></td>
+                                <td style="width: 50%"><img id="landpic" style="width: 250px; height: 150px" /></td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Latitude</b></td>
+                                <td style="width: 50%">{{m.Latitude}}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%"><b>Longitude</b></td>
+                                <td style="width: 50%">{{m.Longitude}}</td>
+                            </tr>
+                        </table>
+                    </div><br />
+                    <label class="text-justify">Verified the above mentioned information submitted by the entrepreneur by personally visiting the project site. I certify that the {{m.ProjectName}} with {{m.Capacity}} {{m.CapacityUnit}} capacity and a project cost of {{m.TotalProjectCost}} is technically feasible and economically viable.</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="print('printSection')">Print Feasibility Report</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancel()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+    <div id="ApproveModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" id="btnCloseAppM">&times;</button>
+                    <h4 class="modal-title">Feasible Record</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" ng-show="approveDetail">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label>Do you want to mark the record as feasible?</label>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div ng-show="bloDetail">
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label>Name</label>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label>{{lblbloName}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <label>Signature</label>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <img id="bloSign" style="height: 100px; width: 175px; border: 1px solid black" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="modal-footer">
+                    <div ng-show="approveDetail">
+                        <input type="button" value="Yes" class="btn btn-success" ng-click="approveM()" />
+                        <input type="button" value="No" class="btn btn-warning" data-dismiss="modal" />
+                    </div>
+                    <div ng-show="bloDetail">
+                        <input type="button" value="Submit" class="btn btn-info" ng-click="submitBLORecord()" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="RejectModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" id="btnCloseRejM">&times;</button>
+                    <h4 class="modal-title">Not Feasible Record</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" ng-show="rejectDetail">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label>Do you want to mark the record as not feasible?</label>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div ng-show="rejectR">
+                        <label>Not Feasible Reason</label>
+                        <div class="row form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                    <label>1.</label>
+                                </div>
+                                <div class="col-md-11 col-sm-11 col-xs-12">
+                                    <textarea rows="2" class="form-control" placeholder="Enter Not Feasible Reason" ng-model="txtReasonOne"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                    <label>2.</label>
+                                </div>
+                                <div class="col-md-11 col-sm-11 col-xs-12">
+                                    <textarea rows="2" class="form-control" placeholder="Enter Not Feasible Reason" ng-model="txtReasonTwo"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-1 col-sm-1 col-xs-12">
+                                    <label>3.</label>
+                                </div>
+                                <div class="col-md-11 col-sm-11 col-xs-12">
+                                    <textarea rows="2" class="form-control" placeholder="Enter Not Feasible Reason" ng-model="txtReasonThree"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="bloRDetail">
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12 text-center">
+                                    <label style="padding-top: 40px">Name : {{lblRbloName}}</label>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12 text-left">
+                                    <img id="bloRSign" style="height: 100px; width: 175px; border: 1px solid black" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="modal-footer">
+                    <div ng-show="rejectDetail">
+                        <input type="button" value="Yes" class="btn btn-success" ng-click="rejectM()" />
+                        <input type="button" value="No" class="btn btn-warning" data-dismiss="modal" />
+                    </div>
+                    <div ng-show="bloRDetail">
+                        <input type="button" value="Submit" class="btn btn-info" ng-click="notsubmitBLORecord()" />
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,425 @@
+﻿@{
+    ViewBag.Title = "Target";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using (Html.BeginForm("Target", "Admin", FormMethod.Post, new { id = "FormId" }))
+{
+    @Html.AntiForgeryToken()
+}
+<div class="right_col" role="main" ng-app="AdminTargetApp" ng-controller="AdminTargetCtrl" ng-cloak>
+    <div data-loading></div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Target</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="col-md-12 col-xs-12 col-sm-12">
+                    <div class="row form-group">
+                        <div class="col-md-12 col-sm-12 col-sx-12">
+                            <h2><b style="margin-left:40%">{{TargetProject}}</b></h2>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3 col-sm-3 col-sx-12"></div>
+                        <div class="col-md-2 col-sm-2 col-xs-12" style="padding-top: 5px">Financial Year<span style="color: red" class="required">*</span></div>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <select class="form-control" name="FinancialYear" ng-model="ddlFinancialYear" required>
+                                <option value="">---Select Year---</option>
+                                <option value="2018-19">2018-19</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-sx-12"></div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3 col-sm-3 col-sx-12"></div>
+                        <div class="col-md-2 col-sm-2 col-xs-12" style="padding-top: 5px">Project<span style="color: red" class="required">*</span></div>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <select class="form-control" name="FinancialYear" ng-model="ddlProject" ng-options="i.Code as i.Name for i in TaggetProject" ng-change="ProjecttypeChange()" required>
+                                <option value="">---Select Project---</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-sx-12"></div>
+                    </div>
+                    <div class="row form-group" ng-show="NUllEntryTarget">
+                        <div class="col-md-12 col-sm-12 col-sx-12">
+                            <div class="table-responsive text-center">
+                                <table class="table table-striped table-bordered jambo_table bulk_action">
+                                    <thead>
+                                        <tr class="headings">
+                                            <th class="column-title text-center">District</th>
+                                            <th class="column-title text-center">GEN</th>
+                                            <th class="column-title text-center">SC</th>
+                                            <th class="column-title text-center">ST</th>
+                                            <th class="column-title text-center">TOTAL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="i in GetDistrict">
+                                            <td style="vertical-align: middle">{{i.DistrictName}}</td>
+                                            <td style="vertical-align: middle"><input type="number" ng-model="i.txtGEN" class="form-control" /></td>
+                                            <td style="vertical-align: middle"><input type="number" ng-model="i.txtSC" class="form-control" /></td>
+                                            <td style="vertical-align: middle"><input type="number" ng-model="i.txtST" class="form-control" /></td>
+                                            <td style="vertical-align: middle">
+                                                {{i.txtGEN+i.txtSC+i.txtST}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Grand Total</td>
+                                            <td>{{FirstGENTOT()}}</td>
+                                            <td>{{FirstSCTOT()}}</td>
+                                            <td>{{FirstSTTOT()}}</td>
+                                            <td>{{FirstGRANDTOT()}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group" ng-show="NUllEntryTarget">
+                        <div class="col-md-3 col-sm-3 col-sx-12"></div>
+                        <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input type="button" value="Submit" ng-click="SaveTarget()" class="btn btn-info" />
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-sx-12"></div>
+                    </div>
+                    <div class="row form-group" ng-show="TargetFillRecord">
+                        <div class="col-md-12 col-sm-12 col-sx-12">
+                            <div class="table-responsive text-center">
+                                <table class="table table-striped table-bordered jambo_table bulk_action">
+                                    <thead>
+                                        <tr class="headings">
+                                            <th class="column-title text-center">District</th>
+                                            <th class="column-title text-center">GEN</th>
+                                            <th class="column-title text-center">SC</th>
+                                            <th class="column-title text-center">ST</th>
+                                            <th class="column-title text-center">TOTAL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="i in FetchTargetALL.GetDist">
+                                            <td style="vertical-align: middle">{{i.DistName}}</td>
+                                            <td style="vertical-align: middle">{{i.GetTargetList.GEN}}</td>
+                                            <td style="vertical-align: middle">{{i.GetTargetList.SC}}</td>
+                                            <td style="vertical-align: middle">{{i.GetTargetList.ST}}</td>
+                                            <td style="vertical-align: middle">{{i.GetTargetList.GEN + i.GetTargetList.SC + i.GetTargetList.ST}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Grand Total</td>
+                                            <td>{{SecondGENTOT()}}</td>
+                                            <td>{{SecondSCTOT()}}</td>
+                                            <td>{{SecondSTTOT()}}</td>
+                                            <td>{{SecondGRANDTOT()}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group" ng-show="TargetFillRecord">
+                        <div class="col-md-3 col-sm-3 col-sx-12"></div>
+                        <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input type="button" value="Update" ng-click="UpdateTargetList()" class="btn btn-info" />
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-sx-12"></div>
+                    </div>
+                    <div class="row form-group" ng-show="UpdateTargetListRecord">
+                        <div class="col-md-12 col-sm-12 col-sx-12">
+                            <div class="table-responsive text-center">
+                                <table class="table table-striped table-bordered jambo_table bulk_action">
+                                    <thead>
+                                        <tr class="headings">
+                                            <th class="column-title text-center">District</th>
+                                            <th class="column-title text-center">GEN</th>
+                                            <th class="column-title text-center">SC</th>
+                                            <th class="column-title text-center">ST</th>
+                                            <th class="column-title text-center">TOTAL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="i in FetchTargetALL.GetDist">
+                                            <td style="vertical-align: middle">{{i.DistName}}</td>
+                                            <td style="vertical-align: middle"><input type="number" ng-model="i.GetTargetList.GEN" class="form-control"></td>
+                                            <td style="vertical-align: middle"><input type="number" ng-model="i.GetTargetList.SC" class="form-control"></td>
+                                            <td style="vertical-align: middle"><input type="number" ng-model="i.GetTargetList.ST" class="form-control"></td>
+                                            <td style="vertical-align: middle">{{i.GetTargetList.GEN + i.GetTargetList.SC + i.GetTargetList.ST}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Grand Total</td>
+                                            <td>{{SecondGENTOT()}}</td>
+                                            <td>{{SecondSCTOT()}}</td>
+                                            <td>{{SecondSTTOT()}}</td>
+                                            <td>{{SecondGRANDTOT()}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group" ng-show="UpdateTargetListRecord">
+                        <div class="col-md-3 col-sm-3 col-sx-12"></div>
+                        <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input type="button" value="Submit" ng-click="UpdateTargetListFinal()" class="btn btn-info" />
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-sx-12"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = angular.module("AdminTargetApp", ['ui.bootstrap']);
+
+    app.controller("AdminTargetCtrl", function ($scope, $http) {
+
+        var token = document.getElementsByName('__RequestVerificationToken')[0].value;
+
+        $scope.NUllEntryTarget = false;
+        $scope.TargetFillRecord = false;
+        $scope.UpdateTargetListRecord = false;
+        $scope.TaggetProject = [];
+        var gettargetproject = function () {
+            $http.get('GetTargetProject').then(function success(response) {
+                $scope.TaggetProject = response.data;
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+        gettargetproject();
+
+        $scope.GetDistrict = [];
+        var getAllDist = function () {
+            $http.get('GetBindDist').then(function success(response) {
+                $scope.GetDistrict = response.data;
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+
+        var targetrecordFetch = function () {
+            $http.get('FetchTargetRecord?PCODE=' + $scope.ddlProject).then(function success(response) {
+                $scope.FetchTargetALL = response.data;
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+
+        var chkTargetList = function () {
+            $http.get('FindTarget?PCODE=' + $scope.ddlProject).then(function success(response) {
+                if (response.data != null && response.data != "") {
+                    targetrecordFetch();
+                    $scope.NUllEntryTarget = false;
+                    $scope.UpdateTargetListRecord = false;
+                    $scope.TargetFillRecord = true;
+                }
+                else {
+                    getAllDist();
+                    $scope.TargetFillRecord = false;
+                    $scope.UpdateTargetListRecord = false;
+                    $scope.NUllEntryTarget = true;
+                }
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+
+        $scope.FetchTargetALL = [];
+        $scope.ProjecttypeChange = function () {
+            if ($scope.ddlProject != null) {
+                $scope.ddlProject == "01P1" ? $scope.TargetProject = "Agro Service Centre" : $scope.ddlProject == "04P16" ? $scope.TargetProject = "Commercial Broiler Farming" : $scope.TargetProject = "Commercial Dairy Farming";
+                chkTargetList();
+            }
+        };
+
+        $scope.SaveTarget = function () {
+            myData = [];
+            angular.forEach($scope.GetDistrict, function (i) {
+                var k = {};
+                k.DistrictCode = i.DistrictCode;
+                k.ProjectTypeCode = $scope.ddlProject;
+                k.GeneralValue = i.txtGEN == null ? "0" : i.txtGEN;
+                k.SCValue = i.txtSC == null ? "0" : i.txtSC;
+                k.STValue = i.txtST == null ? "0" : i.txtST;
+                myData.push(k);
+            });
+            var req = {
+                method: 'POST',
+                url: 'SubmitAllTarget',
+                headers: {
+                    '__RequestVerificationToken': token
+                },
+                data: { AllTarget: myData }
+            };
+            $http(req).then(function success(response) {
+                var result = response.data;
+                if (response.data != null || response.data != "") {
+                    alert(response.data);
+                    targetrecordFetch();
+                    $scope.NUllEntryTarget = false;
+                    $scope.UpdateTargetListRecord = false;
+                    $scope.TargetFillRecord = true;
+                }
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+
+        $scope.UpdateTargetList = function () {
+            $scope.UpdateTargetListRecord = true;
+            $scope.NUllEntryTarget = false;
+            $scope.TargetFillRecord = false;
+            if ($scope.ddlProject != null) {
+                targetrecordFetch();
+            }
+        };
+
+        $scope.UpdateTargetListFinal = function () {
+            if ($scope.ddlFinancialYear != null) {
+                if ($scope.ddlProject != null) {
+                    myData = [];
+                    angular.forEach($scope.FetchTargetALL.GetDist, function (j) {
+                        var k = {};
+                        k.DistrictCode = j.DistCode;
+                        k.ProjectTypeCode = $scope.ddlProject;
+                        k.GeneralValue = j.GetTargetList.GEN == null ? "0" : j.GetTargetList.GEN;
+                        k.SCValue = j.GetTargetList.SC == null ? "0" : j.GetTargetList.SC;
+                        k.STValue = j.GetTargetList.ST == null ? "0" : j.GetTargetList.ST;
+                        myData.push(k);
+                    });
+                    var req = {
+                        method: 'POST',
+                        url: 'UpdateTargetListALL',
+                        headers: {
+                            '__RequestVerificationToken': token
+                        },
+                        data: { AllTargetList: myData, FYR: $scope.ddlFinancialYear }
+                    };
+                    $http(req).then(function success(response) {
+                        var result = response.data;
+                        if (response.data != null || response.data != "") {
+                            alert(response.data);
+                            targetrecordFetch();
+                            $scope.NUllEntryTarget = false;
+                            $scope.UpdateTargetListRecord = false;
+                            $scope.TargetFillRecord = true;
+                        }
+                    }, function error(response) {
+                        alert(response.status);
+                    });
+                }
+                else {
+                    alert("Please select Project Type");
+                }
+            }
+            else {
+                alert("Please Select Financial Year");
+            }
+        };
+
+        $scope.FirstGENTOT = function () {
+            var total = 0;
+            for (count = 0; count < $scope.GetDistrict.length; count++) {
+                if (parseInt($scope.GetDistrict[count].txtGEN))
+                    total += parseInt($scope.GetDistrict[count].txtGEN, 10);
+            }
+            return total;
+        };
+
+        $scope.FirstSCTOT = function () {
+            var total = 0;
+            for (count = 0; count < $scope.GetDistrict.length; count++) {
+                if (parseInt($scope.GetDistrict[count].txtSC))
+                    total += parseInt($scope.GetDistrict[count].txtSC, 10);
+            }
+            return total;
+        };
+
+        $scope.FirstSTTOT = function () {
+            var total = 0;
+            for (count = 0; count < $scope.GetDistrict.length; count++) {
+                if (parseInt($scope.GetDistrict[count].txtST))
+                    total += parseInt($scope.GetDistrict[count].txtST, 10);
+            }
+            return total;
+        };
+
+        $scope.FirstGRANDTOT = function () {
+            var total = 0;
+            for (count = 0; count < $scope.GetDistrict.length; count++) {
+                total += parseInt($scope.GetDistrict[count].txtGEN == null ? 0 : $scope.GetDistrict[count].txtGEN, 10) + parseInt($scope.GetDistrict[count].txtSC == null ? 0
+                    : $scope.GetDistrict[count].txtSC, 10) + parseInt($scope.GetDistrict[count].txtST == null ? 0 : $scope.GetDistrict[count].txtST, 10);
+            }
+            return total;
+        };
+
+        $scope.SecondGENTOT = function () {
+            if ($scope.FetchTargetALL.length != 0) {
+                var total = 0;
+                for (count = 0; count < $scope.FetchTargetALL.GetDist.length; count++) {
+                    if (parseInt($scope.FetchTargetALL.GetDist[count].GetTargetList.GEN))
+                        total += parseInt($scope.FetchTargetALL.GetDist[count].GetTargetList.GEN, 10);
+                }
+                return total;
+            }
+        };
+
+        $scope.SecondSCTOT = function () {
+            if ($scope.FetchTargetALL.length != 0) {
+                var total = 0;
+                for (count = 0; count < $scope.FetchTargetALL.GetDist.length; count++) {
+                    if (parseInt($scope.FetchTargetALL.GetDist[count].GetTargetList.SC))
+                        total += parseInt($scope.FetchTargetALL.GetDist[count].GetTargetList.SC, 10);
+                }
+                return total;
+            }
+        };
+
+        $scope.SecondSTTOT = function () {
+            if ($scope.FetchTargetALL.length != 0) {
+                var total = 0;
+                for (count = 0; count < $scope.FetchTargetALL.GetDist.length; count++) {
+                    if (parseInt($scope.FetchTargetALL.GetDist[count].GetTargetList.ST))
+                        total += parseInt($scope.FetchTargetALL.GetDist[count].GetTargetList.ST, 10);
+                }
+                return total;
+            }
+        };
+
+        $scope.SecondGRANDTOT = function () {
+            if ($scope.FetchTargetALL.length != 0) {
+                var total = 0;
+                for (count = 0; count < $scope.FetchTargetALL.GetDist.length; count++) {
+                    total += parseInt($scope.FetchTargetALL.GetDist[count].GetTargetList.GEN == null ? 0 : $scope.FetchTargetALL.GetDist[count].GetTargetList.GEN, 10) + parseInt($scope.FetchTargetALL.GetDist[count].GetTargetList.SC == null ? 0
+                        : $scope.FetchTargetALL.GetDist[count].GetTargetList.SC, 10) + parseInt($scope.FetchTargetALL.GetDist[count].GetTargetList.ST == null ? 0 : $scope.FetchTargetALL.GetDist[count].GetTargetList.ST, 10);
+                }
+                return total;
+            }
+        };
+    });
+
+    app.directive('loading', ['$http', function ($http) {
+        return {
+            restrict: 'A',
+            template: '<div class="loading">Loading&#8230;</div>',
+            link: function (scope, elm, attrs) {
+                scope.isLoading = function () {
+                    return $http.pendingRequests.length > 0;
+                };
+                scope.$watch(scope.isLoading, function (v) {
+                    if (v) {
+                        elm.css('display', 'block');
+                    } else {
+                        elm.css('display', 'none');
+                    }
+                });
+            }
+        };
+    }]);
+</script>

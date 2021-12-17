@@ -1,0 +1,497 @@
+﻿@{
+    ViewBag.Title = "BLODetailEntry";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using (Html.BeginForm("BLODetailEntry", "Admin", FormMethod.Post, new { id = "FormId" }))
+{
+    @Html.AntiForgeryToken()
+}
+
+<div class="right_col" role="main" ng-app="AdminBLOApp" ng-controller="AdminBLOCtrl" ng-cloak>
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Block Level Officers (BLO) Details Entry</h3>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_content">
+                    <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" style="padding-top: 7px">Select the Department</label>
+                    <div class="col-md-5 col-sm-5 col-xs-12">
+                        <select class="form-control" ng-model="ddlDepartment" ng-options="i.Name for i in departments" ng-change="loadDistricts()">
+                            <option value="" disabled style="text-align: center">-Select the Department-</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="selectDistrict">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><i class="fa fa-bars"></i> Select Districts</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="col-md-2 col-sm-3 col-xs-12" ng-repeat="i in districts">
+                        <input type="checkbox" value="{{i.DistrictCode}}" id="{{i.DistrictCode}}" ng-model="i.selected" ng-click="getDistrict()" />
+                        <label style="padding: 0 5px; font-weight: normal" class="control-label">{{i.DistrictName | capitalize}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="selectedDistrictEntry">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><i class="fa fa-bars"></i> Block Level Officer (BLO) Details District-wise</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div role="tabpanel" data-example-id="togglable-tabs">
+                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                            <li role="presentation" ng-repeat="a in populateDistricts">
+                                <a ng-click="loadBlocks(a.DistrictCode)" role="tab" data-toggle="tab" aria-expanded="false">{{a.DistrictName | capitalize}}</a>
+                            </li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade active in" ng-show="OpenBlocks">
+                                <form class="form-horizontal" name="formRecord" role="form" autocomplete="off" novalidate>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <label class="control-label">
+                                                <input style="margin: 5px" type="checkbox" ng-model="cbSelectAll" ng-click="checkAll()" />
+                                                Select all Blocks
+                                            </label>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <label class="control-label">BLO's Name</label>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                            <label class="control-label">BLO's Mobile No.</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div ng-repeat="j in blocks">
+                                            <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                                <div style="display: block">
+                                                    <input style="margin: 5px" type="checkbox" name="bCode" value="{{j.BlockCode}}" id="{{j.BlockCode}}" ng-model="j.selected" ng-click="getBlock()" />
+                                                    <label style="padding: 0 25px 0 0; font-weight: normal" class="control-label">{{j.BlockName | capitalize}}</label>
+                                                </div>
+                                                <span style="color: red" ng-show="formRecord.bCode.$touched && formRecord.bCode.$invalid && formRecord.bCode.$error.required">This is a required field.</span>
+                                            </div>
+                                            <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                                <input type="text" class="form-control" name="bloName" ng-model="j.Name" placeholder="Enter BLO's Name" alphabet-only maxlength="50" required />
+                                                <span style="color: red" ng-show="formRecord.bloName.$touched && formRecord.bloName.$invalid && formRecord.bloName.$error.required">This is a required field.</span>
+                                            </div>
+                                            <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><b>+91</b></span>
+                                                    <input type="text" class="form-control" name="bloMobileNo" ng-model="j.MobileNo" placeholder="Enter BLO's Mobile No" numbers-only mobile-no maxlength="10" required />
+                                                    <span style="color: red" ng-show="formRecord.bloMobileNo.$touched && formRecord.bloMobileNo.$invalid && formRecord.bloMobileNo.$error.required">This is a required field.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group text-right col-md-12 col-sm-12 col-xs-12">
+                                        <input type="button" value="Submit" class="btn btn-primary" ng-disabled="formRecord.$invalid" ng-click="submitRecords()" />
+                                    </div>
+                                </form>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade active in" ng-show="EnteredRecords">
+                                <div class="form-group">
+                                    <h2>Department : {{lblDepartmentName}}</h2>
+                                </div>
+                                <div class="table-responsive text-center">
+                                    <table class="table table-striped table-bordered jambo_table bulk_action">
+                                        <thead>
+                                            <tr class="headings">
+                                                <th class="column-title text-center">Sl No.</th>
+                                                <th class="column-title text-center">Block</th>
+                                                <th class="column-title text-center">BLO's Name</th>
+                                                <th class="column-title text-center">BLO's Mobile No.</th>
+                                                <th class="column-title text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="i in records">
+                                                <td style="vertical-align: middle">{{$index+1}}</td>
+                                                <td style="vertical-align: middle">{{i.BlockName}}</td>
+                                                <td style="vertical-align: middle">{{i.Name}}</td>
+                                                <td style="vertical-align: middle">{{i.MobileNo}}</td>
+                                                <td style="vertical-align: middle">
+                                                    <input type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#recordModal" value="Edit" ng-click="editRecord(lblDepartmentCode, i.DistrictCode, i.BlockCode)" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="recordModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form class="form-horizontal" name="frmRecord" role="form" autocomplete="off" novalidate>
+                    <div class="modal-header">
+                        <button type="button" id="btnRecordModal" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Edit Record</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" style="margin: 0px">
+                            <div class="form-group">
+                                <label style="text-align: center" class="control-label col-md-2 col-sm-2 col-xs-12">Department</label>
+                                <label style="text-align: center" class="control-label col-md-2 col-sm-2 col-xs-12">District</label>
+                                <label style="text-align: center" class="control-label col-md-2 col-sm-2 col-xs-12">Block</label>
+                                <label style="text-align: center" class="control-label col-md-3 col-sm-3 col-xs-12">BLO's Name</label>
+                                <label style="text-align: center" class="control-label col-md-3 col-sm-3 col-xs-12">BLO's Mobile No.</label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="row" style="margin: 0px">
+                            <div class="form-group" style="text-align: center">
+                                <div style="text-align: center; padding-top: 7px" class="col-md-2 col-sm-2 col-xs-12">
+                                    {{lblDepartmentName}}
+                                </div>
+                                <div style="text-align: center; padding-top: 7px" class="col-md-2 col-sm-2 col-xs-12">
+                                    {{lblDistrictName}}
+                                </div>
+                                <div style="text-align: center; padding-top: 7px" class="col-md-2 col-sm-2 col-xs-12">
+                                    {{lblBlockName}}
+                                </div>
+                                <div style="text-align: center" class="col-md-3 col-sm-3 col-xs-12">
+                                    <input type="text" class="form-control" name="bloName" ng-model="txtBLOName" placeholder="Enter BLO's Name" alphabet-only maxlength="50" required />
+                                    <span style="color: red" ng-show="frmRecord.bloName.$touched && frmRecord.bloName.$invalid && frmRecord.bloName.$error.required">This is a required field.</span>
+                                </div>
+                                <div style="text-align: center" class="col-md-3 col-sm-3 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><b>+91</b></span>
+                                        <input type="text" class="form-control" name="bloMobileNo" ng-model="txtBLOMobileNo" placeholder="Enter BLO's Mobile No" numbers-only mobile-no maxlength="10" required />
+                                        <span style="color: red" ng-show="frmRecord.bloMobileNo.$touched && frmRecord.bloMobileNo.$invalid && frmRecord.bloMobileNo.$error.required">This is a required field.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" ng-disabled="frmRecord.$invalid || frmRecord.$pristine" ng-click="updateRecord(); frmRecord.$setPristine()">Update</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="frmRecord.$setPristine()">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = angular.module("AdminBLOApp", []);
+    app.controller("AdminBLOCtrl", function ($scope, $http) {
+
+        var token = document.getElementsByName('__RequestVerificationToken')[0].value;
+
+        $http.get('Department').then(function success(response) {
+            $scope.departments = response.data;
+        }, function error(response) {
+            alert(response.status);
+        });
+
+        $scope.editRecord = function (a, b, c) {
+            $http.get('RecordbyDeptDistBlock?departmentCode=' + a + '&districtCode=' + b + '&blockCode=' + c).then(function success(response) {
+                var z = response.data;
+                $scope.lblDepartmentCode = z.DepartmentCode;
+                $scope.lblDepartmentName = z.DepartmentName;
+                $scope.lblDistrictCode = z.DistrictCode;
+                $scope.lblDistrictName = z.DistrictName;
+                $scope.lblBlockCode = z.BlockCode;
+                $scope.lblBlockName = z.BlockName;
+                $scope.txtBLOName = z.Name;
+                $scope.txtBLOMobileNo = z.MobileNo;
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+
+        $scope.updateRecord = function () {
+            var myData = { Name: $scope.txtBLOName, MobileNo: $scope.txtBLOMobileNo };
+            var myReq = {
+                method: 'POST',
+                url: 'UpdateBLORecord?departmentCode=' + $scope.lblDepartmentCode + '&districtCode=' + $scope.lblDistrictCode + '&blockCode=' + $scope.lblBlockCode,
+                headers: {
+                    '__RequestVerificationToken': token
+                },
+                data: myData,
+            }
+            $http(myReq).then(function success(response) {
+                var t = response.data;
+                if (t == true) {
+                    alert('Records successfully updated.');
+                    $http.get('RecordbyDistDept?districtCode=' + $scope.distCode + '&departmentCode=' + $scope.ddlDepartment.Code).then(function success(response) {
+                        $scope.records = response.data;
+                    }, function error(response) {
+                        alert(response.status);
+                    });
+                    document.getElementById('btnRecordModal').click();
+                }
+                else {
+                    alert('Oops! Something is wrong. Please try again.');
+                }
+            }, function error(response) {
+                alert(response.status);
+            });
+        }
+
+        $scope.districts = [];
+        $scope.loadDistricts = function () {
+            if ($scope.ddlDepartment.Code !== null) {
+                $http.get('District').then(function success(response) {
+                    $scope.districts = response.data;
+                }, function error(response) {
+                    alert(response.status);
+                });
+                $scope.selectDistrict = true;
+                $scope.selectedDistrictEntry = false;
+            }
+            else {
+                return false;
+            }
+        };
+
+        $scope.populateDistricts = [];
+        $scope.getDistrict = function () {
+            $scope.populateDistricts = [];
+            angular.forEach($scope.districts, function (i) {
+                if (i.selected) {
+                    $scope.populateDistricts.push(i);
+                }
+                else {
+                    return false;
+                }
+            });
+            if ($scope.populateDistricts.length == 0) {
+                $scope.selectedDistrictEntry = false;
+            }
+            else {
+                $scope.selectedDistrictEntry = true;
+            }
+            $scope.OpenBlocks = false;
+            $scope.EnteredRecords = false;
+        };
+
+        $scope.populateBlocks = [];
+        $scope.getBlock = function () {
+            $scope.populateBlocks = [];
+            angular.forEach($scope.blocks, function (j) {
+                if (j.selected) {
+                    $scope.populateBlocks.push(j);
+                }
+                else {
+                    return false;
+                }
+            });
+        };
+
+        $scope.checkAll = function () {
+            if ($scope.cbSelectAll) {
+                $scope.populateBlocks = [];
+                $scope.cbSelectAll = true;
+                angular.forEach($scope.blocks, function (j) {
+                    j.selected = $scope.cbSelectAll;
+                    $scope.populateBlocks.push(j);
+                });
+            }
+            else {
+                $scope.cbSelectAll = false;
+                angular.forEach($scope.blocks, function (j) {
+                    j.selected = $scope.cbSelectAll;
+                });
+                $scope.populateBlocks = [];
+            }
+        };
+
+        $scope.records = [];
+        $scope.blocks = [];
+        $scope.loadBlocks = function (i) {
+            $scope.distCode = i;
+            $http.get('RecordbyDistDept?districtCode=' + $scope.distCode + '&departmentCode=' + $scope.ddlDepartment.Code).then(function success(response) {
+                $scope.records = response.data;
+                if ($scope.records.length <= 0) {
+                    $http.get('BlockbyDistrict?districtCode=' + i + '&departmentCode=' + $scope.ddlDepartment.Code).then(function success(response) {
+                        $scope.blocks = response.data;
+                        $scope.EnteredRecords = false;
+                        $scope.OpenBlocks = true;
+                    }, function error(response) {
+                        alert(response.status);
+                    });
+                }
+                else {
+                    $scope.lblDepartmentName = $scope.records[0].DepartmentName;
+                    $scope.lblDepartmentCode = $scope.records[0].DepartmentCode;
+                    $scope.OpenBlocks = false;
+                    $scope.EnteredRecords = true;
+                }
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+
+        $scope.submitRecords = function () {
+            var myData = [];
+            var count = 0;
+            var z;
+            angular.forEach($scope.populateBlocks, function (i) {
+                if ($scope.ddlDepartment != null && i.DistrictCode != 0 && i.BlockCode != 0) {
+                    if (i.Name != undefined) {
+                        if (i.MobileNo != undefined) {
+                            if (i.MobileNo.length == 10) {
+                                var k = { DepartmentCode: $scope.ddlDepartment.Code, DistrictCode: i.DistrictCode, BlockCode: i.BlockCode, Name: i.Name, MobileNo: i.MobileNo };
+                                count++;
+                                myData.push(k);
+                            }
+                            else {
+                                z = "Please enter a valid Mobile No.";
+                            }
+                        }
+                        else {
+                            z = "Please enter all BLO's Mobile No.";
+                        }
+                    }
+                    else {
+                        z = "Please enter all BLO's Name.";
+                    }
+                }
+                else {
+                    z = "Please select Department, District and Blocks.";
+                }
+            });
+            if (z != undefined) {
+                alert(z);
+            }
+            else {
+                if (count == $scope.blocks.length) {
+                    var req = {
+                        method: 'POST',
+                        url: 'SubmitBLORecords',
+                        headers: {
+                            '__RequestVerificationToken': token
+                        },
+                        data: { x: myData }
+                    };
+                    $http(req).then(function success(response) {
+                        if (response.data == true) {
+                            alert("Records submitted successfully.");
+                            $scope.populateBlocks = [];
+                            $scope.cbSelectAll = false;
+                            $http.get('RecordbyDistDept?districtCode=' + $scope.distCode + '&departmentCode=' + $scope.ddlDepartment.Code).then(function success(response) {
+                                $scope.records = response.data;
+                                $scope.lblDepartmentName = $scope.records[0].DepartmentName;
+                                $scope.lblDepartmentCode = $scope.records[0].DepartmentCode;
+                                $scope.OpenBlocks = false;
+                                $scope.EnteredRecords = true;
+                            }, function error(response) {
+                                alert(response.status);
+                            });
+                        }
+                        else {
+                            alert("Oops!!! Something is wrong.Please try again.");
+                            return false;
+                        }
+                    }, function error(response) {
+                        alert(response.status);
+                    });
+                }
+                else {
+                    alert("Please select all the fields.");
+                }
+            }
+        };
+    });
+
+    app.directive('alphabetOnly', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                ngModelCtrl.$parsers.push(function (val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace(/[^a-zA-Z\s]/g, '');
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
+            }
+        };
+    });
+
+    app.directive('numbersOnly', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                ngModelCtrl.$parsers.push(function (val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace(/[^0-9]/g, '');
+                    var negativeCheck = clean.split('-');
+                    if (!angular.isUndefined(negativeCheck[1])) {
+                        negativeCheck[1] = negativeCheck[1].slice(0, negativeCheck[1].length);
+                        clean = negativeCheck[0] + '-' + negativeCheck[1];
+                        if (negativeCheck[0].length > 0) {
+                            clean = negativeCheck[0];
+                        }
+                    }
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
+                element.bind('keypress', function (event) {
+                    if (event.keyCode === 32) {
+                        event.preventDefault();
+                    }
+                });
+            }
+        };
+    });
+
+    app.directive('mobileNo', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                element.on('input change', function () {
+                    if (this.value === '0' || this.value === '1' || this.value === '2' || this.value === '3' || this.value === '4' || this.value === '5' || this.value === '6') {
+                        this.value = null;
+                    }
+                });
+            }
+        };
+    });
+
+    app.filter('capitalize', function () {
+        return function (input) {
+            return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+        }
+    });
+</script>

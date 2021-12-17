@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="AgriCensusRORData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="distCode" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="villCensusCode" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="khataNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="plotNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AgriCensusRORDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AgriCensusRORDataResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DataTable" nillable="true">
+        <s:complexType>
+          <s:sequence>
+            <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+            <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="AgriCensusRORDataSoapIn">
+    <wsdl:part name="parameters" element="tns:AgriCensusRORData" />
+  </wsdl:message>
+  <wsdl:message name="AgriCensusRORDataSoapOut">
+    <wsdl:part name="parameters" element="tns:AgriCensusRORDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="AgriCensusRORDataHttpGetIn">
+    <wsdl:part name="distCode" type="s:string" />
+    <wsdl:part name="villCensusCode" type="s:string" />
+    <wsdl:part name="khataNo" type="s:string" />
+    <wsdl:part name="plotNo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AgriCensusRORDataHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataTable" />
+  </wsdl:message>
+  <wsdl:message name="AgriCensusRORDataHttpPostIn">
+    <wsdl:part name="distCode" type="s:string" />
+    <wsdl:part name="villCensusCode" type="s:string" />
+    <wsdl:part name="khataNo" type="s:string" />
+    <wsdl:part name="plotNo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AgriCensusRORDataHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataTable" />
+  </wsdl:message>
+  <wsdl:portType name="OdishaCropInsuranceSoap">
+    <wsdl:operation name="AgriCensusRORData">
+      <wsdl:input message="tns:AgriCensusRORDataSoapIn" />
+      <wsdl:output message="tns:AgriCensusRORDataSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="OdishaCropInsuranceHttpGet">
+    <wsdl:operation name="AgriCensusRORData">
+      <wsdl:input message="tns:AgriCensusRORDataHttpGetIn" />
+      <wsdl:output message="tns:AgriCensusRORDataHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="OdishaCropInsuranceHttpPost">
+    <wsdl:operation name="AgriCensusRORData">
+      <wsdl:input message="tns:AgriCensusRORDataHttpPostIn" />
+      <wsdl:output message="tns:AgriCensusRORDataHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="OdishaCropInsuranceSoap" type="tns:OdishaCropInsuranceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AgriCensusRORData">
+      <soap:operation soapAction="http://tempuri.org/AgriCensusRORData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="OdishaCropInsuranceSoap12" type="tns:OdishaCropInsuranceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AgriCensusRORData">
+      <soap12:operation soapAction="http://tempuri.org/AgriCensusRORData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="OdishaCropInsuranceHttpGet" type="tns:OdishaCropInsuranceHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="AgriCensusRORData">
+      <http:operation location="/AgriCensusRORData" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="OdishaCropInsuranceHttpPost" type="tns:OdishaCropInsuranceHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="AgriCensusRORData">
+      <http:operation location="/AgriCensusRORData" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OdishaCropInsurance">
+    <wsdl:port name="OdishaCropInsuranceSoap" binding="tns:OdishaCropInsuranceSoap">
+      <soap:address location="http://bhulekh.ori.nic.in/OdishaCropInsurance.asmx" />
+    </wsdl:port>
+    <wsdl:port name="OdishaCropInsuranceSoap12" binding="tns:OdishaCropInsuranceSoap12">
+      <soap12:address location="http://bhulekh.ori.nic.in/OdishaCropInsurance.asmx" />
+    </wsdl:port>
+    <wsdl:port name="OdishaCropInsuranceHttpGet" binding="tns:OdishaCropInsuranceHttpGet">
+      <http:address location="http://bhulekh.ori.nic.in/OdishaCropInsurance.asmx" />
+    </wsdl:port>
+    <wsdl:port name="OdishaCropInsuranceHttpPost" binding="tns:OdishaCropInsuranceHttpPost">
+      <http:address location="http://bhulekh.ori.nic.in/OdishaCropInsurance.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

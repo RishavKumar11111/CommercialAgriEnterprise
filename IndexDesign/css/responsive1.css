@@ -1,0 +1,109 @@
+@media (max-width:768px){
+       #nav{
+        position: relative;
+        top: auto;
+        left: auto;
+    }
+    #nav > a{
+        text-align: left;
+        background: #009afd;
+        position: relative;
+        float: right;
+        color: #fff;
+        padding: 6px 15px;
+        font-size: 17px;
+    }
+    #nav:not( :target ) > a:first-of-type,
+    #nav:target > a:last-of-type{
+        display: block;
+    }
+
+    /* first level */
+    #nav > ul{
+        height: auto;
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
+    #nav:target > ul{
+        display: block;
+    }
+    #nav > ul > li{
+        width: 100%;
+        float: none;
+    }
+    #nav > ul > li > a{
+        padding: 10px;
+        background: #009afd;
+        font-size: 15px;
+    }
+    #nav > ul > li:not( :last-child ) > a{
+        border-right: none;
+        border-bottom: 0;
+    }
+
+/* second level */
+    #nav li ul{
+        position: absolute;
+        width: 100%!important;
+    }
+    #nav li ul a{
+        padding: 7px 20px;
+    }
+    .logoPanel, .naveenPanel, .copyright, .design{
+        text-align: center;
+    }
+    .logoPanel img, .naveenPanel img{
+        display: inline-block;
+    }
+}
+@media (min-width:768px){
+   
+    #nav li a{
+        font-size: 13px;
+    }
+    #nav > ul > li > a{
+        padding: 15px 6px;
+    }
+    #nav li ul a{
+        padding: 10px;
+    }
+    .logoPanel, .copyright{
+        text-align: left;
+    }
+    .naveenPanel, .design{
+        text-align: right;
+    }
+    .naveenPanel img{
+        display: inline-block;
+    }
+}
+
+@media (min-width:992px){
+   
+    #nav li a{
+        font-size: 15px;
+    }
+    #nav > ul > li > a{
+        padding: 10px 12px;
+    }
+    #nav li ul a{
+        padding: 10px 19px;
+    }
+   
+}
+
+@media (min-width:1200px){
+  
+    .topMenu ul li a{
+        font-size: 13px;
+    }
+    #nav > ul > li > a{
+        padding: 10px 6px;
+    }
+    #nav li ul a{
+        padding: 10px 20px;
+    }
+  
+}

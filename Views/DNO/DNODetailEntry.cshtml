@@ -1,0 +1,316 @@
+﻿@{
+    ViewBag.Title = "DNODetailEntry";
+    Layout = "~/Views/Shared/_LayoutDNO.cshtml";
+}
+@using (Html.BeginForm("DNODetailEntry", "DNO", FormMethod.Post, new { id = "FormId" }))
+{
+    @Html.AntiForgeryToken()
+}
+<div class="right_col" role="main" ng-app="DNOEntryApp" ng-controller="DNOEntryCtrl" ng-cloak>
+    <div data-loading></div>
+    <div class="page-title">
+        <div class="title_left">
+            <h3>District Nodal Officer (DNO) Details Entry</h3>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row" ng-show="recordEntry">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><i class="fa fa-bars"></i> Enter Details</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <form class="form-horizontal" name="formRecord" role="form" autocomplete="off" novalidate>
+                        <div class="row">
+                            <div class="form-group col-md-3 col-sm-3 col-xs-12">
+                                <label class="control-label">Name</label>
+                            </div>
+                            <div class="form-group col-md-3 col-sm-3 col-xs-12">
+                                <label class="control-label">Mobile No.</label>
+                            </div>
+                            <div class="form-group col-md-3 col-sm-3 col-xs-12">
+                                <label class="control-label">Signature</label>
+                            </div>
+                            <div class="form-group text-center col-md-3 col-sm-3 col-xs-12">
+                                <label class="control-label">Action</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-3 col-sm-3 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                                    <input type="text" class="form-control" name="dnoName" ng-model="Name" placeholder="Enter Name" alphabet-only maxlength="50" required />
+                                </div>
+                                <span style="color: red" ng-show="formRecord.dnoName.$touched && formRecord.dnoName.$invalid && formRecord.dnoName.$error.required">This is a required field.</span>
+                            </div>
+                            <div class="form-group col-md-3 col-sm-3 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><b>+91</b></span>
+                                    <input type="text" class="form-control" name="dnoMobileNo" ng-model="MobileNo" placeholder="Enter Mobile No" numbers-only mobile-no maxlength="10" required />
+                                </div>
+                                <span style="color: red" ng-show="formRecord.dnoMobileNo.$touched && formRecord.dnoMobileNo.$invalid && formRecord.dnoMobileNo.$error.required">This is a required field.</span>
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-12 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i></span>
+                                    <input type="text" class="form-control" hidden id="base64textarea" placeholder="Base64 will appear here" disabled style="display: none" required />
+                                    <input type="file" id="dnoSign" name="dnoSign" class="form-control" onchange="angular.element(this).scope().uploadSign(this.files)" required />
+                                </div>
+                                <span style="color: red" ng-show="formRecord.dnoSign.$touched && formRecord.dnoSign.$invalid && formRecord.dnoSign.$error.required">This is a required field.</span>
+                            </div>
+                            <div class="form-group text-center col-md-3 col-sm-3 col-xs-12">
+                                <input type="button" value="Submit" class="btn btn-primary" ng-click="submitRecord()" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="enteredDetails">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><i class="fa fa-bars"></i> View Entered Details</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="table-responsive text-center">
+                        <table class="table table-striped table-bordered jambo_table bulk_action">
+                            <thead>
+                                <tr class="headings">
+                                    <th class="column-title text-center">Name</th>
+                                    <th class="column-title text-center">Mobile No.</th>
+                                    <th class="column-title text-center">Signature</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="vertical-align: middle">{{k.Name}}</td>
+                                    <td style="vertical-align: middle">{{k.MobileNo}}</td>
+                                    <td style="vertical-align: middle"><img id="dnoSignature" style="height: 110px; width: 180px; border: 1px solid black" /></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = angular.module("DNOEntryApp", []);
+
+    app.controller("DNOEntryCtrl", function ($scope, $http) {
+
+        var token = document.getElementsByName('__RequestVerificationToken')[0].value;
+
+        $scope.recordEntry = true;
+
+        $scope.uploadSign = function (files) {
+            var ext = files[0].name.match(/\.(.+)$/)[1];
+            if (!(angular.lowercase(ext) === 'jpeg' || angular.lowercase(ext) === 'jpg')) {
+                alert("Invalid Signature file, you must select a *.jpg , *.jpeg  file.");
+                document.getElementById('dnoSign').value = null;
+                return false;
+            }
+            if (files.fileSize == -1) {
+                alert("Couldn't load Signature file size. Please try to save again.");
+                return false;
+            }
+            else {
+                var as = files[0].size;
+                if (files[0].size > 51200) {
+                    document.getElementById('dnoSign').value = null;
+                    alert("File is too large, you must select file under 50kb.");
+                    return false;
+                }
+                else {
+                    return;
+                }
+            }
+        };
+
+        var handleFileSelect = function (evt) {
+            var files = evt.target.files;
+            var file = files[0];
+            if (files && file) {
+                var reader = new FileReader();
+                reader.onload = function (readerEvt) {
+                    var binaryString = readerEvt.target.result;
+                    document.getElementById("base64textarea").value = btoa(binaryString);
+                };
+                reader.readAsBinaryString(file);
+            }
+        };
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+            document.getElementById('dnoSign').addEventListener('change', handleFileSelect, false);
+        } else {
+            alert('The File APIs are not fully supported in this browser.');
+        };
+
+        var fetchSign = function (a) {
+            var obj = "data:image/jpeg;base64," + a;
+            document.getElementById('dnoSignature').setAttribute("src", obj);
+        };
+
+        $scope.submitRecord = function () {
+            if ($scope.Name != undefined && $scope.MobileNo != undefined) {
+                if (document.getElementById("dnoSign").files.length > 0) {
+                    var sign = document.getElementById("base64textarea").value;
+                    var myData = { Name: $scope.Name, MobileNo: $scope.MobileNo, Signature: sign };
+                    var req = {
+                        method: 'POST',
+                        url: 'SubmitDNORecords',
+                        headers: {
+                            '__RequestVerificationToken': token
+                        },
+                        data: { x: myData }
+                    };
+                    $http(req).then(function success(response) {
+                        var k = response.data;
+                        if (k == true) {
+                            alert("Records submitted successfully.");
+                            getRecords();
+                            $scope.enteredDetails = true;
+                        }
+                        else {
+                            alert("Oops!!! Something is wrong.Please try again.");
+                            return false;
+                        }
+                    }, function error(response) {
+                        alert(response.status);
+                    });
+                }
+                else {
+                    alert("Plesase upload a Signature.");
+                    return false;
+                }
+            }
+            else {
+                alert("Plesase enter Name and Mobile Number.");
+                return false;
+            }
+        };
+
+        $scope.enteredBlocks = [];
+        var getRecords = function () {
+            $http.get('GetDNORecords').then(function success(response) {
+                $scope.k = response.data;
+                if ($scope.k != undefined && $scope.k != null && $scope.k != "") {
+                    $scope.enteredDetails = true;
+                    $scope.recordEntry = false;
+                    fetchSign($scope.k.Sign);
+                }
+                else {
+                    $scope.enteredDetails = false;
+                    $scope.recordEntry = true;
+                }
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+        getRecords();
+    });
+
+    app.directive('alphabetOnly', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                ngModelCtrl.$parsers.push(function (val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace(/[^a-zA-Z\s]/g, '');
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
+            }
+        };
+    });
+
+    app.directive('numbersOnly', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                ngModelCtrl.$parsers.push(function (val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace(/[^0-9]/g, '');
+                    var negativeCheck = clean.split('-');
+                    if (!angular.isUndefined(negativeCheck[1])) {
+                        negativeCheck[1] = negativeCheck[1].slice(0, negativeCheck[1].length);
+                        clean = negativeCheck[0] + '-' + negativeCheck[1];
+                        if (negativeCheck[0].length > 0) {
+                            clean = negativeCheck[0];
+                        }
+                    }
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
+                element.bind('keypress', function (event) {
+                    if (event.keyCode === 32) {
+                        event.preventDefault();
+                    }
+                });
+            }
+        };
+    });
+
+    app.directive('mobileNo', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                element.on('input change', function () {
+                    if (this.value === '0' || this.value === '1' || this.value === '2' || this.value === '3' || this.value === '4' || this.value === '5') {
+                        this.value = null;
+                    }
+                });
+            }
+        };
+    });
+
+    app.directive('loading', ['$http', function ($http) {
+        return {
+            restrict: 'A',
+            template: '<div class="loading">Loading&#8230;</div>',
+            link: function (scope, elm, attrs) {
+                scope.isLoading = function () {
+                    return $http.pendingRequests.length > 0;
+                };
+                scope.$watch(scope.isLoading, function (v) {
+                    if (v) {
+                        elm.css('display', 'block');
+                    } else {
+                        elm.css('display', 'none');
+                    }
+                });
+            }
+        };
+    }]);
+
+    app.filter('capitalize', function () {
+        return function (input) {
+            return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+        }
+    });
+</script>

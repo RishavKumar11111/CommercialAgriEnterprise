@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_LayoutBank.cshtml";
+}
+@using (Html.BeginForm("Home", "Bank", FormMethod.Post, new { id = "FormId" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="right_col" role="main" ng-app="BankHomeApp" ng-controller="BankHomeCtrl" ng-cloak>
+        <div class="page-title">
+            <div class="mid_center" style="padding: 250px 20px">
+                <h1>WELCOME</h1>
+                <h1 style="white-space: nowrap">@ViewBag.BankName</h1>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    var app = angular.module("BankHomeApp", []);
+    app.controller("BankHomeCtrl", function ($scope, $http) {
+        var token = document.getElementsByName('__RequestVerificationToken')[0].value;
+    });
+</script>

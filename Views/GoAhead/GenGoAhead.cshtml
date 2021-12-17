@@ -1,0 +1,536 @@
+﻿@{
+    ViewBag.Title = "GenGoAhead";
+    Layout = "~/Views/Shared/_LayoutGoAhead.cshtml";
+}
+@using (Html.BeginForm("GenGoAhead", "GoAhead", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal text-center", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+}
+
+<div data-loading></div>
+<div class="title">
+    <h2 style="text-align: center">Mukhyamantri Krushi Udyoga Yojana</h2>
+</div>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <h3 style="text-align: center">Generate Go-Ahead</h3>
+    </div>
+</div>
+<div ng-show="EntryDetails" class="well row" style="margin-top: 30px">
+    <form class="form-horizontal text-center" name="formEDetail" role="form" autocomplete="off" novalidate>
+        <div class="col-md-3 col-sm-3 col-xs-12"></div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="col-md-6 col-sm-6 col-xs-12 text-left">
+                <div class="form-group">
+                    <label class="control-label">Reference No.</label>
+                    <span style="color: red" class="required">*</span>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 text-left">
+                <div class="form-group">
+                    <input type="text" placeholder="Enter your Reference No" name="referenceNo" reference-no capitalize class="form-control" ng-model="txtReferenceNo" maxlength="25" required />
+                    <span style="color: red" ng-show="formEDetail.referenceNo.$touched && formEDetail.referenceNo.$invalid && formEDetail.referenceNo.$error.required">This is a required field.</span>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 text-left">
+                <div class="form-group">
+                    <label class="control-label">Voter ID Card No.</label>
+                    <span style="color: red" class="required">*</span>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 text-left">
+                <div class="form-group">
+                    <input type="text" placeholder="Enter your Voter ID Card No" name="voterID" alpha-numeric capitalize class="form-control" ng-model="txtVoterID" maxlength="25" required />
+                    <span style="color: red" ng-show="formEDetail.voterID.$touched && formEDetail.voterID.$invalid && formEDetail.voterID.$error.required">This is a required field.</span>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 text-left">
+                <div class="form-group">
+                    <label class="control-label">Aadhaar Card No.</label>
+                    <span style="color: red" class="required">*</span>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12 text-left">
+                <div class="form-group">
+                    <input type="text" placeholder="Enter your Aadhaar Card No" name="aadhaarNo" numbers-only capitalize class="form-control" ng-model="txtAadhaarNo" maxlength="25" required />
+                    <span style="color: red" ng-show="formEDetail.aadhaarNo.$touched && formEDetail.aadhaarNo.$invalid && formEDetail.aadhaarNo.$error.required">This is a required field.</span>
+                </div>
+            </div>
+            <div class="form-group text-center">
+                <input type="button" value="Submit" class="btn btn-primary" ng-disabled="formEDetail.$invalid" ng-click="CheckReferenceNoStatus()" />
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-12"></div>
+    </form>
+</div>
+<div class="well text-center" ng-show="goAhead" style="margin: 10px 100px 100px">
+    <input type="button" style="margin-bottom: 15px" ng-click="printTo('printSectionId')" value="Print Go-Ahead" class="btn btn-primary" />
+    <div id="printSectionId" class="text-center">
+        <center>
+            <div style="border: 1px solid black; background-color: white; width: 100%">
+                <table style="width: 100%">
+                    <tr>
+                        <td style="width: 120px; padding: 10px"><img src="~/Content/images/govtlogo.jpg" /></td>
+                        <td style="text-align: center"><h3>Department of Agriculture and Farmers' Empowerment</h3></td>
+                        <td style="width: 120px; padding: 10px"><img style="height: 80px; width: 86px" src="~/Content/images/ApicolLOGO.jpg" /></td>
+                    </tr>
+                </table>
+                <table style="width: 100%">
+                    <tr>
+                        <td style="width: 300px; padding: 10px"></td>
+                        <td style="text-align: center"><h3>Go-Ahead Letter</h3></td>
+                        <td style="width: 300px; padding: 10px">
+                            <qrcode data="{{bdata}}" style="width: 300px; height: 300px; display: none" image="true"></qrcode>
+                            <image id="theimage" style="width: 100px; height: 100px; display: none"></image>
+                        </td>
+                    </tr>
+                </table>
+                <table style="width: 100%">
+                    <tr><td colspan="3" style="border-bottom: 1px solid black"></td></tr>
+                    <tr>
+                        <td colspan="3" style="padding: 0 10px"><h4>Go-Ahead No.: <b>{{k.goAheadDetail.GoAheadNo}}</b></h4></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="padding: 0 10px"><h4>Date of Issue: {{k.goAheadDetail.GoAheadDOI}}</h4></td>
+                        <td style="text-align: right; padding: 0 10px"><h4>Valid till: {{k.goAheadDetail.GoAheadValidDate}}</h4></td>
+                    </tr>
+                    <tr><td colspan="3" style="border-bottom: 1px solid black"></td></tr>
+                </table>
+                <table style="width: 100%">
+                    <tr>
+                        <td colspan="3" style="padding: 0 75px">
+                            <h4 style="line-height: 35px; text-align: justify">
+                                Sri/Smt. <b>{{k.fDetail.ApplicantName}}</b>, of Category <b>{{k.fDetail.Category}}</b>, S/O D/O W/O <b>{{k.fDetail.RelationWithApplicant}}</b> AT/P.O - <b>{{k.fDetail.Village}}</b> District - <b>{{k.fDetail.District}}</b> and Pincode - <b>{{k.fDetail.ApplicantPIN}}</b> is allowed for an establishment of the <b>{{k.ProjectName}}</b> Project under <b>{{k.ApplicantDepartment}}</b> sector in his/her field at Village <b>{{k.ApplicantVillageName}}</b>, GP <b>{{k.ApplicantGPName}}</b>, Block <b>{{k.ApplicantBlockName}}</b>, Dist <b>{{k.ApplicantDistName}}</b>. After the successful establishment and trial of the Project, he/she will be entitled to the Subsidy of <b>{{k.ApplicantSubsidyPercentage}} %</b> of the Project Cost (Fixed Capital) limited to Rs. <b>50,00,000</b> (in words: Rupees <b>Fifty Lakhs</b> only). He/She will execute the project through <b>{{k.ApplicantFinanceType}}</b> finance. The project has to be completed by <b>{{k.goAheadDetail.GoAheadValidDate}}</b>.
+                            </h4>
+                        </td>
+                    </tr>
+                </table>
+                <table style="width: 100%">
+                    <tr>
+                        <td colspan="3" style="padding: 0 10px; text-align: right">
+                            <h4>Name: <b>{{k.DNOFullName}}</b></h4>
+                            <h4><img id="photoSignature" data-ng-src="data:image/jpg;base64,{{Photo}}" style="height: 100px; width: 200px" /></h4>
+                            <h4>Signature of the DNO, {{k.ApplicantDistName}}</h4>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </center>
+    </div>
+</div>
+
+<script>
+    var app = angular.module("GoAheadApp", ['ngMaterial']);
+
+    app.controller("GoAheadCtrl", function ($scope, $http, $mdDialog, $timeout) {
+
+        $scope.printTo = function (printSection) {
+            var innerContents = document.getElementById(printSection).innerHTML;
+            var popupWinindow = window.open('', '_blank', 'width=800, height=600, toolbar=1, titlebar=1, resizable=1, location=0, status=1, menubar=0, scrollbars=1');
+            popupWinindow.document.open();
+            popupWinindow.document.write('<html><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></head><body onload="window.print()">' + innerContents + '</html>');
+            popupWinindow.document.close();
+        };
+
+        $scope.EntryDetails = true;
+        $scope.refNo = "@ViewBag.RefNo";
+        $scope.goAhead = false;
+
+        var uploadedsign = function (a) {
+            var obj = "data:image/jpeg;base64," + a;
+            document.getElementById('photoSignature').setAttribute("src", obj);
+        };
+
+        $scope.CheckReferenceNoStatus = function () {
+            $http.get('CheckReferenceNoStatus?referenceNo=' + $scope.txtReferenceNo + '&voterIDNo=' + digest($scope.txtVoterID) + '&aadhaarCardNo=' + digest($scope.txtAadhaarNo)).then(function success(response) {
+                var k = response.data;
+                if (k.includes(',')) {
+                    var z = k.split(',');
+                    $scope.ReferenceNo = z[0];
+                    $scope.FarmerID = z[1];
+                    if ($scope.ReferenceNo != null && $scope.FarmerID != null) {
+                        $http.get('GetGoAhead?referenceNo=' + $scope.ReferenceNo + '&farmerID=' + $scope.FarmerID).then(function success(response) {
+                            $scope.k = response.data;
+                            $scope.EntryDetails = false;
+                            $scope.goAhead = true;
+                            $scope.bdata = $scope.k.goAheadDetail.GoAheadNo + '\n' + 'Applicant Name : ' + $scope.k.fDetail.ApplicantName;
+                            uploadedsign($scope.k.Sign);
+                            $timeout(function () {
+                                var canvas = document.getElementsByClassName('qrcode');
+                                document.getElementById("theimage").src = canvas[0].toDataURL("image/png");
+                                document.getElementById("theimage").style.display = 'block';
+
+                                //document.getElementById("theimage1").src = canvas[0].toDataURL("image/png");
+                                //document.getElementById("theimage1").style.display = 'block';
+
+                                //document.getElementById("theimage2").src = canvas[0].toDataURL("image/png");
+                                //document.getElementById("theimage2").style.display = 'block';
+
+                                //document.getElementById("theimage3").src = canvas[0].toDataURL("image/png");
+                                //document.getElementById("theimage3").style.display = 'block';
+                                $scope.GoAheadLetter = true;
+                            }, 180);
+                        }, function error(response) {
+                            showAlert(response.status);
+                        });
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                else if (k == "0" || k == "1" || k == "2" || k == "3" || k == "4" || k == "5" || k == "6" || k == "7") {
+                    showAlert('Your Go-Ahead Letter will be generated in ' + k + ' days.');
+                    emptyFields();
+                }
+                else if (k.includes('Reference')) {
+                    showAlert(k);
+                    $scope.txtReferenceNo = null;
+                }
+                else if (k.includes('Registration')) {
+                    showAlert(k);
+                    emptyFields();
+                }
+                else if (k.includes('start')) {
+                    showAlert(k);
+                    emptyFields();
+                }
+                else if (k.includes('complete')) {
+                    showAlert(k);
+                    emptyFields();
+                }
+                else if (k.includes('Payment')) {
+                    showAlert(k);
+                    emptyFields();
+                }
+                else if (k.includes('pending')) {
+                    showAlert(k);
+                    emptyFields();
+                }
+                else if (k.includes('rejected')) {
+                    showAlert(k);
+                    emptyFields();
+                }
+                else if (k.includes('Aadhaar')) {
+                    showAlert(k);
+                    $scope.txtAadhaarNo = null;
+                }
+                else if (k.includes('Voter')) {
+                    showAlert(k);
+                    $scope.txtVoterID = null;
+                }
+                else {
+                    showAlert(k);
+                    emptyFields();
+                }
+            }, function error(response) {
+                showAlert(response.status);
+            });
+        };
+
+        var emptyFields = function () {
+            $scope.txtReferenceNo = null;
+            $scope.txtVoterID = null;
+            $scope.txtAadhaarNo = null;
+        };
+
+        var showAlert = function (ev) {
+            $mdDialog.show(
+                $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title('Alert')
+                    .textContent(ev)
+                    .ariaLabel('Alert Dialog Demo')
+                    .ok('OK')
+                    .targetEvent(ev)
+            );
+        };
+    });
+
+    app.directive('loading', ['$http', function ($http) {
+        return {
+            restrict: 'A',
+            template: '<div class="loading">Loading&#8230;</div>',
+            link: function (scope, elm, attrs) {
+                scope.isLoading = function () {
+                    return $http.pendingRequests.length > 0;
+                };
+                scope.$watch(scope.isLoading, function (v) {
+                    if (v) {
+                        elm.css('display', 'block');
+                    } else {
+                        elm.css('display', 'none');
+                    }
+                });
+            }
+        };
+    }]);
+
+    app.directive('capitalize', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                var capitalize = function (inputValue) {
+                    if (inputValue == undefined) inputValue = '';
+                    var capitalized = inputValue.toUpperCase();
+                    if (capitalized !== inputValue) {
+                        ngModelCtrl.$setViewValue(capitalized);
+                        ngModelCtrl.$render();
+                    }
+                    return capitalized;
+                }
+                ngModelCtrl.$parsers.push(capitalize);
+                capitalize(scope[attrs.ngModel]);
+            }
+        };
+    });
+
+    app.directive('referenceNo', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                ngModelCtrl.$parsers.push(function (val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace(/[^a-zA-Z0-9\/\-]/g, '');
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
+                element.bind('keypress', function (event) {
+                    if (event.keyCode === 32) {
+                        event.preventDefault();
+                    }
+                });
+            }
+        };
+    });
+
+    app.directive('alphaNumeric', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                ngModelCtrl.$parsers.push(function (val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace(/[^a-zA-Z0-9\/]/g, '');
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
+                element.bind('keypress', function (event) {
+                    if (event.keyCode === 32) {
+                        event.preventDefault();
+                    }
+                });
+            }
+        };
+    });
+
+    app.directive('numbersOnly', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                ngModelCtrl.$parsers.push(function (val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace(/[^0-9]/g, '');
+                    var negativeCheck = clean.split('-');
+                    if (!angular.isUndefined(negativeCheck[1])) {
+                        negativeCheck[1] = negativeCheck[1].slice(0, negativeCheck[1].length);
+                        clean = negativeCheck[0] + '-' + negativeCheck[1];
+                        if (negativeCheck[0].length > 0) {
+                            clean = negativeCheck[0];
+                        }
+                    }
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
+                element.bind('keypress', function (event) {
+                    if (event.keyCode === 32) {
+                        event.preventDefault();
+                    }
+                });
+            }
+        };
+    });
+
+    app.directive('qrcode', ['$window', function ($window) {
+        var canvas2D = !!$window.CanvasRenderingContext2D,
+            levels = {
+                'L': 'Low',
+                'M': 'Medium',
+                'Q': 'Quartile',
+                'H': 'High'
+            },
+            draw = function (context, qr, modules, tile) {
+                for (var row = 0; row < modules; row++) {
+                    for (var col = 0; col < modules; col++) {
+                        var w = (Math.ceil((col + 1) * tile) - Math.floor(col * tile)),
+                            h = (Math.ceil((row + 1) * tile) - Math.floor(row * tile));
+                        context.fillStyle = qr.isDark(row, col) ? '#000' : '#fff';
+                        context.fillRect(Math.round(col * tile),
+                            Math.round(row * tile), w, h);
+                    }
+                }
+            };
+        return {
+            restrict: 'E',
+            template: '<canvas class="qrcode" style="width:122px;height:142px;"></canvas>',
+            link: function (scope, element, attrs) {
+                var domElement = element[0],
+                    $canvas = element.find('canvas'),
+                    canvas = $canvas[0],
+                    context = canvas2D ? canvas.getContext('2d') : null,
+                    download = 'download' in attrs,
+                    href = attrs.href,
+                    link = download || href ? document.createElement('a') : '',
+                    trim = /^\s+|\s+$/g,
+                    error,
+                    version,
+                    errorCorrectionLevel,
+                    data,
+                    size,
+                    modules,
+                    tile,
+                    qr,
+                    $img,
+                    setVersion = function (value) {
+                        version = Math.max(1, Math.min(parseInt(value, 10), 10)) || 4;
+                    },
+                    setErrorCorrectionLevel = function (value) {
+                        errorCorrectionLevel = value in levels ? value : 'M';
+                    },
+                    setData = function (value) {
+                        if (!value) {
+                            return;
+                        }
+                        data = value.replace(trim, '');
+                        qr = qrcode(version, errorCorrectionLevel);
+                        qr.addData(data);
+                        try {
+                            qr.make();
+                        } catch (e) {
+                            error = e.message;
+                            return;
+                        }
+                        error = false;
+                        modules = qr.getModuleCount();
+                    },
+                    setSize = function (value) {
+                        size = parseInt(value, 10) || modules * 2;
+                        tile = size / modules;
+                        canvas.width = canvas.height = size;
+                    },
+                    render = function () {
+                        if (!qr) {
+                            return;
+                        }
+                        if (error) {
+                            if (link) {
+                                link.removeAttribute('download');
+                                link.title = '';
+                                link.href = '#_';
+                            }
+                            if (!canvas2D) {
+                                domElement.innerHTML = '<img src width="' + size + '"' +
+                                    'height="' + size + '"' +
+                                    'class="qrcode">';
+                            }
+                            scope.$emit('qrcode:error', error);
+                            return;
+                        }
+                        if (download) {
+                            domElement.download = 'qrcode.png';
+                            domElement.title = 'Download QR code';
+                        }
+                        if (canvas2D) {
+                            draw(context, qr, modules, tile);
+                            if (download) {
+                                domElement.href = canvas.toDataURL('image/png');
+                                return;
+                            }
+                        } else {
+                            domElement.innerHTML = qr.createImgTag(tile, 0);
+                            $img = element.find('img');
+                            $img.addClass('qrcode');
+                            if (download) {
+                                domElement.href = $img[0].src;
+                                return;
+                            }
+                        }
+                        if (href) {
+                            domElement.href = href;
+                        }
+                    };
+                if (link) {
+                    link.className = 'qrcode-link';
+                    $canvas.wrap(link);
+                    domElement = link;
+                }
+                setVersion(attrs.version);
+                setErrorCorrectionLevel(attrs.errorCorrectionLevel);
+                setSize(attrs.size);
+                attrs.$observe('version', function (value) {
+                    if (!value) {
+                        return;
+                    }
+                    setVersion(value);
+                    setData(data);
+                    setSize(size);
+                    render();
+                });
+                attrs.$observe('errorCorrectionLevel', function (value) {
+                    if (!value) {
+                        return;
+                    }
+                    setErrorCorrectionLevel(value);
+                    setData(data);
+                    setSize(size);
+                    render();
+                });
+                attrs.$observe('data', function (value) {
+                    if (!value) {
+                        return;
+                    }
+                    setData(value);
+                    setSize(size);
+                    render();
+                });
+                attrs.$observe('size', function (value) {
+                    if (!value) {
+                        return;
+                    }
+                    setSize(value);
+                    render();
+                });
+                attrs.$observe('href', function (value) {
+                    if (!value) {
+                        return;
+                    }
+                    href = value;
+                    render();
+                });
+            }
+        };
+    }]);
+</script>

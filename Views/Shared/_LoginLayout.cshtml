@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mukhyamantri Krushi Udyoga Yojana</title>
+    <link href="~/Content/CommercialAgriEnterpriseTheme/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background: url('../../Content/images/Demologin.jpg') fixed;
+            background-size: cover;
+            padding: 100px 0px 143px 0px;
+            margin: 0px auto;
+            height: 100%;
+        }
+        .headStyle {
+            font-size: 21px;
+            font-weight: bold;
+            color: white;
+            padding: 10px;
+            margin: 0;
+        }
+        form {
+            width: 300px;
+            margin: 0 auto;
+        }
+        form.login input[type="submit"]:hover {
+            transition: background-color 0.5s ease;
+        }
+        form.login .remember-forgot {
+            float: left;
+            width: 100%;
+            margin: 10px 0 0 0;
+        }
+        form.login .forgot-pass-content {
+            min-height: 20px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        form.login label, form.login a {
+            font-size: 12px;
+            font-weight: 400;
+            color: #FFFFFF;
+        }
+        form.login a {
+            transition: color 0.5s ease;
+        }
+        form.login a:hover {
+            color: #2ecc71;
+        }
+    </style>
+    <script type="text/javascript">window.onload = window.history.forward(0); function noback() { window.history.forward(); };</script>
+</head>
+<body class="login" oncontextmenu="return false" onload="noback()" onpageshow="if (event.persisted) noback()" unload="">
+    @RenderBody()
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

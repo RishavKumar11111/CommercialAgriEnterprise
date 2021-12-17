@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "MIS";
+    Layout = "~/Views/Shared/_LayoutBank.cshtml";
+}
+@using (Html.BeginForm("MIS", "Bank", FormMethod.Post, new { id = "FormId" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="right_col" role="main" ng-app="BankMisApp" ng-controller="BankMisCtrl" ng-cloak>
+        <div data-loading></div>
+        <div class="page-title">
+            <div class="title_left">
+            </div>
+        </div>
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>{{BankFullName}} MIS Report</h2>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <br />
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <div class="table table-responsive">
+                            <table class="table table-bordered table-striped table-hover" style="white-space: nowrap">
+                                <tr style="background: #34495e; color: #ffffff">
+                                    <td>Serial No.</td>
+                                    <td>Reference No.</td>
+                                    <td>Farmer ID</td>
+                                    <td>Farmer's Name</td>
+                                    <td>Father's / Husband Name</td>
+                                    <td>Bank Loan</td>
+                                    @*<td>Bank Name</td>*@
+                                    <td>Branch Name</td>
+                                    @*<td>Loan Sanction Status</td>
+                                        <td>Action</td>*@
+                                </tr>
+                                <tr ng-repeat="i in misRecord">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{i.ReferenceNo}}</td>
+                                    <td>{{i.FarmerID}}</td>
+                                    <td>{{i.FDetail.FaremerName}}</td>
+                                    <td>{{i.FDetail.FatherName}}</td>
+                                    <td>₹ {{i.BankLoan}}</td>
+                                    @*<td>{{i.BankName}}</td>*@
+                                    <td>{{i.BranchName}}</td>
+                                    @*<td>{{i.BankLoanStatus}}</td>
+                                        <td>
+                                            <input type="button" class="btn btn-xs btn-primary" value="Approve" /> | <input type="button" class="btn btn-xs btn-danger" value="Reject" />
+                                        </td>*@
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    var app = angular.module("BankMisApp", ['ui.bootstrap']);
+    app.controller("BankMisCtrl", function ($scope, $http) {
+
+        var token = document.getElementsByName('__RequestVerificationToken')[0].value;
+
+        $scope.misRecord = [];
+
+        $http.get('MisDetail').then(function success(response) {
+            $scope.misRecord = response.data;
+            $scope.BankFullName = $scope.misRecord[0].BankName;
+        }, function error(response) {
+            alert(response.status);
+        });
+    });
+
+    app.directive('loading', ['$http', function ($http) {
+        return {
+            restrict: 'A',
+            template: '<div class="loading">Loading&#8230;</div>',
+            link: function (scope, elm, attrs) {
+                scope.isLoading = function () {
+                    return $http.pendingRequests.length > 0;
+                };
+                scope.$watch(scope.isLoading, function (v) {
+                    if (v) {
+                        elm.css('display', 'block');
+                    } else {
+                        elm.css('display', 'none');
+                    }
+                });
+            }
+        };
+    }]);
+</script>

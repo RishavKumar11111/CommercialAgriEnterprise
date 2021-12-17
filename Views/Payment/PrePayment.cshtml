@@ -1,0 +1,543 @@
+﻿@{
+    ViewBag.Title = "PrePayment";
+    Layout = "~/Views/Shared/_LayoutPayment.cshtml";
+}
+@using (Html.BeginForm("PrePayment", "Payment", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal text-center", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+}
+<div ng-app="PrePaymentApp" ng-controller="PrePaymentCtrl" ng-cloak>
+    <div data-loading></div>
+    <div class="row">
+        <div class="title col-md-8 col-sm-8 col-xs-12 text-right">
+            <h2>Mukhyamantri Krushi Udyoga Yojana</h2>
+        </div>
+        <div class="title col-md-4 col-sm-4 col-xs-12 text-right" style="padding-top: 22px">
+            <div id="clockdiv">
+                <div>
+                    <span class="minutes"></span>
+                    <text class="smalltext">Minutes</text>
+                </div>
+                <div>
+                    <span class="seconds"></span>
+                    <text class="smalltext">Seconds</text>
+                </div>
+                <div style="background: #ffffff; color: #000000">
+                    <text>Remaining Before Session Time Out.</text>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+	    <h3 style="text-align: center">Online Payment</h3>
+	</div>
+    </div>
+    <div class="clearfix"></div>
+    <div ng-show="EntryDetails" class="well row" style="margin-top: 30px">
+        <form class="form-horizontal text-center" name="formPay" role="form" autocomplete="off" novalidate>
+            <div class="col-md-3 col-sm-3 col-xs-12"></div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="col-md-6 col-sm-6 col-xs-12 text-left">
+                    <div class="form-group">
+                        <label class="control-label">Reference No.</label>
+                        <span style="color: red" class="required">*</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <input type="text" placeholder="Enter your Reference No." name="referenceNo" reference-no capitalize class="form-control" ng-model="txtReferenceNo" maxlength="25" required />
+                        <span style="color: red" ng-show="formPay.referenceNo.$touched && formPay.referenceNo.$invalid && formPay.referenceNo.$error.required">This is a required field.</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12 text-left">
+                    <div class="form-group">
+                        <label class="control-label">Voter ID Card No.</label>
+                        <span style="color: red" class="required">*</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <input type="text" placeholder="Enter your Voter ID Card No." name="voterID" alpha-numeric capitalize class="form-control" ng-model="txtVoterID" maxlength="25" required />
+                        <span style="color: red" ng-show="formPay.voterID.$touched && formPay.voterID.$invalid && formPay.voterID.$error.required">This is a required field.</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12 text-left">
+                    <div class="form-group">
+                        <label class="control-label">Aadhaar Card No.</label>
+                        <span style="color: red" class="required">*</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <input type="text" placeholder="Enter your Aadhaar Card No." name="aadhaarNo" numbers-only capitalize class="form-control" ng-model="txtAadhaarNo" maxlength="25" required />
+                        <span style="color: red" ng-show="formPay.aadhaarNo.$touched && formPay.aadhaarNo.$invalid && formPay.aadhaarNo.$error.required">This is a required field.</span>
+                    </div>
+                </div>
+                <div class="form-group text-center">
+                    <input type="button" value="Submit" class="btn btn-primary" ng-disabled="formPay.$invalid" ng-click="CheckReferenceNoStatus()" />
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12"></div>
+        </form>
+    </div>
+    <div ng-show="Status" style="margin-top: 30px">
+        <form class="form-horizontal text-center" name="formPaidStatus" role="form" autocomplete="off" novalidate>
+            <div class="table table-responsive">
+                <table class="table table-striped table-bordered table-hover" style="white-space: nowrap">
+                    <thead>
+                        <tr style="background: #34495e; color: #ecf0f1">
+                            <td>Reference No.</td>
+                            <td>Payment Status</td>
+                            <td ng-show="PaymentStatus == 'Success'">Action</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ReferenceNo}}</td>
+                            <td>{{PaymentStatus}}</td>
+                            <td ng-show="PaymentStatus == 'Success'">
+                                <input type="button" class="btn btn-primary" value="View & Print Transaction Receipt" data-toggle="modal" data-target="#receiptModal" ng-click="getReceiptDetails()" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    </div>
+    <div class="modal fade" id="receiptModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Transaction Receipt</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="printSection">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                                <img style="height: 80px; width: 86px" src="~/Content/images/ApicolLOGO.jpg" />
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                                <h3>Transaction Receipt</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                                <div class="table table-responsive">
+                                    <table class="table table-striped table-bordered" id="tranReceipt" style="white-space: nowrap">
+                                        <tr>
+                                            <td style="background: #34495e; color: #ecf0f1">Reference No.</td>
+                                            <td>{{k.ReferenceNo}}</td>
+                                            <td style="background: #34495e; color: #ecf0f1">Transaction Date</td>
+                                            <td>{{k.BankTranDate}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background: #34495e; color: #ecf0f1">Farmer ID</td>
+                                            <td>{{k.FarmerID}}</td>
+                                            <td style="background: #34495e; color: #ecf0f1">Transaction Time</td>
+                                            <td>{{k.BankTranTime}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background: #34495e; color: #ecf0f1">Farmer's Name</td>
+                                            <td>{{k.FarmerName | capitalize}}</td>
+                                            <td style="background: #34495e; color: #ecf0f1">Bank Response</td>
+                                            <td>{{k.BankResponseName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background: #34495e; color: #ecf0f1">Transaction ID</td>
+                                            <td>{{k.BankTransactionID}}</td>
+                                            <td style="background: #34495e; color: #ecf0f1">Payment Mode</td>
+                                            <td>{{k.PayMode}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="background: #34495e; color: #ecf0f1">Transaction Status</td>
+                                            <td>{{k.TransactionStatus}}</td>
+                                            <td style="background: #34495e; color: #ecf0f1">Total Amount</td>
+                                            <td>₹ {{k.TotalAmount}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="print('printSection')">Print Transaction Receipt</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well" ng-show="PaymentRecord" style="background-color: white; margin: 30px 0 70px 0">
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group form-inline">
+                    <label class="control-label">Search</label>
+                    <input type="text" class="form-control" placeholder="Search..." style="width: 300px" ng-model="search" />
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="table table-responsive text-center">
+                    <table class="table table-striped table-bordered table-hover" style="white-space: nowrap">
+                        <thead>
+                            <tr style="background: #34495e; color: #ecf0f1">
+                                <th ng-click="sort('SerialNo')">Serial No.<span style="left: 10px" right" class="glyphicon sort-icon" ng-show="sortKey=='SerialNo'" ng-class="{'glyphicon-chevron-up': !reverse,'glyphicon-chevron-down': reverse}"></span></th>
+                                <th ng-click="sort('TransactionID')">Transaction ID<span style="left: 10px" right" class="glyphicon sort-icon" ng-show="sortKey=='TransactionID'" ng-class="{'glyphicon-chevron-up': !reverse,'glyphicon-chevron-down': reverse}"></span></th>
+                                <th ng-click="sort('TransactionStatus')">Transaction Status<span style="left: 10px" right" class="glyphicon sort-icon" ng-show="sortKey=='TransactionStatus'" ng-class="{'glyphicon-chevron-up': !reverse,'glyphicon-chevron-down': reverse}"></span></th>
+                                <th ng-click="sort('TranDate')">Transaction Date<span style="left: 10px" right" class="glyphicon sort-icon" ng-show="sortKey=='TranDate'" ng-class="{'glyphicon-chevron-up': !reverse,'glyphicon-chevron-down': reverse}"></span></th>
+                                <th ng-click="sort('TranTime')">Transaction Time<span style="left: 10px" right" class="glyphicon sort-icon" ng-show="sortKey=='TranTime'" ng-class="{'glyphicon-chevron-up': !reverse,'glyphicon-chevron-down': reverse}"></span></th>
+                                <th ng-click="sort('BankResponseMessage')">Bank Response Message<span style="left: 10px" right" class="glyphicon sort-icon" ng-show="sortKey=='BankResponseMessage'" ng-class="{'glyphicon-chevron-up': !reverse,'glyphicon-chevron-down': reverse}"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="i in paymentDetails | orderBy: sortKey: reverse | filter: search | itemsPerPage: 3">
+                                <td>{{i.SerialNo}}</td>
+                                <td>{{i.TransactionID}}</td>
+                                <td>{{i.TransactionStatus}}</td>
+                                <td>{{i.TranDate}}</td>
+                                <td>{{i.TranTime}}</td>
+                                <td>{{i.BankResponseMessage == null ? "NA" : i.BankResponseMessage}}</td>
+                            </tr>
+                            <tr ng-show="NoRecord">
+                                <td colspan="6" style="font-weight: bolder; color: darkred">No payment attempts are done !!!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <dir-pagination-controls boundary-links="true" boundary-link-numbers="true" direction-links="true" max-size="5" rotate="true"></dir-pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="well" ng-show="PaymentStatus == 'Pending'" style="background-color: white; margin: 30px 0 70px 0">
+        <form class="form-horizontal text-center" name="formPayment" role="form" autocomplete="off" novalidate>
+            <div class="form-group">
+                <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                <label class="col-md-1 col-sm-1 col-xs-1 control-label">Captcha</label>
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <img src="@Url.Action("CaptchaImage")" alt="Captcha" class="form-control" id="imgCaptcha" />
+                </div>
+                <div class="col-md-1 col-sm-1 col-xs-12" style="padding-top: 7px">
+                    <a href="#" ng-click="refreshCaptcha()"><span class="glyphicon glyphicon-refresh"></span></a>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <input type="text" ng-model="txtCaptcha" class="form-control" autocomplete="off" placeholder="Captcha" />
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-12"></div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <label class="control-label" style="color: orangered">{{ErrorMessage}}</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <input type="submit" value="Proceed to Payment" class="btn btn-info" ng-click="ProceedToPayment()" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    var app = angular.module("PrePaymentApp", ['ngMaterial', 'angularUtils.directives.dirPagination']);
+
+    app.controller("PrePaymentCtrl", function ($scope, $http, $mdDialog, $window, $location) {
+
+        $scope.EntryDetails = true;
+
+        $scope.print = function (printSection) {
+            var innerContents = document.getElementById(printSection).innerHTML;
+            var popupWinindow = window.open('', '_blank', 'width=800, height=600, toolbar=1, titlebar=1, resizable=1, location=0, status=1, menubar=0, scrollbars=1');
+            popupWinindow.document.open();
+            popupWinindow.document.write('<html><head><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"><style>#tranReceipt{border-collapse: collapse; width: 100%; text-align: center}#tranReceipt td{border: 1px solid #000; padding: 10px}</style></head><body onload="window.print()"><div style="margin-top: 250px; text-align: center">' + innerContents + '</div></html>');
+            popupWinindow.document.close();
+        };
+
+        $scope.refreshCaptcha = function () {
+            $scope.txtCaptcha = null;
+            $('#imgCaptcha').attr('src', ' ');
+            $('#imgCaptcha').attr('src', '@Url.Action("CaptchaImage", "Payment")');
+        };
+
+        $scope.getReceiptDetails = function () {
+            $http.get('ReceiptDetails?referenceNo=' + $scope.txtReferenceNo).then(function success(response) {
+                $scope.k = response.data;
+            }, function error(response) {
+                showAlert(response.status);
+            });
+        };
+
+        $scope.ProceedToPayment = function () {
+            $http.get('RequestCaptcha?captcha=' + $scope.txtCaptcha + '&referenceNo=' + $scope.txtReferenceNo).then(function success(response) {
+                var k = response.data;
+                if (k == "Invalid Captcha") {
+                    $scope.refreshCaptcha();
+                    $scope.ErrorMessage = k;
+                }
+                else if (k == "No more projects can be alloted as the Target limit is reached.") {
+                    $scope.refreshCaptcha();
+                    $scope.ErrorMessage = k;
+                }
+                else if (k == "The target value has not been set. Please try after sometime.") {
+                    $scope.refreshCaptcha();
+                    $scope.ErrorMessage = k;
+                }
+                else {
+                    $scope.ErrorMessage = null;
+                    $scope.txtCaptcha = null;
+                    $('#imgCaptcha').attr('src', ' ');
+                    $window.location.href = "PRequest?referenceNo=" + $scope.txtReferenceNo + "&randomNo=" + k;
+                }
+            }, function error(response) {
+                showAlert(response.status);
+            });
+        };
+
+        $scope.sort = function (keyname) {
+            $scope.sortKey = keyname;
+            $scope.reverse = !$scope.reverse;
+        };
+
+        $scope.all = [];
+        $scope.paymentDetails = [];
+        var a = 1;
+        var getPaymentDetail = function () {
+            $http.get('PaymentDetail?referenceNo=' + $scope.txtReferenceNo).then(function success(response) {
+                $scope.all = response.data;
+                angular.forEach($scope.all, function (i) {
+                    i.SerialNo = a;
+                    a++;
+                    $scope.paymentDetails.push(i);
+                });
+                if ($scope.paymentDetails.length !== 0) {
+                    $scope.paymentRecord = true;
+                }
+                else {
+                    $scope.paymentRecord = false;
+                    $scope.NoRecord = true;
+                }
+            }, function error(reponse) {
+                showAlert(response.status);
+            });
+        };
+
+        $scope.CheckReferenceNoStatus = function () {
+            $http.get('CheckReferenceNoStatus?referenceNo=' + $scope.txtReferenceNo + '&voterIDNo=' + digest($scope.txtVoterID) + '&aadhaarCardNo=' + digest($scope.txtAadhaarNo)).then(function success(response) {
+                var k = response.data;
+                if (k.includes(',')) {
+                    var z = k.split(',');
+                    $scope.ReferenceNo = z[0];
+                    $scope.PaymentStatus = z[1];
+                    if ($scope.PaymentStatus == 'Pending') {
+                        $scope.Status = true;
+                        $scope.PaymentRecord = true;
+                        getPaymentDetail();
+                        emptyFields();
+                        $scope.EntryDetails = false;
+                    }
+                    else if ($scope.PaymentStatus == 'Success') {
+                        $scope.Status = true;
+                        $scope.PaymentRecord = true;
+                        getPaymentDetail();
+                        emptyFields();
+                        $scope.EntryDetails = false;
+                    }
+                    else {
+                        $scope.Status = false;
+                    }
+                }
+                else if (k.includes('Reference')) {
+                    showAlert(k);
+                    hideEmptyFields();
+                    $scope.txtReferenceNo = null;
+                }
+                else if (k.includes('Aadhaar')) {
+                    showAlert(k);
+                    hideEmptyFields();
+                    $scope.txtAadhaarNo = null;
+                }
+                else if (k.includes('Voter')) {
+                    showAlert(k);
+                    hideEmptyFields();
+                    $scope.txtVoterID = null;
+                }
+                else {
+                    showAlert(k);
+                    hideEmptyFields();
+                    emptyFields();
+                }
+            }, function error(response) {
+                showAlert(response.status);
+            });
+        };
+
+        var emptyFields = function () {
+            $scope.txtAadhaarNo = null;
+            $scope.txtVoterID = null;
+        };
+
+        var hideEmptyFields = function () {
+            $scope.ReferenceNo = null;
+            $scope.PaymentStatus = null;
+            $scope.PaymentStatus = false;
+            $scope.PaymentRecord = false;
+            $scope.Status = false;
+        };
+
+        var showAlert = function (ev) {
+            $mdDialog.show(
+                $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title('Alert')
+                    .textContent(ev)
+                    .ariaLabel('Alert Dialog Demo')
+                    .ok('OK')
+                    .targetEvent(ev)
+            );
+        };
+    });
+
+    app.directive('capitalize', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                var capitalize = function (inputValue) {
+                    if (inputValue == undefined) inputValue = '';
+                    var capitalized = inputValue.toUpperCase();
+                    if (capitalized !== inputValue) {
+                        ngModelCtrl.$setViewValue(capitalized);
+                        ngModelCtrl.$render();
+                    }
+                    return capitalized;
+                }
+                ngModelCtrl.$parsers.push(capitalize);
+                capitalize(scope[attrs.ngModel]);
+            }
+        };
+    });
+
+    app.directive('referenceNo', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                ngModelCtrl.$parsers.push(function (val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace(/[^a-zA-Z0-9\/\-]/g, '');
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
+                element.bind('keypress', function (event) {
+                    if (event.keyCode === 32) {
+                        event.preventDefault();
+                    }
+                });
+            }
+        };
+    });
+
+    app.directive('alphaNumeric', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                ngModelCtrl.$parsers.push(function (val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace(/[^a-zA-Z0-9\/]/g, '');
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
+                element.bind('keypress', function (event) {
+                    if (event.keyCode === 32) {
+                        event.preventDefault();
+                    }
+                });
+            }
+        };
+    });
+
+    app.directive('numbersOnly', function () {
+        return {
+            require: '?ngModel',
+            link: function (scope, element, attrs, ngModelCtrl) {
+                if (!ngModelCtrl) {
+                    return;
+                }
+                ngModelCtrl.$parsers.push(function (val) {
+                    if (angular.isUndefined(val)) {
+                        var val = '';
+                    }
+                    var clean = val.replace(/[^0-9]/g, '');
+                    var negativeCheck = clean.split('-');
+                    if (!angular.isUndefined(negativeCheck[1])) {
+                        negativeCheck[1] = negativeCheck[1].slice(0, negativeCheck[1].length);
+                        clean = negativeCheck[0] + '-' + negativeCheck[1];
+                        if (negativeCheck[0].length > 0) {
+                            clean = negativeCheck[0];
+                        }
+                    }
+                    if (val !== clean) {
+                        ngModelCtrl.$setViewValue(clean);
+                        ngModelCtrl.$render();
+                    }
+                    return clean;
+                });
+                element.bind('keypress', function (event) {
+                    if (event.keyCode === 32) {
+                        event.preventDefault();
+                    }
+                });
+            }
+        };
+    });
+
+    app.directive('loading', ['$http', function ($http) {
+        return {
+            restrict: 'A',
+            template: '<div class="loading">Loading&#8230;</div>',
+            link: function (scope, elm, attrs) {
+                scope.isLoading = function () {
+                    return $http.pendingRequests.length > 0;
+                };
+                scope.$watch(scope.isLoading, function (v) {
+                    if (v) {
+                        elm.css('display', 'block');
+                    } else {
+                        elm.css('display', 'none');
+                    }
+                });
+            }
+        };
+    }]);
+
+    app.filter('capitalize', function () {
+        return function (input) {
+            if (input != null) {
+                input = input.toLowerCase().split(' ');
+                for (var i = 0; i < input.length; i++) {
+                    input[i] = input[i].charAt(0).toUpperCase() + input[i].substring(1);
+                }
+                return input.join(' ');
+            }
+            else {
+                return false;
+            }
+        }
+    });
+</script>

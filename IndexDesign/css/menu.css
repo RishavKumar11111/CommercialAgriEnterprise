@@ -1,0 +1,108 @@
+/*** google fonts ***/
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,400italic,700,700italic);
+@import url(https://fonts.googleapis.com/css?family=Bitter:400,400italic,700);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic);
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+#nav{
+	position: relative;
+	z-index: 100000;
+}
+#nav > a{
+	display: none;
+}
+#nav li{
+	position: relative;
+}
+#nav li a{
+	color: #333333;
+	display: block;
+	 font-family: 'Lato';
+	 font-size: 12px;
+  font-weight: 600;
+	text-transform: uppercase;
+}
+#nav li a:active{
+	background-color: #c00 !important;
+}
+#nav span:after{
+	width: 0;
+	height: 0;
+	border: 0.313em solid transparent;
+	border-bottom: none;
+	border-top-color: #fff;
+	content: '';
+	vertical-align: middle;
+	display: inline-block;
+	position: relative;
+	right: -0.313em;
+}
+
+/* first level */
+
+#nav > ul
+{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+#nav > ul > li
+{
+	float: left;
+}
+#nav > ul > li > a
+{
+	text-align: center;
+}
+#nav > ul > li:not( :last-child ) > a
+{
+	border-right: 0;
+}
+#nav > ul > li:hover > a,
+#nav > ul:not( :hover ) > li.active > a
+{
+	background: #95b61d ;
+	text-decoration: none;
+	color: #fff;
+}
+
+/* second level */
+
+#nav li ul
+{
+	display: none;
+	position: absolute;
+	top: 100%;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	width: auto;
+	border-top: solid 6px #097ec9;
+	z-index: 1000;
+}
+#nav li:hover ul
+{
+	display: block;
+}
+#nav li:not( :first-child ):hover ul
+{
+	left: -1px;
+}
+#nav li ul a
+{
+	background: #95b61d;
+	white-space: nowrap;
+	color: #333;
+	font-size: 13px;
+}
+#nav li ul a:before{
+	font-family: 'FontAwesome';
+	content: '\f046';
+	padding-right: 5px;
+}
+#nav li ul li a:hover,
+#nav li ul:not( :hover ) li.active a
+{
+	background: #000;
+	text-decoration: none;
+	color: #fff;
+}

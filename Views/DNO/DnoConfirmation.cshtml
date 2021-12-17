@@ -1,0 +1,162 @@
+﻿@{
+    ViewBag.Title = "DnoConfirmation";
+    Layout = "~/Views/Shared/_LayoutDNO.cshtml";
+}
+@using (Html.BeginForm("DnoConfirmation", "DNO", FormMethod.Post, new { id = "FormId" }))
+{
+    @Html.AntiForgeryToken()
+}
+
+<div ng-app="DnoConfirmationApp">
+    <div ng-controller="DNOCtrl" ng-cloak>
+        <div class="right_col" role="main">
+            <div class="page-title">
+                <div class="title_left" style="width: 75%">
+                    <h3>Approved Records</h3>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-3 col-xs-3 col-xs-12">
+                    <div class="x_panel" style="min-height: 450px">
+                        <div class="x_title">
+                            <h2>Select Date and Year</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <br />
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    Financial Year :
+                                    <select class="form-control" ng-model="ddlFyr" ng-options="i.fyr for i in DBFYR">
+                                        <option value="">-- Select Financial Year --</option>
+                                    </select>
+                                </div>
+                            </form>
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    Start Date :
+                                    <input type="date" ng-model="startdate" id="startdate" class="form-control" placeholder="Select Start Date" />
+                                </div>
+                            </form>
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    End Date :
+                                    <input type="date" ng-model="enddate" id="enddate" class="form-control" placeholder="Select End Date" />
+                                </div>
+                            </form>
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <input type="button" class="btn btn-info" value="Submit" ng-click="GetConfirmationlist()" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9 col-xs-9 col-xs-12">
+                    <div class="x_panel" style="height: 450px">
+                        <div class="x_title">
+                            <h2>Get Records</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <br />
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="table table-responsive">
+                                        <table class="table table-bordered table-striped">
+                                            <tr>
+                                                <td><b>Serial No.</b></td>
+                                                <td><b>Reference No.</b></td>
+                                                <td><b>Farmer's Name</b></td>
+                                            </tr>
+                                            <tr ng-repeat="i in Confirmationlist">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{i.refno}}</td>
+                                                <td>{{i.farmername}}</td>
+                                            </tr>
+                                            <tr style="color:red;text-align:center;font-size:20px" ng-if="Errorshow"><td colspan="3"><b>{{ErrorMSg}}</b></td></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = angular.module("DnoConfirmationApp", []);
+
+    app.controller("DNOCtrl", function ($scope, $http) {
+
+        var token = document.getElementsByName('__RequestVerificationToken')[0].value;
+
+        $scope.DBFYR = [];
+        var dbfinyr = function () {
+            $http.get('GetFYR').then(function success(respone) {
+                $scope.DBFYR = respone.data;
+            }, function error(response) {
+                alert(response.status);
+            })
+        };
+
+        dbfinyr();
+        $scope.Confirmationlist = [];
+        $scope.GetConfirmationlist = function () {
+            $scope.Confirmationlist = null;
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+            if (document.getElementById('startdate').value == '' || document.getElementById('startdate').value == null) {
+                alert("Please select Statrt date");
+                $scope.Confirmationlist = null;
+                document.getElementById('startdate').focus();
+                return;
+            }
+            if (document.getElementById('enddate').value == '' || document.getElementById('enddate').value == null) {
+                alert("Please select End date");
+                $scope.Confirmationlist = null;
+                document.getElementById('enddate').focus();
+                return;
+            }
+            if (Date.parse(document.getElementById('startdate').value) > Date.parse(document.getElementById('enddate').value)) {
+                alert("End date must be less than Start date");
+                $scope.Confirmationlist = null;
+                document.getElementById('startdate').value = '';
+                document.getElementById('enddate').value = '';
+                return;
+            }
+            if (document.getElementById('enddate').value > today) {
+                alert("End date must be less than Today's date");
+                $scope.Confirmationlist = null;
+                document.getElementById('enddate').value = '';
+                return;
+            }
+            $http.get('DnoConfirmationlist?startdate=' + $scope.startdate + '&enddate=' + $scope.enddate + '&fyr=' + $scope.ddlFyr.fyr).then(function success(response) {
+                var t = response.data;
+                if (t != null && t != "") {
+                    $scope.Errorshow = false;
+                    $scope.Confirmationlist = response.data;
+                }
+                else {
+                    $scope.Errorshow = true;
+                    $scope.ErrorMSg = "Record Not Found";
+                }
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+    });
+</script>

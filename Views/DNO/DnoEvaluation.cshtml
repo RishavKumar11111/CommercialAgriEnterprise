@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "DnoEvaluation";
+    Layout = "~/Views/Shared/_LayoutDNO.cshtml";
+}
+
+@using (Html.BeginForm("DnoEvaluation", "DNO", FormMethod.Post, new { id = "FormId" }))
+{
+    @Html.AntiForgeryToken()
+}
+
+<div ng-app="DnoEvaluationApp">
+    <div ng-controller="DnoEvaluationCtrl" ng-cloak>
+        <div class="right_col" role="main">
+            <div class="page-title">
+                <div class="title_left" style="width: 75%">
+                    <h3>Evaluation/Valuation of Fixed Capital Investment of Agro-Enterprise.</h3>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-3 col-xs-3 col-xs-12">
+                    <div class="x_panel" style="min-height: 450px">
+                        <div class="x_title">
+                            <h2>Select Date and Year</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <br />
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    Financial Year :
+                                    <select class="form-control" ng-model="ddlFyr" ng-options="i.fyr for i in DBFYR">
+                                        <option value="">-- Select Financial Year --</option>
+                                    </select>
+                                </div>
+                            </form>
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    Start Date :
+                                    <input type="date" ng-model="startdate" id="startdate" class="form-control" placeholder="Select Start Date" />
+                                </div>
+                            </form>
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    End Date :
+                                    <input type="date" ng-model="enddate" id="enddate" class="form-control" placeholder="Select End Date" />
+                                </div>
+                            </form>
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <input type="button" class="btn btn-info" value="Submit" ng-click="GetConfirmationlist()" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9 col-xs-9 col-xs-12">
+                    <div class="x_panel" style="height: 450px">
+                        <div class="x_title">
+                            <h2>Get Records</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <br />
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="table table-responsive">
+                                        <table class="table table-bordered table-striped">
+                                            <tr>
+                                                <td><b>Serial No.</b></td>
+                                                <td><b>Reference No.</b></td>
+                                                <td><b>Farmer's Name</b></td>
+                                            </tr>
+                                            <tr ng-repeat="i in Confirmationlist">
+                                                <td>{{$index+1}}</td>
+                                                <td>{{i.refno}}</td>
+                                                <td>{{i.farmername}}</td>
+                                            </tr>
+                                            <tr style="color:red;text-align:center;font-size:20px" ng-if="Errorshow"><td colspan="3"><b>{{ErrorMSg}}</b></td></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = angular.module("DnoEvaluationApp", []);
+
+    app.controller("DnoEvaluationCtrl", function ($scope, $http) {
+
+        var token = document.getElementsByName('__RequestVerificationToken')[0].value;
+
+    });
+</script>

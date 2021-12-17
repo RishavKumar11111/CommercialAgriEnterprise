@@ -1,0 +1,110 @@
+﻿@{
+    ViewBag.Title = "BLODetailsPayment";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using (Html.BeginForm("BLODetailsPayment", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+}
+<div class="right_col" role="main" ng-app="AdminApp" ng-controller="AdminCtrl" ng-cloak>
+    <div data-loading></div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>District-wise Payment Status & BLO Details</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content" style="color:black; white-space: nowrap">
+                    <br />
+                    <div ng-repeat="i in getRecords">
+                        <label class="control-label">{{$index + 1}}. {{i.DistrictName}}</label>
+                        <div class="table table-responsive text-center">
+                            <table class="table table-bordered table-striped table-hover">
+                                <tr style="background: #34495e; color: #ffffff">
+                                    <td>Serial No.</td>
+                                    <td>Reference No.</td>
+                                    <td>Farmer ID</td>
+                                    <td>Farmer's Name</td>
+                                    <td>Payment Status</td>
+                                    <td>Payment Date</td>
+                                    <td>BLO Status</td>
+                                    <td>Block Name</td>
+                                    <td>BLO Name</td>
+                                    <td>BLO Mobile Number</td>
+                                    <td>DNO Status</td>
+                                    <td>DNO Name</td>
+                                    <td>DNO Mobile Number</td>
+                                </tr>
+                                <tr ng-repeat="j in i.GetBeneficiaryBLO">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{j.ReferenceNo}}</td>
+                                    <td>{{j.FarmerID}}</td>
+                                    <td>{{j.FarmerName}}</td>
+                                    <td>
+                                        {{j.PaymentStatus}}
+                                        <span class="glyphicon glyphicon-ok" style="color: green" ng-if="j.PaymentStatus == 'Success'"></span>
+                                        <span class="glyphicon glyphicon-refresh" style="color: orange" ng-if="j.PaymentStatus == 'Pending'"></span>
+                                    </td>
+                                    <td>{{j.PaymentDate}}</td>
+                                    <td>
+                                        {{j.BLOStatus}}
+                                        <span class="glyphicon glyphicon-ok" style="color: green" ng-if="j.BLOStatus == 'Feasible'"></span>
+                                        <span class="glyphicon glyphicon-remove" style="color: red" ng-if="j.BLOStatus == 'Not Feasible'"></span>
+                                        <span class="glyphicon glyphicon-refresh" style="color: orange" ng-if="j.BLOStatus == 'Pending'"></span>
+                                    </td>
+                                    <td>{{j.BlockName}}</td>
+                                    <td>{{j.BLODetails.BLOName == null ? 'NA' : j.BLODetails.BLOName}}</td>
+                                    <td>{{j.BLODetails.BLOMobNo == null ? 'NA' : j.BLODetails.BLOMobNo}}</td>
+                                    <td>
+                                        {{j.DNOStatus}}
+                                        <span class="glyphicon glyphicon-ok" style="color: green" ng-if="j.DNOStatus == 'Recommended'"></span>
+                                        <span class="glyphicon glyphicon-remove" style="color: red" ng-if="j.DNOStatus == 'Not Recommended'"></span>
+                                        <span class="glyphicon glyphicon-refresh" style="color: orange" ng-if="j.DNOStatus == 'Pending'"></span>
+                                    </td>
+                                    <td>{{j.DNODetails.DNOName == null ? 'NA' : j.DNODetails.DNOName}}</td>
+                                    <td>{{j.DNODetails.DNOMobNo == null ? 'NA' : j.DNODetails.DNOMobNo}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = angular.module("AdminApp", []);
+
+    app.controller("AdminCtrl", function ($scope, $http, $timeout) {
+
+        var token = document.getElementsByName('__RequestVerificationToken')[0].value;
+
+        $http.get('GetBLODetailsPayment').then(function success(response) {
+            $scope.getRecords = response.data;
+        }, function error(response) {
+            alert(response.status);
+        });
+    });
+
+    app.directive('loading', ['$http', function ($http) {
+        return {
+            restrict: 'A',
+            template: '<div class="loading">Loading&#8230;</div>',
+            link: function (scope, elm, attrs) {
+                scope.isLoading = function () {
+                    return $http.pendingRequests.length > 0;
+                };
+                scope.$watch(scope.isLoading, function (v) {
+                    if (v) {
+                        elm.css('display', 'block');
+                    } else {
+                        elm.css('display', 'none');
+                    }
+                });
+            }
+        };
+    }]);
+</script>

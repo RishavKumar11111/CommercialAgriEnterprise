@@ -1,0 +1,374 @@
+﻿@{
+    ViewBag.Title = "LockUser";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using (Html.BeginForm("LockUser", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+}
+<link href="~/Content/angularmaterialmin.css" rel="stylesheet" />
+<script src="~/Content/animatemin.js"></script>
+<script src="~/Content/areamin.js"></script>
+<script src="~/Content/messagemin.js"></script>
+<script src="~/Content/materialmin.js"></script>
+<script src="~/Scripts/ui-bootstrap-tpls-2.5.0.min.js"></script>
+<script src="~/Scripts/angular-ui-bootstrap-modal.js"></script>
+<div class="right_col" role="main" ng-app="AdminApp" ng-controller="AdminCtrl" ng-cloak>
+    <div data-loading></div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Lock Users</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" style="color:cornflowerblue">LIST OF LOCKED BLO</a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in">
+                            <div class="panel-body checkbox-primary">
+                                <table class="table table-bordered table-striped">
+                                    <tr>
+                                        <td>Serial No.</td>
+                                        <td>User ID</td>
+                                        <td>User Name</td>
+                                        <td>Email ID</td>
+                                        <td>
+                                            <input type="checkbox" ng-model="cbSelectAll" ng-click="checkAll()">Select All
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="i in blolist">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{i.UserName}}</td>
+                                        <td>{{i.BloUsernm}}</td>
+                                        <td>{{i.EmailID}}</td>
+                                        <td>
+                                            <input type="checkbox" ng-click="selected()" ng-model="i.selected" id="chklAll" />
+                                        </td>
+                                    </tr>
+                                    <tr style="color:red;text-align:center;font-size:20px" ng-show="Errorshow"><td colspan="5"><b>{{ErrorMSg}}</b></td></tr>
+                                </table>
+                            </div>
+                            <div class="text-center"><input type="button" value="Unlock" class="btn btn-info" ng-show="BLOunlockBtn" ng-click="UnlockBlolist()" /></div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" style="color:cornflowerblue">LIST OF LOCKED DNO</a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <table class="table table-bordered table-striped">
+                                    <tr>
+                                        <td>Serial No.</td>
+                                        <td>User ID</td>
+                                        <td>User Name</td>
+                                        <td>Email ID</td>
+                                        <td><input type="checkbox" ng-model="chkDnoAll" ng-click="dnoSelectALl()">Select All</td>
+                                    </tr>
+                                    <tr ng-repeat="i in dnolist">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{i.UserName}}</td>
+                                        <td>{{i.DnoUsernm}}</td>
+                                        <td>{{i.EmailID}}</td>
+                                        <td><input type="checkbox" ng-model="i.selected" id="chkDnoAll" ng-click="dnoselected()"></td>
+                                    </tr>
+                                    <tr style="color:red;text-align:center;font-size:20px" ng-show="Errorshow1"><td colspan="5"><b>{{ErrorMSg1}}</b></td></tr>
+                                </table>
+                            </div>
+                            <div class="text-center"><input type="button" value="Unlock" class="btn btn-info" ng-show="DNOunlockBtn" ng-click="UnlockDnolist()" /></div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" style="color:cornflowerblue">LIST OF LOCKED COLLECTOR</a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <table class="table table-bordered table-striped">
+                                    <tr>
+                                        <td>Serial No.</td>
+                                        <td>User Name</td>
+                                        <td><input type="checkbox" ng-model="chklCollectorAll" ng-click="collectorSelectALl()">Select All</td>
+                                    </tr>
+                                    <tr ng-repeat="i in collectorlist">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{i.Username}}</td>
+                                        <td><input type="checkbox" ng-model="i.selected" id="chkCollectorAll" ng-click="Collectorselected()"></td>
+                                    </tr>
+                                    <tr style="color:red;text-align:center;font-size:20px" ng-show="Errorshow2"><td colspan="4"><b>{{ErrorMSg2}}</b></td></tr>
+                                </table>
+                            </div>
+                            <div class="text-center"><input type="button" value="Unlock" class="btn btn-info" ng-show="CollectorunlockBtn" ng-click="UnlockCollectorlist()" /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = angular.module("AdminApp", ['ui.bootstrap.modal', 'ngMaterial']);
+
+    app.controller("AdminCtrl", function ($scope, $http, $mdDialog) {
+
+        var token = document.getElementsByName('__RequestVerificationToken')[0].value;
+
+        $scope.selectedBlock = [];
+        $scope.checkAll = function () {
+            if ($scope.cbSelectAll) {
+                $scope.cbSelectAll = true;
+                angular.forEach($scope.blolist, function (j) {
+                    j.selected = $scope.cbSelectAll;
+                    var k = { usernm: j.UserName };
+                    $scope.selectedBlock.push(k);
+                });
+            }
+            else {
+                $scope.cbSelectAll = false;
+                angular.forEach($scope.blolist, function (j) {
+                    j.selected = $scope.cbSelectAll;
+                });
+                $scope.selectedBlock = [];
+            }
+        };
+
+        var showAlert = function (ev) {
+            $mdDialog.show(
+                $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title('Alert')
+                    .textContent(ev)
+                    .ariaLabel('Alert Dialog Demo')
+                    .ok('OK')
+                    .targetEvent(ev)
+            );
+        };
+
+        $scope.selectedDno = [];
+        $scope.dnoSelectALl = function () {
+            if ($scope.chkDnoAll) {
+                $scope.chkDnoAll = true;
+                angular.forEach($scope.dnolist, function (j) {
+                    j.selected = $scope.chkDnoAll;
+                    var k = { usernm: j.UserName };
+                    $scope.selectedDno.push(k);
+                });
+            }
+            else {
+                $scope.chkDnoAll = false;
+                angular.forEach($scope.dnolist, function (j) {
+                    j.selected = $scope.chkDnoAll;
+                });
+                $scope.selectedDno = [];
+            }
+        };
+
+        $scope.selected = function () {
+            angular.forEach($scope.blolist, function (i) {
+                if (i.selected) {
+                    var k = { usernm: i.UserName };
+                    $scope.selectedBlock.push(k);
+                }
+            });
+        };
+
+        $scope.dnoselected = function () {
+            angular.forEach($scope.dnolist, function (i) {
+                if (i.selected) {
+                    var k = { usernm: i.UserName };
+                    $scope.selectedDno.push(k);
+                }
+            });
+        };
+
+        $scope.blolist = [];
+        var blolockuser = function () {
+            $http.get('GetBLOLockUser').then(function success(response) {
+                if (response.data.length > 0) {
+                    $scope.Errorshow = false;
+                    $scope.blolist = response.data;
+                    $scope.BLOunlockBtn = true;
+                }
+                else {
+                    $scope.Errorshow = true;
+                    $scope.ErrorMSg = "No record found.";
+                    $scope.BLOunlockBtn = false;
+                    $scope.blolist = response.data;
+                }
+
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+
+        $scope.UnlockBlolist = function () {
+            var chkd = document.getElementById("chklAll").checked;
+            if (chkd == true) {
+                var req = {
+                    method: 'POST',
+                    url: 'ChkBlouseridforUnlock',
+                    headers: {
+                        '__RequestVerificationToken': token
+                    },
+                    data: { userlst: $scope.selectedBlock }
+                };
+                $http(req).then(function success(response) {
+                    alert('User ID unlocked successfully.');
+                    blolockuser();
+                }, function error(response) {
+                    alert(response.status);
+                });
+            }
+            else {
+                showAlert("Select atleast one record to unlock !!!");
+            }
+        };
+
+        $scope.dnolist = [];
+        var dnolockuser = function () {
+            $http.get('GetDNOLockUser').then(function success(response) {
+                if (response.data.length > 0) {
+                    $scope.Errorshow1 = false;
+                    $scope.dnolist = response.data;
+                    $scope.DNOunlockBtn = true;
+                }
+                else {
+                    $scope.DNOunlockBtn = false;
+                    $scope.Errorshow1 = true;
+                    $scope.dnolist = response.data;
+                    $scope.ErrorMSg1 = "No record found.";
+                }
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+
+        $scope.UnlockDnolist = function () {
+            var chkd = document.getElementById("chkDnoAll").checked;
+            if (chkd == true) {
+                var req = {
+                    method: 'POST',
+                    url: 'ChkDnouseridforUnlock',
+                    headers: {
+                        '__RequestVerificationToken': token
+                    },
+                    data: { userlst: $scope.selectedDno }
+                };
+                $http(req).then(function success(response) {
+                    alert('User ID unlocked successfully.');
+                    dnolockuser();
+                }, function error(response) {
+                    alert(response.status);
+                });
+            }
+            else {
+                showAlert("Select atleast one record to unlock !!!");
+            }
+        };
+
+        $scope.collectorlist = [];
+        var collectorlockuser = function () {
+            $http.get('GetCollectorLockUser').then(function success(response) {
+                if (response.data.length > 0) {
+                    $scope.Errorshow2 = false;
+                    $scope.collectorlist = response.data;
+                    $scope.CollectorunlockBtn = true;
+                }
+                else {
+                    $scope.collectorlist = response.data;
+                    $scope.Errorshow2 = true;
+                    $scope.ErrorMSg2 = "No record found.";
+                    $scope.CollectorunlockBtn = false;
+                }
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+
+        blolockuser();
+        dnolockuser();
+        collectorlockuser();
+
+        $scope.selectedCollector = [];
+        $scope.collectorSelectALl = function () {
+            if ($scope.chklCollectorAll) {
+                $scope.chklCollectorAll = true;
+                angular.forEach($scope.collectorlist, function (j) {
+                    j.selected = $scope.chklCollectorAll;
+                    var k = { usernm: j.Username };
+                    $scope.selectedCollector.push(k);
+                });
+            }
+            else {
+                $scope.chklCollectorAll = false;
+                angular.forEach($scope.collectorlist, function (j) {
+                    j.selected = $scope.chklCollectorAll;
+                });
+                $scope.selectedCollector = [];
+            }
+        };
+
+        $scope.Collectorselected = function () {
+            angular.forEach($scope.collectorlist, function (i) {
+                if (i.selected) {
+                    var k = { usernm: i.Username };
+                    $scope.selectedCollector.push(k);
+                }
+            });
+        };
+
+        $scope.UnlockCollectorlist = function () {
+            var chkd = document.getElementById("chkCollectorAll").checked;
+            if (chkd == true) {
+                var req = {
+                    method: 'POST',
+                    url: 'ChkCollectoruseridforUnlock',
+                    headers: {
+                        '__RequestVerificationToken': token
+                    },
+                    data: { userlst: $scope.selectedCollector }
+                };
+                $http(req).then(function success(response) {
+                    alert('User ID unlocked successfully.');
+                    collectorlockuser();
+                }, function error(response) {
+                    alert(response.status);
+                });
+            }
+            else {
+                showAlert("Select atleast one record to unlock !!!");
+            }
+        };
+    });
+
+    app.directive('loading', ['$http', function ($http) {
+        return {
+            restrict: 'A',
+            template: '<div class="loading">Loading&#8230;</div>',
+            link: function (scope, elm, attrs) {
+                scope.isLoading = function () {
+                    return $http.pendingRequests.length > 0;
+                };
+                scope.$watch(scope.isLoading, function (v) {
+                    if (v) {
+                        elm.css('display', 'block');
+                    } else {
+                        elm.css('display', 'none');
+                    }
+                });
+            }
+        };
+    }]);
+</script>

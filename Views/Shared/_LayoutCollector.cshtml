@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en" style="min-height: 100%" oncontextmenu="return false;" onload="noback();" onpageshow="if (event.persisted) noback();" unload="">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mukhyamantri Krushi Udyoga Yojana</title>
+    <link href="~/Content/CommercialAgriEnterpriseTheme/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/CommercialAgriEnterpriseTheme/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/CommercialAgriEnterpriseTheme/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="~/Content/CommercialAgriEnterpriseTheme/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <link href="~/Content/CommercialAgriEnterpriseTheme/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+    <link href="~/Content/CommercialAgriEnterpriseTheme/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+    <link href="~/Content/CommercialAgriEnterpriseTheme/vendors/starrr/dist/starrr.css" rel="stylesheet">
+    <link href="~/Content/CommercialAgriEnterpriseTheme/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="~/Content/CommercialAgriEnterpriseTheme/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <link href="~/Content/CommercialAgriEnterpriseTheme/build/css/custom.min.css" rel="stylesheet">
+    <link href="~/DPRDesign/Loader.css" rel="stylesheet" />
+    <style>
+        #ackTable td {
+            border: 1px solid black;
+            padding: 3px;
+            text-align: center;
+        }
+    </style>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="~/Scripts/angular-ui-bootstrap-modal.js"></script>
+    <script type="text/javascript">window.onload = window.history.forward(0); function noback() { window.history.forward(); };</script>
+</head>
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "pull-right" }))
+            {
+                @Html.AntiForgeryToken()
+            }
+            <div class="col-md-3 left_col menu_fixed">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0">
+                        <a href="#" class="site_title"><i class="fa fa-bank"></i> <span>MKUY</span></a>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="profile clearfix">
+                        <div class="profile_info">
+                            <span>Welcome</span>
+                            <h2>Collector @ViewBag.DistrictName</h2>
+                        </div>
+                    </div>
+                    <br />
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <ul class="nav side-menu">
+                                <li><a href="@Url.Action("Home", "Collector")">Home</a></li>
+                                <li><a href="@Url.Action("Dashboard", "Collector")">Dashboard</a></li>
+                                <li><a href="@Url.Action("Records", "Collector")">Edit or View the Date of Time of Meeting for Records</a></li>
+                                <li><a href="@Url.Action("ChangePassword", "Collector")">Change Password</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    Mukhyamantri Krushi Udyoga Yojana
+                                    <span class=" fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out pull-right"></i>Log Out</a></li>
+                                </ul>
+                            </li>
+                            <li role="presentation" class="dropdown" title="Pending Reference No for the feasibility report.">
+                                <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="true">
+                                    <i class="fa fa-envelope-o"></i>
+                                    <span class="badge bg-green">@ViewBag.notification</span>
+                                </a>
+                                <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                                    @foreach (var i in ViewBag.pendingrecord)
+                                    {
+                                        <li style="text-align: center">
+                                            <a>
+                                                <span class="message">
+                                                    <span>Reference No. : </span>
+                                                    <span>@i</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            @RenderBody()
+            <footer>
+                <div class="pull-right">
+                    Designed and developed by <a href="https://www.nic.in/state/Odisha">National Informatics Centre, Odisha</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+        </div>
+    </div>
+    <script src="~/Content/CommercialAgriEnterpriseTheme/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/CommercialAgriEnterpriseTheme/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/CommercialAgriEnterpriseTheme/vendors/fastclick/lib/fastclick.js"></script>
+    <script src="~/Content/CommercialAgriEnterpriseTheme/vendors/nprogress/nprogress.js"></script>
+    <script src="~/Content/CommercialAgriEnterpriseTheme/vendors/validator/validator.js"></script>
+    <script src="~/Content/CommercialAgriEnterpriseTheme/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <script src="~/Content/CommercialAgriEnterpriseTheme/vendors/iCheck/icheck.min.js"></script>
+    <script src="~/Content/CommercialAgriEnterpriseTheme/vendors/moment/min/moment.min.js"></script>
+    <script src="~/Content/CommercialAgriEnterpriseTheme/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="~/Content/CommercialAgriEnterpriseTheme/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="~/Content/CommercialAgriEnterpriseTheme/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+    <script src="~/Content/CommercialAgriEnterpriseTheme/vendors/google-code-prettify/src/prettify.js"></script>
+    <script src="~/Content/CommercialAgriEnterpriseTheme/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+    <script src="~/Content/CommercialAgriEnterpriseTheme/vendors/switchery/dist/switchery.min.js"></script>
+    <script src="~/Content/CommercialAgriEnterpriseTheme/vendors/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/Content/CommercialAgriEnterpriseTheme/vendors/autosize/dist/autosize.min.js"></script>
+    <script src="~/Content/CommercialAgriEnterpriseTheme/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+    <script src="~/Content/CommercialAgriEnterpriseTheme/vendors/starrr/dist/starrr.js"></script>
+    <script src="~/Content/CommercialAgriEnterpriseTheme/build/js/custom.min.js"></script>
+    <script src="~/Scripts/angular-ui-bootstrap-modal.js"></script>
+</body>
+</html>

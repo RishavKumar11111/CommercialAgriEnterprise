@@ -1,0 +1,147 @@
+﻿@{
+    ViewBag.Title = "BLODetailsReport";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using (Html.BeginForm("DepartmentWiseReport", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+}
+<div class="right_col" role="main" ng-app="AdminApp" ng-controller="AdminCtrl" ng-cloak>
+    <div data-loading></div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Block Details Entry</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <select ng-model="ddlDistrict" ng-options="i.DistrictCode as i.DistrictName for i in GetDistAll" ng-change="ChangeDistrict()" class="form-control">
+                            <option value="" style="text-align: center">--Select District--</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                </div>
+                <div class="x_content" style="color:black">
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12 col-sm-12">
+                            <label class="control-label">{{DName}}</label>
+                        </div>
+                    </div>
+                    <div ng-repeat="i in GetAll" ng-show="ShowRpt">
+                        <div class="row">
+                            <div class="col-md-1 col-sm-1 col-xs-12"></div>
+                            <div class="col-md-10 col-sm-10 col-xs-12">
+                                <b style="text-align:left"> <lable class="control-label">{{$index + 1}}. {{i.DepartmentName}}</lable></b>
+                                <div class="table table-responsive text-center">
+                                    <table class="table table-bordered table-striped table-hover" style="white-space: nowrap">
+                                        <tr style="background: #34495e; color: #ffffff">
+                                            <td>Serial No.</td>
+                                            <td>Block Name</td>
+                                            <td>BLO name</td>
+                                            <td>Mobile Number</td>
+                                        </tr>
+                                        <tr ng-repeat="j in i.getAllBlockList">
+                                            <td>{{$index+1}}</td>
+                                            <td>{{j.BlockName}}</td>
+                                            <td>{{j.BloName}}</td>
+                                            <td>{{j.MobileNumber}}</td>
+                                        </tr>
+                                        <tr ng-show="i.getAllBlockList.length == 0">
+                                            <td class="text-danger" colspan="4">
+                                                <b>No record found.</b>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-sm-1 col-xs-12"></div>
+                        </div>
+                    </div>
+                    <div ng-show="NoRpt">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h1 class="text-danger" style="text-align: center">No Record Found.</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = angular.module("AdminApp", []);
+
+    app.controller("AdminCtrl", function ($scope, $http) {
+
+        var token = document.getElementsByName('__RequestVerificationToken')[0].value;
+
+        $scope.ddlDistrict;
+        $scope.GetDistAll = [];
+        $scope.ShowRpt = false;
+        $scope.NoRpt = false;
+        var BindAllDist = function () {
+            $http.get('District').then(function success(response) {
+                $scope.DName = null;
+                $scope.GetDistAll = response.data;
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+        BindAllDist();
+
+        $scope.DName = null;
+        $scope.GetAll = [];
+        var GetAllRecord = function () {
+            $http.get('GetBlockDetailEntry?DistCode=' + $scope.ddlDistrict).then(function success(response) {
+                if (response.data.length > 0) {
+                    $scope.ShowRpt = true;
+                    $scope.NoRpt = false;
+                    $scope.GetAll = response.data;
+                    $scope.DName = $scope.GetAll[0].DistName;
+                }
+                else {
+                    $scope.ShowRpt = false;
+                    $scope.NoRpt = true;
+                }
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+
+        $scope.ChangeDistrict = function (a) {
+            if ($scope.ddlDistrict != null) {
+                $scope.DName = null;
+                GetAllRecord();
+            }
+            else {
+                alert("Please select District.");
+                $scope.ShowRpt = false;
+                $scope.NoRpt = false;
+                $scope.DName = null;
+            }
+        };
+    });
+
+    app.directive('loading', ['$http', function ($http) {
+        return {
+            restrict: 'A',
+            template: '<div class="loading">Loading&#8230;</div>',
+            link: function (scope, elm, attrs) {
+                scope.isLoading = function () {
+                    return $http.pendingRequests.length > 0;
+                };
+                scope.$watch(scope.isLoading, function (v) {
+                    if (v) {
+                        elm.css('display', 'block');
+                    } else {
+                        elm.css('display', 'none');
+                    }
+                });
+            }
+        };
+    }]);
+</script>

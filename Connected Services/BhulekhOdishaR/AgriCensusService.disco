@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://bhulekh.ori.nic.in/AgriCensusService.asmx?wsdl" docRef="http://bhulekh.ori.nic.in/AgriCensusService.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://bhulekh.ori.nic.in/AgriCensusService.asmx" xmlns:q1="http://tempuri.org/" binding="q1:AgriCensusServiceSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://bhulekh.ori.nic.in/AgriCensusService.asmx" xmlns:q2="http://tempuri.org/" binding="q2:AgriCensusServiceSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

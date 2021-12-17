@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b79ca358004a428d8ba0270c9542ca65" Name="Diagram1" ZoomLevel="80">
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.ActivityLog" Width="1.5" PointX="5.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.BankLoanStatu" Width="1.5" PointX="5" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.BankMapping" Width="1.5" PointX="5.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.BeneficiaryCompletion" Width="1.5" PointX="7.25" PointY="107.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.BeneficiaryDocument" Width="1.5" PointX="5" PointY="26.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.BeneFiciaryLandRecordDetail" Width="1.5" PointX="8" PointY="73.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.BeneficiaryMemberDetail" Width="1.5" PointX="5" PointY="70.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.BeneficiaryProjectDetail" Width="1.5" PointX="11" PointY="73.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.BLOBlockLog" Width="1.5" PointX="11" PointY="40.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.BLOBlockMapping" Width="1.5" PointX="8" PointY="40.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.BLODetailEntry" Width="1.5" PointX="11" PointY="35.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.BLORecord" Width="1.5" PointX="5" PointY="28.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.CapitalInvestment" Width="1.5" PointX="5" PointY="32.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.CapitalInvestmentAnimalPlant" Width="1.5" PointX="5" PointY="35.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.CapitalInvestmentCivilConstruction" Width="1.5" PointX="5" PointY="38.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.CapitalInvestmentElectrification" Width="1.5" PointX="5" PointY="42.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.CapitalInvestmentLand" Width="1.5" PointX="5" PointY="45.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.CapitalInvestmentMiscellaneou" Width="1.5" PointX="5" PointY="47.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.CapitalInvestmentPlantMachinery" Width="1.5" PointX="5" PointY="51" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.CapitalInvestmentWaterSupply" Width="1.5" PointX="5" PointY="53.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.CashFlowStatement" Width="1.5" PointX="5" PointY="82.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.CheckPasswordStatu" Width="1.5" PointX="7.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.CollectorDistrictMapping" Width="1.5" PointX="5.75" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.Department" Width="1.5" PointX="5.75" PointY="65.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.DNODetailEntry" Width="1.5" PointX="8" PointY="36.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.DNODistrictMapping" Width="1.5" PointX="8" PointY="45" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.DPRLog" Width="1.5" PointX="5" PointY="97.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.DPRStatu" Width="1.5" PointX="5" PointY="100.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.EasyPayErrorCode" Width="1.5" PointX="2.75" PointY="66.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.EducationalQualification" Width="1.5" PointX="0.5" PointY="75.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.FeasibilityReport" Width="1.5" PointX="5" PointY="102.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.GoAhead" Width="1.5" PointX="5" PointY="108.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.GroupType" Width="1.5" PointX="0.5" PointY="72.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.KeyBusinessMatrix" Width="1.5" PointX="5" PointY="112.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.LGDBlock" Width="1.5" PointX="5.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.LGDDistrict" Width="1.5" PointX="3.5" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.LGDGP" Width="1.5" PointX="5.75" PointY="59" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.LGDVillage" Width="1.5" PointX="8" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.MeansOfFinance" Width="1.5" PointX="5" PointY="115.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.MobileReg" Width="1.5" PointX="7.5" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.Payment" Width="1.5" PointX="5" PointY="73.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.ProfitabilityProjection" Width="1.5" PointX="5" PointY="119.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.ProjectType" Width="1.5" PointX="8.75" PointY="80.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.rDistrict" Width="1.5" PointX="0.5" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.RecurringExpenditure" Width="1.5" PointX="5" PointY="122.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.RegistrationLog" Width="1.5" PointX="5" PointY="125.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.Relationship" Width="1.5" PointX="5.75" PointY="62.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.riCircle" Width="1.5" PointX="2.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.rTehsil" Width="1.5" PointX="2.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.rVillage" Width="1.5" PointX="2.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.Target" Width="1.5" PointX="11" PointY="48.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.TargetLog" Width="1.5" PointX="14" PointY="48" IsExpanded="true" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.View_UserDetails" Width="1.5" PointX="7.5" PointY="7.5" IsExpanded="true" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BeneficiaryCompletion_GoAhead" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BeneFiciaryLandRecordDetails_LGDBlock" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BeneFiciaryLandRecordDetails_LGDDistrict" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BeneFiciaryLandRecordDetails_LGDGP" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BeneFiciaryLandRecordDetails_Relationship" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BeneficiaryMemberDetail_EducationalQualification" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BeneficiaryProjectDetail_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BeneficiaryProjectDetail_ProjectType" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BeneficiaryProjectDetail_ProjectType1" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BLOBlockLog_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BLOBlockLog_LGDBlock" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BloBlockMapping_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BloBlockMapping_LGDBlock" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_AdminOfficerDetailEntry_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_AdminOfficerDetailEntry_LGDBlock" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_AdminOfficerDetailEntry_LGDDistrict" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_CollectorDistrictMapping_LGDDistrict" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_AdminDNODetailEntry_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_DNODistrictMapping_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_ProjectType_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_AdminDNODetailEntry_LGDDistrict" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_DNODistrictMapping_LGDDistrict" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_Payment_EasyPayErrorCode" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_LGDBlock_LGDDistrict" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_LGDGP_LGDBlock" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_LGDVillage_LGDBlock" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_LGDGP_LGDDistrict" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_LGDVillage_LGDVillage" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_Target_LGDDistrict" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_TargetLog_LGDDistrict" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_Target_ProjectType" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_TargetLog_ProjectType" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_riCircle_rDistrict" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_rTehsil_rDistrict" ManuallyRouted="false" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_rVillage_rDistrict" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.DNORecord" Width="1.5" PointX="5" PointY="20.25" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.BLODPRLog" Width="1.5" PointX="5" PointY="140.125" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.IntegratedProjectLog" Width="1.5" PointX="8" PointY="69.75" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_IntegratedProjectLog_Department" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_IntegratedProjectLog_Department1" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.IntegratedProjectDetail" Width="1.5" PointX="5" PointY="132.375" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.BLOFeasibilityLog" Width="1.5" PointX="5" PointY="135.5" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.DNOBackToBLOLog" Width="1.5" PointX="5" PointY="154.625" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.BLORegdLog" Width="1.5" PointX="5" PointY="90.125" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.CollectorRecord" Width="1.5" PointX="5" PointY="159.25" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.DDARecord" Width="1.5" PointX="5" PointY="85.75" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.DDABackToBLOLog" Width="1.5" PointX="5" PointY="7.75" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.DNODetailLog" Width="1.5" PointX="14" PointY="40.25" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_DNODetailLog_Department" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_DNODetailLog_LGDDistrict" />
+        <EntityTypeShape EntityType="CommercialAgriEnterpriseModel.BeneficiaryDetail" Width="1.5" PointX="2.75" PointY="69.625" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BankLoanStatus_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BeneficiaryDetail_EducationalQualification" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BeneficiaryDetail_GroupType" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BeneficiaryDocument_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BeneFiciaryLandRecordDetails_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BeneficiaryMemberDetail_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BeneficiaryProjectDetail_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BLODPRLog_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BLOFeasibilityLog_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BLORecord_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_BLORegdLog_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_CapitalInvestment_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_CapitalInvestmentAnimalPlant_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_CapitalInvestmentCivilConstruction_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_CapitalInvestmentElectrification_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_CapitalInvestmentLand_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_CapitalInvestmentMiscellaneous_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_CapitalInvestmentPlantMachinery_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_CapitalInvestmentWaterSupply_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_CashFlowStatement_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_CollectorRecord_BeneficiaryDetail1" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_DDABackToBLOLog_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_DDAStatus_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_DNOBackToBLOLog_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_DNORecord_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_DPRLog_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_DPRStatus_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_Expenditure_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_FeasibilityReport_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_GoAhead_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_IntegratedProjectDetail_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_IntegratedProjectLog_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_KeyBusinessMatrix_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_MeansOfFinance_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_Payment_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_ProfitabilityProjection_BeneficiaryDetail" />
+        <AssociationConnector Association="CommercialAgriEnterpriseModel.FK_RegistrationLog_BeneficiaryDetail" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

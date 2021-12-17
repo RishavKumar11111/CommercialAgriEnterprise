@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "BlockwiseBLORegistration";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using (Html.BeginForm("BlockwiseBLORegistration", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+}
+<div class="right_col" role="main" ng-app="AdminApp" ng-controller="AdminCtrl" ng-cloak>
+    <div data-loading></div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2 style="color: black">District-wise, Block-wise, Department-wise BLO Registration Report</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content" style="color:black">
+                    <div class="row">
+                        <div class="col-md-1 col-sm-1 col-xs-12"></div>
+                        <div class="col-md-10 col-sm-10 col-xs-12">
+                            <div class="table table-responsive text-center">
+                                <table class="table table-bordered table-striped table-hover" style="white-space: nowrap">
+                                    <tr style="background: #34495e; color: #ffffff">
+                                        <td>Serial No.</td>
+                                        <td>District</td>
+                                        <td>Total BLO Registered</td>
+                                    </tr>
+                                    <tr ng-repeat="i in totalBLORegdCount">
+                                        <td>{{$index + 1}}</td>
+                                        <td><b>{{i.DistrictName}}</b></td>
+                                        <td>
+                                            <b style="float:left">Total Blocks: {{i.TotalBlock}} </b><br />
+                                            <b style="float:left">Agriculture: {{i.Agriculture}}</b><br />
+                                            <b style="float:left">Horticulture: {{i.Horticulture}}</b><br />
+                                            <b style="float:left">Fishery: {{i.Fishery}}</b><br />
+                                            <b style="float:left">Animal Resource Development: {{i.ARD}}</b>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-sm-1 col-xs-12"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var app = angular.module("AdminApp", []);
+
+    app.controller("AdminCtrl", function ($scope, $http) {
+
+        var token = document.getElementsByName('__RequestVerificationToken')[0].value;
+
+        $scope.totalBLORegdCount = [];
+        var getAllRecord = function () {
+            $http.get('BlockwiseBLORegdCount').then(function success(response) {
+                $scope.totalBLORegdCount = response.data;
+            }, function error(response) {
+                alert(response.status);
+            });
+        };
+        getAllRecord();
+    });
+
+    app.directive('loading', ['$http', function ($http) {
+        return {
+            restrict: 'A',
+            template: '<div class="loading">Loading&#8230;</div>',
+            link: function (scope, elm, attrs) {
+                scope.isLoading = function () {
+                    return $http.pendingRequests.length > 0;
+                };
+                scope.$watch(scope.isLoading, function (v) {
+                    if (v) {
+                        elm.css('display', 'block');
+                    } else {
+                        elm.css('display', 'none');
+                    }
+                });
+            }
+        };
+    }]);
+</script>

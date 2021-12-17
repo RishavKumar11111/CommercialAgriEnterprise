@@ -1,0 +1,505 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Mukhyamantri Krushi Udyoga Yojana</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="motive">
+    <link rel="stylesheet" href="~/IndexDesign/css/style.css" />
+    <link rel="stylesheet" href="~/IndexDesign/css/custom.css" />
+    <link rel="stylesheet" href="~/IndexDesign/css/responsive.css" />
+    <style>
+        .dropbtn {
+            background-color: white;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            color: black;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #95b61d;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown:hover .dropbtn {
+            background-color: #95b61d !important;
+        }
+        .nav > li > a:before {
+            content: ' ';
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            display: none;
+            vertical-align: middle;
+            position: relative;
+            bottom: 2px;
+            right: 20px;
+        }
+        .nav > li > a:hover, .btn:hover {
+            background-color: #95b61d !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="preloaderbox"></div>
+    <header class="clearfix">
+        <section id="header_area" class="clearfix">
+            <div class="header1" style="margin: 10px 0">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 logoPanel"><img src="~/IndexDesign/img/logo1.jpg" alt="" class="img-responsive" /></div>
+                        <div class="col-sm-6 pull-right"><img src="~/IndexDesign/img/logo2.jpg" alt="" class="img-responsive pull-right" /></div>
+                    </div>
+                </div>
+            </div>
+            <nav class="navbar navbar-default" style="background-color: white; margin-bottom: 0">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="myNavbar">
+                        <ul class="nav navbar-nav">
+                            <li><a style="color: black; padding: 10px 10px" href="@Url.Action("Index", "Home")"><i class="fa fa-home"></i></a></li>
+                            <li><a style="color: black; padding: 10px 10px" href="@Url.Action("Prerequisites", "Prerequisites")">Prerequisites</a></li>
+                            <li class="dropdown">
+                                <button class="dropbtn" style="color: black; padding: 11px 10px; font-family: 'Lato'">Beneficiary Master</button>
+                                <div class="dropdown-content">
+                                    <a style="color: black; padding: 10px 10px" href="@Url.Action("Prerequisites", "Prerequisites")">Registration</a>
+                                    <a style="color: black; padding: 10px 10px" href="@Url.Action("Prerequisites", "Prerequisites")">DPR</a>
+                                    <a style="color: black; padding: 10px 10px" href="@Url.Action("Prerequisites", "Prerequisites")">Payment</a>
+                                    <a style="color: black; padding: 10px 10px" href="@Url.Action("CheckBeneficiaryStatus", "GoAhead")">Beneficiary Status</a>
+                                    <a style="color: black; padding: 10px 10px" href="@Url.Action("GenGoAhead", "GoAhead")">Generate Go-Ahead</a>
+                                    <a style="color: black; padding: 10px 10px" href="@Url.Action("BCompletion", "BeneficiaryCompletion")">Beneficiary Completion</a>
+                                </div>
+                            </li>
+                            <li><a style="color: black; padding: 10px 10px" href="@Url.Action("ProcessFlow", "Home")">Process Flow</a></li>
+                            <li><a style="color: black; padding: 10px 10px" href="@Url.Action("Manual", "Home")">User Manuals & Videos</a></li>
+                            <li><a style="color: black; padding: 10px 10px" href="~/Content/54th SLC.pdf" target="_blank">54th SLC Report</a></li>
+                            <li><a style="color: black; padding: 10px 10px" href="~/Content/ADVERTISEMENT, TERM OF REFERENCE & APPLICATION FORMAT FOR ENGAGEMENT OF NODAL OFFICERS -MKUY.pdf" target="_blank">Recruitment</a></li>
+                            <li><a style="color: black; padding: 10px 10px" href="~/Content/Approved CAE guideline.pdf" target="_blank">MKUY Guidelines</a></li>
+                            <li><a style="color: black; padding: 10px 10px" href="@Url.Action("Login", "Account")">Login</a></li>
+                            <li><input type="button" style="border-color: white; height: 40px; font-family: 'Lato'; font-size: 15px; font-weight: 500; padding: 9px 10px" class="btn btn-default" data-toggle="modal" data-target="#helpLineModal" value="Contact Us" /></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </section>
+    </header>
+    <section class="main-slider">
+        <div class="tp-banner-container">
+            <div class="tp-banner">
+                <ul>
+                    <li data-transition="fade" data-slotamount="1" data-masterspeed="1000" data-thumb="../../IndexDesign/img/slider-1.jpg" data-saveperformance="on" data-title="">
+                        <img src="../../IndexDesign/img/slider-1.jpg" alt="" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+                    </li>
+                    <li data-transition="fade" data-slotamount="1" data-masterspeed="1000" data-thumb="../../IndexDesign/img/slider-6.jpg" data-saveperformance="off" data-title="">
+                        <img src="../../IndexDesign/img/slider-6.jpg" alt="" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+                    </li>
+                    <li data-transition="slidedown" data-slotamount="1" data-masterspeed="1000" data-thumb="../../IndexDesign/img/slider-7.jpg" data-saveperformance="off" data-title="">
+                        <img src="../../IndexDesign/img/slider-7.jpg" alt="" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+                    </li>
+                    <li data-transition="slidedown" data-slotamount="1" data-masterspeed="1000" data-thumb="../../IndexDesign/img/slider-2.jpg" data-saveperformance="off" data-title="">
+                        <img src="../../IndexDesign/img/slider-2.jpg" alt="" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+                    </li>
+                    <li data-transition="fade" data-slotamount="1" data-masterspeed="1000" data-thumb="../../IndexDesign/img/slider-3.jpg" data-saveperformance="off" data-title="">
+                        <img src="../../IndexDesign/img/slider-3.jpg" alt="" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+                    </li>
+                    <li data-transition="fade" data-slotamount="1" data-masterspeed="1000" data-thumb="../../IndexDesign/img/slider-4.jpg" data-saveperformance="off" data-title="">
+                        <img src="../../IndexDesign/img/slider-4.jpg" alt="" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+                    </li>
+                    <li data-transition="fade" data-slotamount="1" data-masterspeed="1000" data-thumb="../../IndexDesign/img/slider-5.jpg" data-saveperformance="off" data-title="">
+                        <img src="../../IndexDesign/img/slider-5.jpg" alt="" data-bgposition="center top" data-bgfit="cover" data-bgrepeat="no-repeat">
+                    </li>
+                </ul>
+                <div class="tp-bannertimer"></div>
+            </div>
+        </div>
+    </section>
+    <section id="slider-bottom-area">
+        <div class="container">
+            <div class="row">
+                <div class="slider-bottom">
+                    <div class="newsPanel margine10top">
+                        <div class="col-sm-1 newsAr pad10top"><span><img src="~/Content/images/NewImg.gif" style="height:50px;width:100px;" /></span></div>
+                        <div class="col-sm-11 newsCont">
+                            <marquee behavior="scroll" direction="left">Simple, Transparent & Time-Bound implementation of Mukhyamantri Krushi Udyoga Yojana</marquee><br />
+                            <marquee behavior="scroll" direction="left"><p style="color:red">DNOs are requested to upload DNO details (Name, Mobile No. and Full Signature) and upload their respective BLO details (Name, Smart Phone Mobile No. and Full Signature) after successful login for the first time.</p></marquee>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <iframe style="width: 100%; height: 425px" src="http://localhost:3165/Home/Graph2" frameborder="0" allowfullscreen></iframe>
+    <section id="about_area" class="padtop35">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="about_img">
+                        <div class="about_img_up">
+                            <img src="~/IndexDesign/img/about-img-one.jpg" alt="" />
+                        </div>
+                        <div class="about_img_down">
+                            <img src="~/IndexDesign/img/about-img-two.jpg" alt="" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="about_title ">
+                        <h2 style="padding-bottom: 10px">Welcome to</h2>
+                        <h3>Mukhyamantri Krushi Udyoga Yojana</h3>
+                        <img src="~/IndexDesign/img/border.png" alt="" style="width:48%; height: 38px" />
+                        <p style="text-align: justify; padding-top: 0"> It was established on 01-03-1996 as envisaged in State Agriculture Policy 1996. It started functioning since 01-06-1996 with the sole objective of promoting agro-based industries/food processing industries including commercial agriculture/horticulture/animal husbandry/fisheries, in broad terms to promote investment in Agriculture and allied sectors.</p>
+                        <p style="text-align: justify">The Agricultural Promotion and Investment Corporation of Odisha Limited(APICOL), a Government of Odisha undertaking, coming up as a promotional organisation for providing assistance to agricultural enterprises in the state of Odisha. Apicol would promote enterprises in agriculture within the state with suitable guidance for project formulation, counseling, enterprise development and assistance in project implementation.</p>
+                        <a href="@Url.Action("AboutUs", "Home")" class="btn btn-info hvr-bounce-to-right about_icon" style="margin: 5px; background: green; border-radius: 0">Read more</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="offer-area">
+        <div class="container">
+            <div class="row">
+                <div class="setion_title_area text-center">
+                    <h2 style="padding-bottom: 10px">What We Offer</h2>
+                    <h3>Services we provide</h3>
+                    <img src="~/IndexDesign/img/border.png" alt="" />
+                </div>
+                <div class="row">
+                    <div class=" col-md-4">
+                        <div class="single-offer-2">
+                            <div class="icon-box">
+                                <div class="inner">
+                                    <img src="~/IndexDesign/img/maize-512.png" alt="" />
+                                </div>
+                            </div>
+                            <div class="content">
+                                <h3>Agriculture</h3>
+                                <p style="text-align:justify">Capital investment subsidy is available for 24 nos. of CAE Project under Agriculture sector. Our dear farmers can avail this oppurtunity.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-md-4">
+                        <div class="single-offer-2">
+                            <div class="icon-box">
+                                <div class="inner">
+                                    <img src="~/IndexDesign/img/horti.png" alt="" />
+                                </div>
+                            </div>
+                            <div class="content">
+                                <h3>Horticulture</h3>
+                                <p style="text-align:justify">Horticulture Sector projects provides a good scope to the entrepreneur for employment & income generation.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-md-4">
+                        <div class="single-offer-2">
+                            <div class="icon-box">
+                                <div class="inner">
+                                    <img src="~/IndexDesign/img/hen.png" alt="" />
+                                </div>
+                            </div>
+                            <div class="content">
+                                <h3>ARD</h3>
+                                <p style="text-align:justify">ARD is a flourishing sector under state agriculture policy having 11 nos. CAE Projects where there is provision of subsidy.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class=" col-md-4">
+                        <div class="single-offer-2" style="height: 205px">
+                            <div class="icon-box">
+                                <div class="inner">
+                                    <img src="~/IndexDesign/img/fish.png" alt="" />
+                                </div>
+                            </div>
+                            <div class="content">
+                                <h3>Fisheries</h3>
+                                <p style="text-align:justify">6 nos. of CAE projects from fishery sector under state agriculture policy provides employment oppurtunity to entrepreneurs in the sector.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" col-md-4">
+                        <div class="single-offer-2" style="height: 205px">
+                            <div class="icon-box">
+                                <div class="inner">
+                                    <img src="~/IndexDesign/img/nuts.png" alt="" />
+                                </div>
+                            </div>
+                            <div class="content">
+                                <h3>Food Processing</h3>
+                                <p style="text-align:justify">Our Agriculture entrepreneur friends can establish F.P. projects utilizing the producer of Agriculture, Horticulture, ARD and Fishery sectors and avail incentives upto 50 lakh.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="chooose_area">
+        <div class="container">
+            <div class="panels">
+                <div class="panel-box">
+                    <div class="wrap">
+                        <a href="http://agrisnetodisha.ori.nic.in/stock/farmer/FarmerList.aspx" target="_blank" onclick="return confirm('This link will take you to an external web site.')"><img alt="button menu" src="../../Resource/www.nielit.gov.in/sites/default/files/seeddbt.jpg" /></a>
+                    </div>
+                </div>
+                <div class="panel-box">
+                    <div class="wrap">
+                        <a href="http://odishaseedsportal.nic.in/" target="_blank" onclick="return confirm('This link will take you to an external web site.')"><img alt="button menu" src="../../Resource/www.nielit.gov.in/sites/default/files/Seedsportal.jpg" /></a>
+                    </div>
+                </div>
+                <div class="panel-box">
+                    <div class="wrap">
+                        <a href="http://agrisnetodisha.ori.nic.in/stock/farmer/VarietySearch.aspx" target="_blank" onclick="return confirm('This link will take you to an external web site.')"><img alt="button menu" src="../../Resource/www.nielit.gov.in/sites/default/files/stockposition.jpg" /></a>
+                    </div>
+                </div>
+                <div class="panel-box">
+                    <div class="wrap">
+                        <a href="https://ossopca.nic.in/" target="_blank" onclick="return confirm('This link will take you to an external web site.')"><img alt="button menu" src="../../Resource/www.nielit.gov.in/sites/default/files/ossopcaicon.jpg" /></a>
+                    </div>
+                </div>
+                <div class="panel-box">
+                    <div class="wrap">
+                        <a href="http://agrisnetodisha.ori.nic.in/" target="_blank" onclick="return confirm('This link will take you to an external web site.')"><img alt="button menu" src="../../Resource/www.nielit.gov.in/sites/default/files/AGRISNETICON.jpg" /></a>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </section>
+    <section id="footer_area">
+        <div class="container">
+            <div class="row">
+                <div class="footer_main_area">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <div class="footer_main_area_column">
+                            <h2>EXPLORE APICOL</h2>
+                        </div>
+                        <div class="footer_menu_link">
+                            <ul>
+                                <li>
+                                    <a href="@Url.Action("AboutUs", "Home" )">
+                                        About Us
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="~/Content/apicol 19th annual report.pdf" target="_blank">
+                                        Annual Report
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("RTI", "Home" )">
+                                        RTI
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <div class="footer_main_area_column ">
+                            <h2>USEFUL LINKS</h2>
+                        </div>
+                        <div class="footer_menu_link">
+                            <ul>
+                                <li>
+                                    <a href="http://agrisnetodisha.ori.nic.in/stock/farmer/FarmerList.aspx" onclick="return confirm('This link will take you to an external web site.')" target=_blank>
+                                        agrisnetodisha.ori.nic.in
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="http://odishaseedsportal.nic.in/" onclick="return confirm('This link will take you to an external web site.')" target=_blank>
+                                        odishaseedsportal.nic.in
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://ossopca.nic.in/" onclick="return confirm('This link will take you to an external web site.')" target=_blank>
+                                        ossopca.nic.in
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="http://odisha.gov.in/" onclick="return confirm('This link will take you to an external web site.')" target=_blank>
+                                        odisha.gov.in
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="http://www.adepa.com/" onclick="return confirm('This link will take you to an external web site.')" target=_blank>
+                                        www.adepa.com
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="http://sfacindia.com/" onclick="return confirm('This link will take you to an external web site.')" target=_blank>
+                                        sfacindia.com
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <div class="footer_main_area_column">
+                            <h2>Online Services</h2>
+                        </div>
+                        <div class="footer_menu_link">
+                            <ul>
+                                <li><a href="@Url.Action("Prerequisites", "Prerequisites")">Online Registration</a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="@Url.Action("Prerequisites", "Prerequisites")">Online DPR</a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="@Url.Action("Prerequisites", "Prerequisites")">Online Payment</a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="@Url.Action("GenGoAhead", "GoAhead")">Online Go-Ahead Generation</a></li>
+                                <li><a href="#"></a></li>
+                                <li><a href="@Url.Action("BCompletion", "BeneficiaryCompletion")">Online Completion</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-5 col-xs-12">
+                        <div class="footer_main_area_column ">
+                            <h2>Contact Us</h2>
+                        </div>
+                        <div class="contact_area ">
+                            <ul>
+                                <li style="color: lightgray; padding-bottom: 7px">The Agricultural Promotion & Investment Corporation of Odisha Limited</li>
+                                <li style="color: lightgray; padding-bottom: 7px">Baramunda, Bhubaneswar</li>
+                                <li style="color: lightgray; padding-bottom: 7px">Odisha, PIN-751003</li>
+                                <li style="color: lightgray; padding-bottom: 7px">Email: apicol96@yahoo.com</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                    <div class="col-lg-4 col-md-4">
+                        <div class="copy_right text-right">
+                            <img style="margin-top: 22px" src="~/Content/images/NICINLOGO.png" alt="NIC Logo" />
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8">
+                        <div class="copy_right text-left" style="border-left: 1px solid white; margin: 15px 0">
+                            <h3 style="color: white; margin: 5px 0">Website content managed by APICOL (The Agricultural Promotion & Investment Corporation of Odisha Limited)</h3>
+                            <h3 style="color: white; margin: 5px 0">Department of Agriculture & farmers' Empowerment</h3>
+                            <h3 style="color: white; margin: 5px 0">Government of Odisha</h3>
+                            <h3 style="color: white; margin: 5px 0">Designed, Developed and Hosted by <a href="https://www.nic.in/" target="_blank"><u>National Informatics Centre, Odisha (NIC)</u></a></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="modal fade" id="helpLineModal" role="dialog" style="z-index: 100000">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Contact Us</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row form-group">
+                        <label>APICOL (Bhubaneswar)</label>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="well" style="background-color: white">
+                                    <label>Dr. Durga Prasad Tripathy</label>
+                                    <label>Specialist APICOL</label>
+                                    <label><span class="glyphicon glyphicon-phone"></span> +91-9437181840</label>
+                                    <label><span class="glyphicon glyphicon-envelope"></span> md@apicol.co.in</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="well" style="background-color: white">
+                                    <label>Mr. Gouri Sankar Nanda</label>
+                                    <label>Specialist APICOL</label>
+                                    <label><span class="glyphicon glyphicon-phone"></span> +91-9937740133</label>
+                                    <label style="white-space:nowrap"><span class="glyphicon glyphicon-envelope"></span> apicol96@yahoo.com</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label>NIC (Bhubaneswar)</label>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="well" style="background-color: white">
+                                    <label>Mr. Subrat Ranjan Parida</label>
+                                    <label>Software Programmer</label>
+                                    <label><span class="glyphicon glyphicon-phone"></span> +91-7790096621</label>
+                                    <label><span class="glyphicon glyphicon-envelope"></span> suburan1992@gmail.com</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <div class="well" style="background-color: white">
+                                    <label>Mr. Rishav Kumar</label>
+                                    <label>Software Programmer</label>
+                                    <label><span class="glyphicon glyphicon-phone"></span> +91-7077046970</label>
+                                    <label style="white-space: nowrap"><span class="glyphicon glyphicon-envelope"></span> rishavkumar11111@gmail.com</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <div class="well" style="background-color: white; font-size: 20px">
+                                    <label>Mr. Ashok Kumar Behera</label><br />
+                                    <label>Scientist-D</label><br />
+                                    <label><span class="glyphicon glyphicon-phone"></span> +91-7205020406</label><br />
+                                    <label><span class="glyphicon glyphicon-envelope"></span> ak.behera@nic.in</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-2 col-xs-12"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/IndexDesign/js/jquery.min.js"></script>
+    <script src="~/IndexDesign/js/jquery.easing.min.js"></script>
+    <script src="~/IndexDesign/js/bootstrap.min.js"></script>
+    <script src="~/IndexDesign/js/jquery.mixitup.min.js"></script>
+    <script src="~/IndexDesign/js/jquery.smartmenus.js"></script>
+    <script src="~/IndexDesign/js/jquery.smartmenus.bootstrap.js"></script>
+    <script src="~/IndexDesign/js/revolution.min.js"></script>
+    <script src="~/IndexDesign/js/jquery.fancybox.pack.js"></script>
+    <script src="~/IndexDesign/js/simplePlayer.js"></script>
+    <script src="~/IndexDesign/js/owl.carousel.js"></script>
+    <script src="~/IndexDesign/js/main.js"></script>
+    @*<script>
+        $(document).ready(function () {
+            setTimeout(function () { window.location.href = "http://localhost:3165/Home/Video" }, 34000);
+        });
+    </script>*@
+</body>
+</html>

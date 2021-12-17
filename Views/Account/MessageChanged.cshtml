@@ -1,0 +1,33 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html oncontextmenu="return false;" onload="noback();" onpageshow="if (event.persisted) noback();" unload="">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Change Password</title>
+    <script type="text/javascript">window.onload = window.history.forward(0); function noback() { window.history.forward(); };</script>
+</head>
+<body>
+    <style>
+        body {
+            background-image: url('../../Content/images/Demologin.jpg');
+        }
+    </style>
+    <div>
+        @using (Html.BeginForm("MessageChanged", "Login", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+            <fieldset style="width: 400px; margin: auto; margin-top: 100px;background-color: white;">
+                <legend style="background-color: white;"></legend>
+
+                <div class="row">
+                    <div class="col-md-12">Password Changed Successfully</div>
+                    <div class="col-md-12">@Html.ActionLink("login", "Login")</div>
+                </div>
+            </fieldset>
+        }
+    </div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_LayoutCollector.cshtml";
+}
+@using (Html.BeginForm("Home", "Collector", FormMethod.Post, new { id = "FormId" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="right_col" role="main" ng-app="CollectorApp" ng-controller="CollectorCtrl" ng-cloak>
+        <div class="page-title">
+            <div class="mid_center" style="padding: 250px 20px">
+                <h1>Welcome Collector {{districtName | capitalize}}</h1>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+}
+
+<script>
+    var app = angular.module("CollectorApp", []);
+    app.controller("CollectorCtrl", function ($scope, $http) {
+        var token = document.getElementsByName('__RequestVerificationToken')[0].value;
+        $scope.districtName = "@ViewBag.DistrictName";
+    });
+    app.filter('capitalize', function () {
+        return function (input) {
+            return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+        }
+    });
+</script>

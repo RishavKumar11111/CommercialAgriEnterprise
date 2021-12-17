@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html lang="en" style="min-height: 100%" onload="noback();" onpageshow="if (event.persisted) noback();" unload="" oncontextmenu="return false;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="~/DPRDesign/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/DPRDesign/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/DPRDesign/normalize.min.css" rel="stylesheet" />
+    <link href="~/DPRDesign/animate.min.css" rel="stylesheet" />
+    <link href="~/Content/angular-material.min.css" rel="stylesheet" />
+    <link href="~/DPRDesign/Loader.css" rel="stylesheet" />
+    <script src="~/DPRDesign/angular.min.js"></script>
+    <script src="~/Content/encoder.js"></script>
+    <script src="~/Scripts/angular-ui-bootstrap-modal.js"></script>
+    <script src="~/Scripts/dirPagination.js"></script>
+    <script src="~/Scripts/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="~/Scripts/angular-animate.min.js"></script>
+    <script src="~/Scripts/angular-aria.min.js"></script>
+    <script src="~/Scripts/angular-messages.min.js"></script>
+    <script src="~/Scripts/angular-material.min.js"></script>
+    <script src="~/DPRDesign/jquery.min.js"></script>
+    <script src="~/DPRDesign/bootstrap.min.js"></script>
+    <script src="~/Content/QRcode.js"></script>
+    <title>Mukhyamantri Krushi Udyoga Yojana</title>
+    <script type="text/javascript">window.onload = window.history.forward(0); function noback() { window.history.forward(); };</script>
+</head>
+<body ng-app="GoAheadApp" ng-controller="GoAheadCtrl" ng-cloak>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar" style="height: auto; background: rgb(83, 163, 163)">
+        <h1 style="padding: 10px 30px; font-family: 'Times New Roman'; color: white"><a href="@Url.Action("Index", "Home")"><span class="glyphicon glyphicon-home" title="Click here to go Home page" style="color: white; font-size: 24px; padding-right: 30px"></span></a>Agricultural Promotion & Investment Corporation of Odisha Limited (APICOL)</h1>
+    </nav>
+    <div class="container" style="margin-top: 100px">
+        @RenderBody()
+    </div>
+    <footer style="background: rgb(83, 163, 163); margin: 0px; padding: 10px; position: fixed; bottom: 0; left: 0; right: 0">
+        <div class="text-right" style="color: white; font-family: 'Times New Roman'">
+            <p style="margin: 0px">Designed and developed by National Informatics Centre, Odisha</p>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+</body>
+</html>

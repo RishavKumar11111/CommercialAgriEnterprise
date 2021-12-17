@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="AgriRORData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="distCode" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="tehCode" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="villCode" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="khataNo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="plotNo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AgriRORDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AgriRORDataResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DataTable" nillable="true">
+        <s:complexType>
+          <s:sequence>
+            <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+            <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="AgriRORDataSoapIn">
+    <wsdl:part name="parameters" element="tns:AgriRORData" />
+  </wsdl:message>
+  <wsdl:message name="AgriRORDataSoapOut">
+    <wsdl:part name="parameters" element="tns:AgriRORDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="AgriRORDataHttpGetIn">
+    <wsdl:part name="distCode" type="s:string" />
+    <wsdl:part name="tehCode" type="s:string" />
+    <wsdl:part name="villCode" type="s:string" />
+    <wsdl:part name="khataNo" type="s:string" />
+    <wsdl:part name="plotNo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AgriRORDataHttpGetOut">
+    <wsdl:part name="Body" element="tns:DataTable" />
+  </wsdl:message>
+  <wsdl:message name="AgriRORDataHttpPostIn">
+    <wsdl:part name="distCode" type="s:string" />
+    <wsdl:part name="tehCode" type="s:string" />
+    <wsdl:part name="villCode" type="s:string" />
+    <wsdl:part name="khataNo" type="s:string" />
+    <wsdl:part name="plotNo" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AgriRORDataHttpPostOut">
+    <wsdl:part name="Body" element="tns:DataTable" />
+  </wsdl:message>
+  <wsdl:portType name="AgriCensusServiceSoap">
+    <wsdl:operation name="AgriRORData">
+      <wsdl:input message="tns:AgriRORDataSoapIn" />
+      <wsdl:output message="tns:AgriRORDataSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="AgriCensusServiceHttpGet">
+    <wsdl:operation name="AgriRORData">
+      <wsdl:input message="tns:AgriRORDataHttpGetIn" />
+      <wsdl:output message="tns:AgriRORDataHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="AgriCensusServiceHttpPost">
+    <wsdl:operation name="AgriRORData">
+      <wsdl:input message="tns:AgriRORDataHttpPostIn" />
+      <wsdl:output message="tns:AgriRORDataHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AgriCensusServiceSoap" type="tns:AgriCensusServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AgriRORData">
+      <soap:operation soapAction="http://tempuri.org/AgriRORData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AgriCensusServiceSoap12" type="tns:AgriCensusServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AgriRORData">
+      <soap12:operation soapAction="http://tempuri.org/AgriRORData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AgriCensusServiceHttpGet" type="tns:AgriCensusServiceHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="AgriRORData">
+      <http:operation location="/AgriRORData" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AgriCensusServiceHttpPost" type="tns:AgriCensusServiceHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="AgriRORData">
+      <http:operation location="/AgriRORData" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AgriCensusService">
+    <wsdl:port name="AgriCensusServiceSoap" binding="tns:AgriCensusServiceSoap">
+      <soap:address location="http://bhulekh.ori.nic.in/AgriCensusService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AgriCensusServiceSoap12" binding="tns:AgriCensusServiceSoap12">
+      <soap12:address location="http://bhulekh.ori.nic.in/AgriCensusService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AgriCensusServiceHttpGet" binding="tns:AgriCensusServiceHttpGet">
+      <http:address location="http://bhulekh.ori.nic.in/AgriCensusService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AgriCensusServiceHttpPost" binding="tns:AgriCensusServiceHttpPost">
+      <http:address location="http://bhulekh.ori.nic.in/AgriCensusService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
